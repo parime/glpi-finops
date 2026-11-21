@@ -198,7 +198,7 @@ final class ScpInventoryReader
                 'resource'    => CsvCostParser::clean($vm['vm_id']),
                 'cost'        => number_format(min(self::monthlyCost($vm, $grid), 1.0e12), 6, '.', ''),
                 'currency'    => $currency,
-                'tags'        => CsvCostParser::parseTags((string) json_encode(array_filter($tags, 'strlen'))),
+                'tags'        => CsvCostParser::parseTags((string) json_encode(array_filter($tags, static fn (string $value): bool => $value !== ''))),
                 'source_key'  => hash('sha256', self::PROVIDER . '|' . $accountId . '|' . $vm['vm_id'] . '|' . $month),
             ];
         }
