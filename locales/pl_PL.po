@@ -13,6 +13,39 @@ msgstr ""
 msgid "Settings saved."
 msgstr "Ustawienia zapisane."
 
+msgid "Choose an entity you have access to."
+msgstr "Wybierz jednostkę, do której masz dostęp."
+
+msgid "Choose a CSV file."
+msgstr "Wybierz plik CSV."
+
+msgid "Only .csv and .txt files are accepted."
+msgstr "Akceptowane są tylko pliki .csv i .txt."
+
+msgid "No valid cost line in the file."
+msgstr "Brak prawidłowego wiersza kosztu w pliku."
+
+msgid "The file cannot be read."
+msgstr "Nie można odczytać pliku."
+
+msgid "The preview has expired: upload the file again."
+msgstr "Podgląd wygasł: prześlij plik ponownie."
+
+msgid "Import done: %1$d new lines, %2$d already known, %3$d rejected."
+msgstr "Import zakończony: %1$d nowych wierszy, %2$d już znanych, %3$d odrzuconych."
+
+msgid "Import deleted with its cost lines."
+msgstr "Import usunięty wraz z wierszami kosztów."
+
+msgid "Link removed."
+msgstr "Powiązanie usunięte."
+
+msgid "Resource linked to the asset."
+msgstr "Zasób powiązany z elementem."
+
+msgid "Choose an asset you can see."
+msgstr "Wybierz zasób, który możesz zobaczyć."
+
 msgid "General"
 msgstr "Ogólne"
 
@@ -22,11 +55,62 @@ msgstr "Źródła kosztów"
 msgid "About"
 msgstr "O wtyczce"
 
+msgid "Cost import"
+msgid_plural "Cost imports"
+msgstr[0] "Import kosztów"
+msgstr[1] "Importy kosztów"
+msgstr[2] "Importów kosztów"
+
+msgid "Cost line"
+msgid_plural "Cost lines"
+msgstr[0] "Wiersz kosztu"
+msgstr[1] "Wiersze kosztów"
+msgstr[2] "Wierszy kosztów"
+
+msgid "The file is larger than the size allowed in the settings."
+msgstr "Plik jest większy niż rozmiar dozwolony w ustawieniach."
+
+msgid "The file is empty."
+msgstr "Plik jest pusty."
+
+msgid "The file is not a text file."
+msgstr "Plik nie jest plikiem tekstowym."
+
+msgid "The file contains program code and was refused."
+msgstr "Plik zawiera kod programu i został odrzucony."
+
+msgid "Required columns missing: %s."
+msgstr "Brak wymaganych kolumn: %s."
+
+msgid "The file has too many columns."
+msgstr "Plik ma zbyt wiele kolumn."
+
+msgid "The file has too many lines."
+msgstr "Plik ma zbyt wiele wierszy."
+
+msgid "Invalid date (expected YYYY-MM-DD or DD/MM/YYYY)."
+msgstr "Nieprawidłowa data (oczekiwano RRRR-MM-DD lub DD/MM/RRRR)."
+
+msgid "Missing or invalid provider."
+msgstr "Brak dostawcy lub nieprawidłowy dostawca."
+
+msgid "Invalid cost (expected a number)."
+msgstr "Nieprawidłowy koszt (oczekiwano liczby)."
+
+msgid "Invalid currency (expected a three-letter code)."
+msgstr "Nieprawidłowa waluta (oczekiwano kodu trzyliterowego)."
+
+msgid "Too many cells on the line."
+msgstr "Zbyt wiele komórek w wierszu."
+
 msgid "FinOps"
 msgstr "FinOps"
 
 msgid "Costs"
 msgstr "Koszty"
+
+msgid "Import"
+msgstr "Import"
 
 msgid "Cloud and virtualisation costs"
 msgstr "Koszty chmury i wirtualizacji"
@@ -39,6 +123,12 @@ msgstr "Powiąż zasoby z zasobami GLPI"
 
 msgid "Delete an import"
 msgstr "Usuń import"
+
+msgid "Resource"
+msgid_plural "Resources"
+msgstr[0] "Zasób"
+msgstr[1] "Zasoby"
+msgstr[2] "Zasobów"
 
 msgid "Generic CSV file"
 msgstr "Ogólny plik CSV"
@@ -106,20 +196,200 @@ msgstr "Typ"
 msgid "Version"
 msgstr "Wersja"
 
-msgid "Cost import arrives with the next version of the plugin."
-msgstr "Import kosztów pojawi się w następnej wersji wtyczki."
+msgid "%s already imported"
+msgstr "%s już zaimportowanych"
+
+msgid "%s new lines"
+msgstr "%s nowych wierszy"
+
+msgid "%s rejected"
+msgstr "%s odrzuconych"
+
+msgid "Account"
+msgstr "Konto"
+
+msgid "Bring the costs of a provider into GLPI from a CSV file, whatever the provider."
+msgstr "Przenieś do GLPI koszty dostawcy z pliku CSV, niezależnie od dostawcy."
+
+msgid "By"
+msgstr "Przez"
+
+msgid "CSV file"
+msgstr "Plik CSV"
+
+msgid "CSV or text file, %s MB at most."
+msgstr "Plik CSV lub tekstowy, najwyżej %s MB."
+
+msgid "Cost"
+msgstr "Koszt"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Dates as YYYY-MM-DD or DD/MM/YYYY. Without currency, %s is used. Tags as key=value;key2=value2 or a JSON object."
+msgstr "Daty jako RRRR-MM-DD lub DD/MM/RRRR. Bez waluty używana jest %s. Tagi jako klucz=wartość;klucz2=wartość2 lub obiekt JSON."
+
+msgid "Delete"
+msgstr "Usuń"
+
+msgid "Delete this import and its cost lines?"
+msgstr "Usunąć ten import i jego wiersze kosztów?"
+
+msgid "Expected columns"
+msgstr "Oczekiwane kolumny"
+
+msgid "File"
+msgstr "Plik"
+
+msgid "First line: column names. Separator: comma, semicolon or tab. Other names accepted for each column:"
+msgstr "Pierwszy wiersz: nazwy kolumn. Separator: przecinek, średnik lub tabulator. Inne nazwy akceptowane dla każdej kolumny:"
+
+msgid "First new lines"
+msgstr "Pierwsze nowe wiersze"
+
+msgid "Import a cost file"
+msgstr "Importuj plik kosztów"
+
+msgid "Import log"
+msgstr "Dziennik importów"
+
+msgid "Import the new lines"
+msgstr "Importuj nowe wiersze"
+
+msgid "Line %1$s: %2$s"
+msgstr "Wiersz %1$s: %2$s"
+
+msgid "Months"
+msgstr "Miesiące"
+
+msgid "New costs"
+msgstr "Nowe koszty"
+
+msgid "No import yet."
+msgstr "Brak importów."
+
+msgid "Preview"
+msgstr "Podgląd"
+
+msgid "Preview before import"
+msgstr "Podgląd przed importem"
+
+msgid "Provider"
+msgstr "Dostawca"
+
+msgid "Providers"
+msgstr "Dostawcy"
+
+msgid "Rejected lines"
+msgstr "Odrzucone wiersze"
+
+msgid "Result"
+msgstr "Wynik"
+
+msgid "Service"
+msgstr "Usługa"
+
+msgid "The cost lines and resources belong to this entity."
+msgstr "Wiersze kosztów i zasoby należą do tej jednostki."
+
+msgid "Upload the file, check the preview, then confirm. Importing the same file again creates no duplicate."
+msgstr "Prześlij plik, sprawdź podgląd i potwierdź. Ponowny import tego samego pliku nie tworzy duplikatów."
+
+msgid "required"
+msgstr "wymagana"
+
+msgid "Amounts in different currencies are never added up: one table per currency."
+msgstr "Kwoty w różnych walutach nigdy nie są sumowane: jedna tabela na walutę."
+
+msgid "Cost lines"
+msgstr "Wiersze kosztów"
 
 msgid "Costs by provider and by month"
 msgstr "Koszty według dostawcy i miesiąca"
 
+msgid "Export the costs of your provider as CSV, then import the file."
+msgstr "Wyeksportuj koszty dostawcy do CSV, a następnie zaimportuj plik."
+
 msgid "Import a cost file, then review the months and providers that cost the most."
 msgstr "Zaimportuj plik kosztów, a następnie przejrzyj najdroższe miesiące i dostawców."
+
+msgid "Last import"
+msgstr "Ostatni import"
+
+msgid "Month"
+msgstr "Miesiąc"
 
 msgid "No cost imported yet"
 msgstr "Nie zaimportowano jeszcze kosztów"
 
-msgid "Settings"
-msgstr "Ustawienia"
+msgid "Resources"
+msgstr "Zasoby"
+
+msgid "Resources not linked to an asset"
+msgstr "Zasoby niepowiązane z elementem"
 
 msgid "This page shows what your cloud and virtualised resources cost, by provider and by month."
 msgstr "Ta strona pokazuje, ile kosztują zasoby w chmurze i zwirtualizowane, według dostawcy i miesiąca."
+
+msgid "Total"
+msgstr "Razem"
+
+msgid "Cost by month"
+msgstr "Koszt miesięczny"
+
+msgid "Link a resource to this asset from Management > FinOps > Resources."
+msgstr "Powiąż zasób z tym elementem w Zarządzanie > FinOps > Zasoby."
+
+msgid "Linked resources"
+msgstr "Powiązane zasoby"
+
+msgid "No billed resource is linked to this asset"
+msgstr "Żaden rozliczany zasób nie jest powiązany z tym elementem"
+
+msgid "Total cost"
+msgstr "Koszt całkowity"
+
+msgid "%1$s to %2$s of %3$s"
+msgstr "%1$s do %2$s z %3$s"
+
+msgid "Asset"
+msgstr "Zasób GLPI"
+
+msgid "Computers, appliances and network devices of the entity of the resource."
+msgstr "Komputery, aplikacje i urządzenia sieciowe jednostki zasobu."
+
+msgid "Each resource billed by a provider (instance, VM, database, disk...) and the GLPI asset it belongs to."
+msgstr "Każdy zasób rozliczany przez dostawcę (instancja, VM, baza danych, dysk...) i zasób GLPI, do którego należy."
+
+msgid "Last seen"
+msgstr "Ostatnio widziany"
+
+msgid "Link"
+msgstr "Powiąż"
+
+msgid "Link the resources shown in orange to the computer, appliance or network device they run on."
+msgstr "Powiąż zasoby oznaczone na pomarańczowo z komputerem, aplikacją lub urządzeniem sieciowym, na którym działają."
+
+msgid "Linked asset"
+msgstr "Powiązany element"
+
+msgid "No resource to show"
+msgstr "Brak zasobów do wyświetlenia"
+
+msgid "Not linked"
+msgstr "Niepowiązany"
+
+msgid "Not linked only"
+msgstr "Tylko niepowiązane"
+
+msgid "Open"
+msgstr "Otwórz"
+
+msgid "Remove the link"
+msgstr "Usuń powiązanie"
+
+msgid "Resources appear here when a cost file names them (resource column)."
+msgstr "Zasoby pojawiają się tutaj, gdy plik kosztów je wymienia (kolumna resource)."
+
+msgid "Search"
+msgstr "Szukaj"

@@ -25,8 +25,8 @@ use Session;
 /**
  * Seule entrée de menu d'usage du plugin : Gestion > FinOps (charte commune, section 9). Ses écrans
  * sont des sous-pages reliées par une barre d'onglets commune (templates/_section_nav.html.twig) :
- * coûts par fournisseur et par mois (les ressources et l'import arrivent avec le premier lot). Les
- * réglages sont dans la page de configuration du plugin (ConfigPage).
+ * coûts par fournisseur et par mois, ressources, import. Les réglages sont dans la page de
+ * configuration du plugin (ConfigPage).
  *
  * Droits (un seul droit, plugin_finops) : READ consulte, CREATE importe, UPDATE rattache une
  * ressource à un actif, PURGE supprime un import et ses lignes.
@@ -112,7 +112,19 @@ class Menu extends MenuBase
                 'icon'  => 'ti ti-chart-bar',
                 'url'   => self::url(self::TAB_OVERVIEW, [], false),
             ],
+            self::TAB_RESOURCES => [
+                'label' => Resource::getTypeName(2),
+                'icon'  => Resource::getIcon(),
+                'url'   => self::url(self::TAB_RESOURCES, [], false),
+            ],
         ];
+        if (CostImport::canCreate()) {
+            $screens[self::TAB_IMPORT] = [
+                'label' => __('Import', 'finops'),
+                'icon'  => CostImport::getIcon(),
+                'url'   => self::url(self::TAB_IMPORT, [], false),
+            ];
+        }
 
         return $screens;
     }

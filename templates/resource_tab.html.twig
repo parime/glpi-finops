@@ -1,0 +1,93 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Onglet « FinOps » d'un actif : ressources facturées rattachées à l'actif et coût par mois. #}
+<div class="container-fluid mt-2">
+   {% if rows is empty %}
+      <div class="empty">
+         <div class="empty-icon"><i class="ti ti-report-money"></i></div>
+         <p class="empty-title">{{ __('No billed resource is linked to this asset', 'finops') }}</p>
+         <p class="empty-subtitle text-muted">
+            {{ __('Link a resource to this asset from Management > FinOps > Resources.', 'finops') }}
+         </p>
+         {% if can_link %}
+            <div class="empty-action">
+               <a href="{{ resources_url }}?unlinked=1" class="btn btn-outline-primary">
+                  <i class="ti ti-link me-1"></i>{{ __('Resources not linked to an asset', 'finops') }}
+               </a>
+            </div>
+         {% endif %}
+      </div>
+   {% else %}
+      <div class="row">
+         <div class="col-lg-7">
+            <div class="card mb-3">
+               <div class="card-header">
+                  <h3 class="card-title"><i class="ti ti-server-2 me-2"></i>{{ __('Linked resources', 'finops') }}</h3>
+               </div>
+               <div class="table-responsive">
+                  <table class="table table-vcenter card-table">
+                     <thead>
+                        <tr>
+                           <th>{{ __('Resource', 'finops') }}</th>
+                           <th>{{ __('Provider', 'finops') }}</th>
+                           <th>{{ __('Service', 'finops') }}</th>
+                           <th class="text-end">{{ __('Total cost', 'finops') }}</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for row in rows %}
+                           <tr>
+                              <td class="text-break"><a href="{{ resources_url }}?id={{ row.id }}">{{ row.resource }}</a></td>
+                              <td><i class="ti ti-cloud me-1 text-muted"></i>{{ row.provider }}</td>
+                              <td>{{ row.service }}</td>
+                              <td class="text-end text-nowrap">
+                                 {% for currency, cost in row.costs %}
+                                    <div>{{ cost|number_format(2, '.', ' ') }} {{ currency }}</div>
+                                 {% endfor %}
+                              </td>
+                           </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-5">
+            <div class="card mb-3">
+               <div class="card-header">
+                  <h3 class="card-title"><i class="ti ti-calendar-month me-2"></i>{{ __('Cost by month', 'finops') }}</h3>
+               </div>
+               <div class="table-responsive">
+                  <table class="table table-vcenter card-table">
+                     <tbody>
+                        {% for month in months %}
+                           <tr>
+                              <td>{{ month.month }}</td>
+                              <td class="text-end">
+                                 {% for currency, cost in month.costs %}
+                                    <div>{{ cost|number_format(2, '.', ' ') }} {{ currency }}</div>
+                                 {% endfor %}
+                              </td>
+                           </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   {% endif %}
+</div>
