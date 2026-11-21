@@ -25,8 +25,8 @@ use Session;
 /**
  * Seule entrée de menu d'usage du plugin : Gestion > FinOps (charte commune, section 9). Ses écrans
  * sont des sous-pages reliées par une barre d'onglets commune (templates/_section_nav.html.twig) :
- * coûts par fournisseur et par mois (les ressources et l'import arrivent avec le premier lot). Les réglages sont dans la page de
- * configuration du plugin (ConfigPage).
+ * coûts par fournisseur et par mois (les ressources et l'import arrivent avec le premier lot). Les
+ * réglages sont dans la page de configuration du plugin (ConfigPage).
  *
  * Droits (un seul droit, plugin_finops) : READ consulte, CREATE importe, UPDATE rattache une
  * ressource à un actif, PURGE supprime un import et ses lignes.
