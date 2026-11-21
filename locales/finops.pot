@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 10:11+0000\n"
+"POT-Creation-Date: 2026-11-21 10:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,9 +16,55 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: front/config.php:31
 msgid "Settings saved."
+msgstr ""
+
+#: front/import.php:40
+msgid "Choose an entity you have access to."
+msgstr ""
+
+#: front/import.php:44
+msgid "Choose a CSV file."
+msgstr ""
+
+#: front/import.php:46
+msgid "Only .csv and .txt files are accepted."
+msgstr ""
+
+#: front/import.php:58
+msgid "No valid cost line in the file."
+msgstr ""
+
+#: front/import.php:62 src/Import/CostImporter.php:232
+msgid "The file cannot be read."
+msgstr ""
+
+#: front/import.php:82
+msgid "The preview has expired: upload the file again."
+msgstr ""
+
+#: front/import.php:93
+#, php-format
+msgid "Import done: %1$d new lines, %2$d already known, %3$d rejected."
+msgstr ""
+
+#: front/import.php:108
+msgid "Import deleted with its cost lines."
+msgstr ""
+
+#: front/resource.php:37
+msgid "Link removed."
+msgstr ""
+
+#: front/resource.php:37
+msgid "Resource linked to the asset."
+msgstr ""
+
+#: front/resource.php:40
+msgid "Choose an asset you can see."
 msgstr ""
 
 #: src/ConfigPage.php:51 templates/config.html.twig
@@ -33,12 +79,77 @@ msgstr ""
 msgid "About"
 msgstr ""
 
+#: src/CostImport.php:38
+msgid "Cost import"
+msgid_plural "Cost imports"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/CostLine.php:35
+msgid "Cost line"
+msgid_plural "Cost lines"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Import/CostImporter.php:217
+msgid "The file is larger than the size allowed in the settings."
+msgstr ""
+
+#: src/Import/CostImporter.php:218
+msgid "The file is empty."
+msgstr ""
+
+#: src/Import/CostImporter.php:219
+msgid "The file is not a text file."
+msgstr ""
+
+#: src/Import/CostImporter.php:220
+msgid "The file contains program code and was refused."
+msgstr ""
+
+#: src/Import/CostImporter.php:222
+#, php-format
+msgid "Required columns missing: %s."
+msgstr ""
+
+#: src/Import/CostImporter.php:225
+msgid "The file has too many columns."
+msgstr ""
+
+#: src/Import/CostImporter.php:226
+msgid "The file has too many lines."
+msgstr ""
+
+#: src/Import/CostImporter.php:227
+msgid "Invalid date (expected YYYY-MM-DD or DD/MM/YYYY)."
+msgstr ""
+
+#: src/Import/CostImporter.php:228
+msgid "Missing or invalid provider."
+msgstr ""
+
+#: src/Import/CostImporter.php:229
+msgid "Invalid cost (expected a number)."
+msgstr ""
+
+#: src/Import/CostImporter.php:230
+msgid "Invalid currency (expected a three-letter code)."
+msgstr ""
+
+#: src/Import/CostImporter.php:231
+msgid "Too many cells on the line."
+msgstr ""
+
 #: src/Menu.php:44
 msgid "FinOps"
 msgstr ""
 
 #: src/Menu.php:111
 msgid "Costs"
+msgstr ""
+
+#: src/Menu.php:123
+msgid "Import"
 msgstr ""
 
 #: src/Profile.php:57
@@ -56,6 +167,13 @@ msgstr ""
 #: src/Profile.php:63
 msgid "Delete an import"
 msgstr ""
+
+#: src/Resource.php:47 templates/import.html.twig
+#: templates/resource_tab.html.twig templates/resources.html.twig
+msgid "Resource"
+msgid_plural "Resources"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/Source/GenericCsvSource.php:35
 msgid "Generic CSV file"
@@ -155,12 +273,174 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
+#: templates/import.html.twig
+#, php-format
+msgid "%s already imported"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "%s new lines"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "%s rejected"
+msgstr ""
+
+#: templates/import.html.twig templates/resources.html.twig
+msgid "Account"
+msgstr ""
+
+#: templates/import.html.twig
+msgid ""
+"Bring the costs of a provider into GLPI from a CSV file, whatever the "
+"provider."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "By"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "CSV file"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "CSV or text file, %s MB at most."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Cost"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Date"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid ""
+"Dates as YYYY-MM-DD or DD/MM/YYYY. Without currency, %s is used. Tags as "
+"key=value;key2=value2 or a JSON object."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Delete"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Delete this import and its cost lines?"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Expected columns"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "File"
+msgstr ""
+
+#: templates/import.html.twig
+msgid ""
+"First line: column names. Separator: comma, semicolon or tab. Other names "
+"accepted for each column:"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "First new lines"
+msgstr ""
+
+#: templates/import.html.twig templates/overview.html.twig
+#: templates/resources.html.twig
+msgid "Import a cost file"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Import log"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Import the new lines"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "Line %1$s: %2$s"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Months"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "New costs"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "No import yet."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Preview"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Preview before import"
+msgstr ""
+
+#: templates/import.html.twig templates/resource_tab.html.twig
+#: templates/resources.html.twig
+msgid "Provider"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Providers"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Rejected lines"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Result"
+msgstr ""
+
+#: templates/import.html.twig templates/resource_tab.html.twig
+#: templates/resources.html.twig
+msgid "Service"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "The cost lines and resources belong to this entity."
+msgstr ""
+
+#: templates/import.html.twig
+msgid ""
+"Upload the file, check the preview, then confirm. Importing the same file "
+"again creates no duplicate."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "required"
+msgstr ""
+
 #: templates/overview.html.twig
-msgid "Cost import arrives with the next version of the plugin."
+msgid ""
+"Amounts in different currencies are never added up: one table per currency."
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Cost lines"
 msgstr ""
 
 #: templates/overview.html.twig
 msgid "Costs by provider and by month"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Export the costs of your provider as CSV, then import the file."
 msgstr ""
 
 #: templates/overview.html.twig
@@ -169,15 +449,117 @@ msgid ""
 msgstr ""
 
 #: templates/overview.html.twig
-msgid "No cost imported yet"
+msgid "Last import"
 msgstr ""
 
 #: templates/overview.html.twig
-msgid "Settings"
+msgid "Month"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "No cost imported yet"
+msgstr ""
+
+#: templates/overview.html.twig templates/resources.html.twig
+msgid "Resources"
+msgstr ""
+
+#: templates/overview.html.twig templates/resource_tab.html.twig
+msgid "Resources not linked to an asset"
 msgstr ""
 
 #: templates/overview.html.twig
 msgid ""
 "This page shows what your cloud and virtualised resources cost, by provider "
 "and by month."
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Total"
+msgstr ""
+
+#: templates/resource_tab.html.twig
+msgid "Cost by month"
+msgstr ""
+
+#: templates/resource_tab.html.twig
+msgid "Link a resource to this asset from Management > FinOps > Resources."
+msgstr ""
+
+#: templates/resource_tab.html.twig
+msgid "Linked resources"
+msgstr ""
+
+#: templates/resource_tab.html.twig
+msgid "No billed resource is linked to this asset"
+msgstr ""
+
+#: templates/resource_tab.html.twig templates/resources.html.twig
+msgid "Total cost"
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
+msgid "%1$s to %2$s of %3$s"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Asset"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid ""
+"Computers, appliances and network devices of the entity of the resource."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid ""
+"Each resource billed by a provider (instance, VM, database, disk...) and the "
+"GLPI asset it belongs to."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Last seen"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Link"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid ""
+"Link the resources shown in orange to the computer, appliance or network "
+"device they run on."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Linked asset"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "No resource to show"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Not linked"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Not linked only"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Open"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Remove the link"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Resources appear here when a cost file names them (resource column)."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Search"
 msgstr ""

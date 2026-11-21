@@ -13,6 +13,39 @@ msgstr ""
 msgid "Settings saved."
 msgstr "Settings saved."
 
+msgid "Choose an entity you have access to."
+msgstr "Choose an entity you have access to."
+
+msgid "Choose a CSV file."
+msgstr "Choose a CSV file."
+
+msgid "Only .csv and .txt files are accepted."
+msgstr "Only .csv and .txt files are accepted."
+
+msgid "No valid cost line in the file."
+msgstr "No valid cost line in the file."
+
+msgid "The file cannot be read."
+msgstr "The file cannot be read."
+
+msgid "The preview has expired: upload the file again."
+msgstr "The preview has expired: upload the file again."
+
+msgid "Import done: %1$d new lines, %2$d already known, %3$d rejected."
+msgstr "Import done: %1$d new lines, %2$d already known, %3$d rejected."
+
+msgid "Import deleted with its cost lines."
+msgstr "Import deleted with its cost lines."
+
+msgid "Link removed."
+msgstr "Link removed."
+
+msgid "Resource linked to the asset."
+msgstr "Resource linked to the asset."
+
+msgid "Choose an asset you can see."
+msgstr "Choose an asset you can see."
+
 msgid "General"
 msgstr "General"
 
@@ -22,11 +55,60 @@ msgstr "Cost sources"
 msgid "About"
 msgstr "About"
 
+msgid "Cost import"
+msgid_plural "Cost imports"
+msgstr[0] "Cost import"
+msgstr[1] "Cost imports"
+
+msgid "Cost line"
+msgid_plural "Cost lines"
+msgstr[0] "Cost line"
+msgstr[1] "Cost lines"
+
+msgid "The file is larger than the size allowed in the settings."
+msgstr "The file is larger than the size allowed in the settings."
+
+msgid "The file is empty."
+msgstr "The file is empty."
+
+msgid "The file is not a text file."
+msgstr "The file is not a text file."
+
+msgid "The file contains program code and was refused."
+msgstr "The file contains program code and was refused."
+
+msgid "Required columns missing: %s."
+msgstr "Required columns missing: %s."
+
+msgid "The file has too many columns."
+msgstr "The file has too many columns."
+
+msgid "The file has too many lines."
+msgstr "The file has too many lines."
+
+msgid "Invalid date (expected YYYY-MM-DD or DD/MM/YYYY)."
+msgstr "Invalid date (expected YYYY-MM-DD or DD/MM/YYYY)."
+
+msgid "Missing or invalid provider."
+msgstr "Missing or invalid provider."
+
+msgid "Invalid cost (expected a number)."
+msgstr "Invalid cost (expected a number)."
+
+msgid "Invalid currency (expected a three-letter code)."
+msgstr "Invalid currency (expected a three-letter code)."
+
+msgid "Too many cells on the line."
+msgstr "Too many cells on the line."
+
 msgid "FinOps"
 msgstr "FinOps"
 
 msgid "Costs"
 msgstr "Costs"
+
+msgid "Import"
+msgstr "Import"
 
 msgid "Cloud and virtualisation costs"
 msgstr "Cloud and virtualisation costs"
@@ -39,6 +121,11 @@ msgstr "Link resources to assets"
 
 msgid "Delete an import"
 msgstr "Delete an import"
+
+msgid "Resource"
+msgid_plural "Resources"
+msgstr[0] "Resource"
+msgstr[1] "Resources"
 
 msgid "Generic CSV file"
 msgstr "Generic CSV file"
@@ -106,20 +193,200 @@ msgstr "Type"
 msgid "Version"
 msgstr "Version"
 
-msgid "Cost import arrives with the next version of the plugin."
-msgstr "Cost import arrives with the next version of the plugin."
+msgid "%s already imported"
+msgstr "%s already imported"
+
+msgid "%s new lines"
+msgstr "%s new lines"
+
+msgid "%s rejected"
+msgstr "%s rejected"
+
+msgid "Account"
+msgstr "Account"
+
+msgid "Bring the costs of a provider into GLPI from a CSV file, whatever the provider."
+msgstr "Bring the costs of a provider into GLPI from a CSV file, whatever the provider."
+
+msgid "By"
+msgstr "By"
+
+msgid "CSV file"
+msgstr "CSV file"
+
+msgid "CSV or text file, %s MB at most."
+msgstr "CSV or text file, %s MB at most."
+
+msgid "Cost"
+msgstr "Cost"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Dates as YYYY-MM-DD or DD/MM/YYYY. Without currency, %s is used. Tags as key=value;key2=value2 or a JSON object."
+msgstr "Dates as YYYY-MM-DD or DD/MM/YYYY. Without currency, %s is used. Tags as key=value;key2=value2 or a JSON object."
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Delete this import and its cost lines?"
+msgstr "Delete this import and its cost lines?"
+
+msgid "Expected columns"
+msgstr "Expected columns"
+
+msgid "File"
+msgstr "File"
+
+msgid "First line: column names. Separator: comma, semicolon or tab. Other names accepted for each column:"
+msgstr "First line: column names. Separator: comma, semicolon or tab. Other names accepted for each column:"
+
+msgid "First new lines"
+msgstr "First new lines"
+
+msgid "Import a cost file"
+msgstr "Import a cost file"
+
+msgid "Import log"
+msgstr "Import log"
+
+msgid "Import the new lines"
+msgstr "Import the new lines"
+
+msgid "Line %1$s: %2$s"
+msgstr "Line %1$s: %2$s"
+
+msgid "Months"
+msgstr "Months"
+
+msgid "New costs"
+msgstr "New costs"
+
+msgid "No import yet."
+msgstr "No import yet."
+
+msgid "Preview"
+msgstr "Preview"
+
+msgid "Preview before import"
+msgstr "Preview before import"
+
+msgid "Provider"
+msgstr "Provider"
+
+msgid "Providers"
+msgstr "Providers"
+
+msgid "Rejected lines"
+msgstr "Rejected lines"
+
+msgid "Result"
+msgstr "Result"
+
+msgid "Service"
+msgstr "Service"
+
+msgid "The cost lines and resources belong to this entity."
+msgstr "The cost lines and resources belong to this entity."
+
+msgid "Upload the file, check the preview, then confirm. Importing the same file again creates no duplicate."
+msgstr "Upload the file, check the preview, then confirm. Importing the same file again creates no duplicate."
+
+msgid "required"
+msgstr "required"
+
+msgid "Amounts in different currencies are never added up: one table per currency."
+msgstr "Amounts in different currencies are never added up: one table per currency."
+
+msgid "Cost lines"
+msgstr "Cost lines"
 
 msgid "Costs by provider and by month"
 msgstr "Costs by provider and by month"
 
+msgid "Export the costs of your provider as CSV, then import the file."
+msgstr "Export the costs of your provider as CSV, then import the file."
+
 msgid "Import a cost file, then review the months and providers that cost the most."
 msgstr "Import a cost file, then review the months and providers that cost the most."
+
+msgid "Last import"
+msgstr "Last import"
+
+msgid "Month"
+msgstr "Month"
 
 msgid "No cost imported yet"
 msgstr "No cost imported yet"
 
-msgid "Settings"
-msgstr "Settings"
+msgid "Resources"
+msgstr "Resources"
+
+msgid "Resources not linked to an asset"
+msgstr "Resources not linked to an asset"
 
 msgid "This page shows what your cloud and virtualised resources cost, by provider and by month."
 msgstr "This page shows what your cloud and virtualised resources cost, by provider and by month."
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Cost by month"
+msgstr "Cost by month"
+
+msgid "Link a resource to this asset from Management > FinOps > Resources."
+msgstr "Link a resource to this asset from Management > FinOps > Resources."
+
+msgid "Linked resources"
+msgstr "Linked resources"
+
+msgid "No billed resource is linked to this asset"
+msgstr "No billed resource is linked to this asset"
+
+msgid "Total cost"
+msgstr "Total cost"
+
+msgid "%1$s to %2$s of %3$s"
+msgstr "%1$s to %2$s of %3$s"
+
+msgid "Asset"
+msgstr "Asset"
+
+msgid "Computers, appliances and network devices of the entity of the resource."
+msgstr "Computers, appliances and network devices of the entity of the resource."
+
+msgid "Each resource billed by a provider (instance, VM, database, disk...) and the GLPI asset it belongs to."
+msgstr "Each resource billed by a provider (instance, VM, database, disk...) and the GLPI asset it belongs to."
+
+msgid "Last seen"
+msgstr "Last seen"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Link the resources shown in orange to the computer, appliance or network device they run on."
+msgstr "Link the resources shown in orange to the computer, appliance or network device they run on."
+
+msgid "Linked asset"
+msgstr "Linked asset"
+
+msgid "No resource to show"
+msgstr "No resource to show"
+
+msgid "Not linked"
+msgstr "Not linked"
+
+msgid "Not linked only"
+msgstr "Not linked only"
+
+msgid "Open"
+msgstr "Open"
+
+msgid "Remove the link"
+msgstr "Remove the link"
+
+msgid "Resources appear here when a cost file names them (resource column)."
+msgstr "Resources appear here when a cost file names them (resource column)."
+
+msgid "Search"
+msgstr "Search"
