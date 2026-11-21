@@ -390,3 +390,167 @@ msgstr "Les ressources apparaissent ici quand un fichier de coûts les nomme (co
 
 msgid "Search"
 msgstr "Rechercher"
+
+msgid "OVHcloud account"
+msgid_plural "OVHcloud accounts"
+msgstr[0] "Compte OVHcloud"
+msgstr[1] "Comptes OVHcloud"
+
+msgid "OVHcloud cannot be reached (network, proxy or firewall)."
+msgstr "OVHcloud est injoignable (réseau, proxy ou pare-feu)."
+
+msgid "OVHcloud refused the keys: check them and the rights of the consumer key."
+msgstr "OVHcloud a refusé les clés : vérifiez-les ainsi que les droits de la consumer key."
+
+msgid "OVHcloud does not know an item asked for: check the project identifiers."
+msgstr "OVHcloud ne connaît pas un élément demandé : vérifiez les identifiants de projet."
+
+msgid "OVHcloud limits the number of calls: try again in a few minutes."
+msgstr "OVHcloud limite le nombre d'appels : réessayez dans quelques minutes."
+
+msgid "OVHcloud is unavailable: try again later."
+msgstr "OVHcloud est indisponible : réessayez plus tard."
+
+msgid "Too much data to read at once: reduce the number of months."
+msgstr "Trop de données à lire d'un coup : réduisez le nombre de mois."
+
+msgid "The keys of this account are incomplete."
+msgstr "Les clés de ce compte sont incomplètes."
+
+msgid "OVHcloud sent an unexpected answer."
+msgstr "OVHcloud a envoyé une réponse inattendue."
+
+msgid "Europe"
+msgstr "Europe"
+
+msgid "Canada"
+msgstr "Canada"
+
+msgid "Give the account a name."
+msgstr "Donnez un nom au compte."
+
+msgid "Each Public Cloud project identifier has 32 hexadecimal characters."
+msgstr "Chaque identifiant de projet Public Cloud compte 32 caractères hexadécimaux."
+
+msgid "The three OVHcloud keys are required."
+msgstr "Les trois clés OVHcloud sont obligatoires."
+
+msgid "An OVHcloud key only contains letters and digits."
+msgstr "Une clé OVHcloud ne contient que des lettres et des chiffres."
+
+msgid "OVHcloud"
+msgstr "OVHcloud"
+
+msgid "Bills and Public Cloud consumption per resource, read on request from the OVHcloud API (Europe or Canada)."
+msgstr "Factures et consommation Public Cloud par ressource, lues à la demande dans l'API OVHcloud (Europe ou Canada)."
+
+msgid "OVHcloud account saved."
+msgstr "Compte OVHcloud enregistré."
+
+msgid "OVHcloud account deleted; the costs already read are kept."
+msgstr "Compte OVHcloud supprimé ; les coûts déjà lus sont conservés."
+
+#, php-format
+msgid "OVHcloud read: %1$d new lines, %2$d already known."
+msgstr "Lecture OVHcloud : %1$d nouvelles lignes, %2$d déjà connues."
+
+#, php-format
+msgid "OVHcloud read failed, the costs already read are kept: %s"
+msgstr "Échec de la lecture OVHcloud, les coûts déjà lus sont conservés : %s"
+
+msgid "Shown in the import journal, for example the customer account or the department."
+msgstr "Affiché dans le journal des imports, par exemple le compte client ou le service."
+
+msgid "The cost lines read belong to this entity."
+msgstr "Les lignes de coût lues appartiennent à cette entité."
+
+msgid "API region"
+msgstr "Région de l'API"
+
+msgid "Region where the OVHcloud account was created: Europe (ovh.com) or Canada (ovh.ca)."
+msgstr "Région où le compte OVHcloud a été créé : Europe (ovh.com) ou Canada (ovh.ca)."
+
+msgid "Application key"
+msgstr "Application key"
+
+msgid "Application secret"
+msgstr "Application secret"
+
+msgid "Consumer key"
+msgstr "Consumer key"
+
+msgid "Saved, unchanged if left empty"
+msgstr "Enregistrée, inchangée si laissée vide"
+
+msgid "Public Cloud projects"
+msgstr "Projets Public Cloud"
+
+#, php-format
+msgid "Optional, %s at most: identifiers of 32 characters, separated by commas. Their consumption is read per resource, and their bill lines are left out to avoid counting them twice."
+msgstr "Facultatif, %s au plus : identifiants de 32 caractères, séparés par des virgules. Leur consommation est lue par ressource et leurs lignes de facture sont écartées pour ne pas les compter deux fois."
+
+msgid "Months read"
+msgstr "Mois lus"
+
+msgid "The current month and the previous ones. Lines already read are never duplicated."
+msgstr "Le mois en cours et les précédents. Les lignes déjà lues ne sont jamais dupliquées."
+
+msgid "Which keys?"
+msgstr "Quelles clés ?"
+
+msgid "Create an application on the OVHcloud API (createToken page of your region) with only these rights, all in GET: /me, /me/bill/*, /cloud/project/*/usage/*. The plugin never changes anything at OVHcloud. The keys are encrypted by GLPI and never shown again."
+msgstr "Créez une application sur l'API OVHcloud (page createToken de votre région) avec seulement ces droits, tous en GET : /me, /me/bill/*, /cloud/project/*/usage/*. Le plugin ne modifie jamais rien chez OVHcloud. Les clés sont chiffrées par GLPI et ne sont plus jamais affichées."
+
+msgid "Keys"
+msgstr "Clés"
+
+msgid "Last read"
+msgstr "Dernière lecture"
+
+msgid "Saved, encrypted"
+msgstr "Enregistrées, chiffrées"
+
+msgid "Incomplete"
+msgstr "Incomplètes"
+
+msgid "Delete this OVHcloud account? The costs already read are kept."
+msgstr "Supprimer ce compte OVHcloud ? Les coûts déjà lus sont conservés."
+
+msgid "Add an OVHcloud account"
+msgstr "Ajouter un compte OVHcloud"
+
+msgid "Read from OVHcloud"
+msgstr "Lire depuis OVHcloud"
+
+msgid "Reads the bills and the Public Cloud consumption of the account, in read-only mode. A failed read writes nothing: the costs already read stay as they are."
+msgstr "Lit les factures et la consommation Public Cloud du compte, en lecture seule. Une lecture en échec n'écrit rien : les coûts déjà lus restent tels quels."
+
+msgid "No OVHcloud account yet."
+msgstr "Aucun compte OVHcloud pour l'instant."
+
+msgid "Add one in the settings (Cost sources tab)"
+msgstr "En ajouter un dans la configuration (onglet Sources de coûts)"
+
+msgid "An administrator adds them in the settings of the plugin."
+msgstr "Un administrateur les ajoute dans la configuration du plugin."
+
+msgid "Read now"
+msgstr "Lire maintenant"
+
+msgid "Manage the OVHcloud accounts"
+msgstr "Gérer les comptes OVHcloud"
+
+#, php-format
+msgid "Read on %s"
+msgstr "Lu le %s"
+
+#, php-format
+msgid "Failed on %s"
+msgstr "Échec le %s"
+
+#, php-format
+msgid "Last success: %s"
+msgstr "Dernière réussite : %s"
+
+msgid "Never read"
+msgstr "Jamais lu"
