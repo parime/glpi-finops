@@ -1,0 +1,165 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Ressources vues dans les coûts, filtrables, et formulaire de rattachement à un actif de GLPI. #}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+<div class="container-fluid mt-2">
+   {% include '@finops/_page_help.html.twig' with {
+      page: 'resources',
+      purpose: __('Each resource billed by a provider (instance, VM, database, disk...) and the GLPI asset it belongs to.', 'finops'),
+      expected: __('Link the resources shown in orange to the computer, appliance or network device they run on.', 'finops'),
+   } %}
+
+   {% include '@finops/_section_nav.html.twig' with {tabs: tabs} %}
+
+   {% if selected %}
+      <div class="card mb-3" style="max-width: 1100px;">
+         <div class="card-header">
+            <h3 class="card-title"><i class="ti ti-link me-2"></i>{{ selected.resource }}</h3>
+            <div class="card-actions small text-muted">
+               <i class="ti ti-cloud me-1"></i>{{ selected.provider }}
+               <i class="ti ti-building ms-2 me-1"></i>{{ selected.entity }}
+            </div>
+         </div>
+         <div class="card-body">
+            <p class="mb-2">
+               <strong>{{ __('Account', 'finops') }}</strong> {{ selected.account ?: '-' }}
+               <strong class="ms-3">{{ __('Service', 'finops') }}</strong> {{ selected.service ?: '-' }}
+            </p>
+            <p class="mb-3">
+               <strong>{{ __('Linked asset', 'finops') }}</strong>
+               {% if selected.asset %}
+                  {% include '@finops/_badge.html.twig' with {kind: 'ok', label: selected.asset.type ~ ' : ' ~ selected.asset.name} %}
+                  {% if selected.asset.url %}<a href="{{ selected.asset.url }}" class="ms-1">{{ __('Open', 'finops') }}</a>{% endif %}
+               {% else %}
+                  {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Not linked', 'finops')} %}
+               {% endif %}
+            </p>
+            {% if can_link %}
+               <form method="post" action="{{ page_url }}">
+                  <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="id" value="{{ selected.id }}" />
+                  {{ fields.dropdownItemsFromItemtypes('items', __('Asset', 'finops'), {
+                     'itemtypes': asset_types,
+                     'entity_restrict': selected.entities_id,
+                     'checkright': true,
+                     'add_field_html': '<div class="form-hint">' ~ __('Computers, appliances and network devices of the entity of the resource.', 'finops')|e ~ '</div>',
+                  }) }}
+                  <div class="d-flex gap-2">
+                     <button type="submit" name="link" value="1" class="btn btn-primary">
+                        <i class="ti ti-link me-1"></i>{{ __('Link', 'finops') }}
+                     </button>
+                     {% if selected.asset %}
+                        <button type="submit" name="unlink" value="1" class="btn btn-outline-danger">
+                           <i class="ti ti-unlink me-1"></i>{{ __('Remove the link', 'finops') }}
+                        </button>
+                     {% endif %}
+                  </div>
+               </form>
+            {% endif %}
+         </div>
+      </div>
+   {% endif %}
+
+   <div class="card">
+      <div class="card-header">
+         <h3 class="card-title"><i class="ti ti-server-2 me-2"></i>{{ __('Resources', 'finops') }} <span class="badge bg-secondary-lt ms-1">{{ total }}</span></h3>
+         <div class="card-actions">
+            <form method="get" action="{{ page_url }}" class="d-flex gap-2 align-items-center">
+               <input type="search" name="search" value="{{ search }}" class="form-control form-control-sm"
+                      placeholder="{{ __('Search', 'finops') }}" aria-label="{{ __('Search', 'finops') }}" />
+               <label class="form-check form-switch mb-0 text-nowrap">
+                  <input class="form-check-input" type="checkbox" name="unlinked" value="1"{{ unlinked ? ' checked' : '' }} onchange="this.form.submit()" />
+                  <span class="form-check-label">{{ __('Not linked only', 'finops') }}</span>
+               </label>
+               <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="ti ti-filter"></i></button>
+            </form>
+         </div>
+      </div>
+      {% if rows is empty %}
+         <div class="card-body">
+            <div class="empty">
+               <div class="empty-icon"><i class="ti ti-server-off"></i></div>
+               <p class="empty-title">{{ __('No resource to show', 'finops') }}</p>
+               <p class="empty-subtitle text-muted">{{ __('Resources appear here when a cost file names them (resource column).', 'finops') }}</p>
+               {% if import_url %}
+                  <div class="empty-action">
+                     <a href="{{ import_url }}" class="btn btn-outline-primary"><i class="ti ti-file-import me-1"></i>{{ __('Import a cost file', 'finops') }}</a>
+                  </div>
+               {% endif %}
+            </div>
+         </div>
+      {% else %}
+         <div class="table-responsive">
+            <table class="table table-vcenter card-table">
+               <thead>
+                  <tr>
+                     <th>{{ __('Resource', 'finops') }}</th>
+                     <th>{{ __('Provider', 'finops') }}</th>
+                     <th>{{ __('Account', 'finops') }}</th>
+                     <th>{{ __('Service', 'finops') }}</th>
+                     <th>{{ __('Last seen', 'finops') }}</th>
+                     <th class="text-end">{{ __('Total cost', 'finops') }}</th>
+                     <th>{{ __('Linked asset', 'finops') }}</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for row in rows %}
+                     <tr>
+                        <td class="text-break"><a href="{{ page_url }}?id={{ row.id }}">{{ row.resource }}</a></td>
+                        <td><i class="ti ti-cloud me-1 text-muted"></i>{{ row.provider }}</td>
+                        <td>{{ row.account }}</td>
+                        <td>{{ row.service }}</td>
+                        <td>{{ row.last_seen }}</td>
+                        <td class="text-end text-nowrap">
+                           {% for currency, cost in row.costs %}
+                              <div>{{ cost|number_format(2, '.', ' ') }} {{ currency }}</div>
+                           {% endfor %}
+                        </td>
+                        <td>
+                           {% if row.asset %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'ok', label: row.asset.name} %}
+                           {% else %}
+                              <a href="{{ page_url }}?id={{ row.id }}">
+                                 {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Not linked', 'finops')} %}
+                              </a>
+                           {% endif %}
+                        </td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+         {% if total > page_size %}
+            <div class="card-footer d-flex justify-content-between align-items-center">
+               <span class="text-muted small">{{ __('%1$s to %2$s of %3$s', 'finops')|format(start + 1, min(start + page_size, total), total) }}</span>
+               <div class="btn-group">
+                  {% if start > 0 %}
+                     <a class="btn btn-sm btn-outline-secondary" href="{{ page_url }}?{{ {start: max(0, start - page_size), search: search, unlinked: unlinked ? 1 : 0}|url_encode }}">
+                        <i class="ti ti-chevron-left"></i>
+                     </a>
+                  {% endif %}
+                  {% if start + page_size < total %}
+                     <a class="btn btn-sm btn-outline-secondary" href="{{ page_url }}?{{ {start: start + page_size, search: search, unlinked: unlinked ? 1 : 0}|url_encode }}">
+                        <i class="ti ti-chevron-right"></i>
+                     </a>
+                  {% endif %}
+               </div>
+            </div>
+         {% endif %}
+      {% endif %}
+   </div>
+</div>

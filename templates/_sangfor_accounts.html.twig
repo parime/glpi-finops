@@ -1,0 +1,150 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Plateformes Sangfor SCP (issue #11), onglet « Sources de coûts » de la configuration : liste, ajout,
+   modification, suppression. L'identifiant et le mot de passe ne sont jamais réaffichés. #}
+
+{% macro platform_form(account, sangfor_url, entity, currency) %}
+   {% import 'components/form/fields_macros.html.twig' as fields %}
+   {% set creation = account is null %}
+   {% set suffix = creation ? 'new' : account.id %}
+   <form method="post" action="{{ sangfor_url }}" autocomplete="off">
+      <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+      <input type="hidden" name="_form" value="1" />
+      {% if not creation %}<input type="hidden" name="id" value="{{ account.id }}" />{% endif %}
+      {{ fields.textField('name', creation ? '' : account.name, __('Name'), {
+         'required': true,
+         'add_field_html': '<div class="form-hint">' ~ __('Shown in the import journal, for example the site or the cluster.', 'finops')|e ~ '</div>',
+      }) }}
+      {{ fields.dropdownField('Entity', 'entities_id', creation ? entity : account.entities_id, __('Entity'), {
+         'add_field_html': '<div class="form-hint">' ~ __('The cost lines and virtual machines read belong to this entity.', 'finops')|e ~ '</div>',
+      }) }}
+      {{ fields.textField('url', creation ? '' : account.url, __('Address of Sangfor SCP', 'finops'), {
+         'required': true,
+         'placeholder': 'https://scp.example.org',
+         'add_field_html': '<div class="form-hint">' ~ __('The only address called by the plugin: https:// followed by the name or IP address of SCP, and a port if needed. No redirect is followed.', 'finops')|e ~ '</div>',
+      }) }}
+      {% for field, label in {'username': __('User name', 'finops'), 'password': __('Password')} %}
+         <div class="form-field row col-12 mb-2">
+            <label class="col-form-label col-xxl-5 text-xxl-end" for="finops-scp-{{ field }}-{{ suffix }}">{{ label }}</label>
+            <div class="col-xxl-7 field-container">
+               <input type="password" class="form-control" name="{{ field }}" value="" autocomplete="new-password"
+                      id="finops-scp-{{ field }}-{{ suffix }}" {{ creation ? 'required' : '' }}
+                      placeholder="{{ creation ? '' : __('Saved, unchanged if left empty', 'finops') }}" />
+            </div>
+         </div>
+      {% endfor %}
+      <div class="form-field row col-12 mb-2">
+         <div class="col-xxl-5"></div>
+         <div class="col-xxl-7 field-container">
+            <label class="form-check">
+               <input class="form-check-input" type="checkbox" name="allow_self_signed" value="1"{{ not creation and account.allow_self_signed ? ' checked' : '' }} />
+               <span class="form-check-label">{{ __('Accept a self-signed certificate', 'finops') }}</span>
+            </label>
+            <div class="form-hint text-warning">
+               <i class="ti ti-alert-triangle me-1"></i>{{ __('Off by default. Turn it on only if SCP keeps its factory certificate: the connection stays encrypted but the identity of the server is no longer checked. Installing the authority of the certificate on the GLPI server is safer.', 'finops') }}
+            </div>
+         </div>
+      </div>
+      <h4 class="subheader mt-3">{{ __('Price grid (per month)', 'finops') }}</h4>
+      <p class="small text-muted">
+         {{ __('Sangfor does not bill by use: give your internal prices to turn allocations into costs, or leave 0 for an inventory without cost. vCPU and memory count only when the machine is not powered off; the disk always counts.', 'finops') }}
+      </p>
+      {% for field, label in {
+         'price_vcpu': __('Price of one vCPU', 'finops'),
+         'price_ram_gb': __('Price of 1 GB of memory', 'finops'),
+         'price_disk_gb': __('Price of 1 GB of disk', 'finops'),
+      } %}
+         {{ fields.numberField(field, creation ? 0 : account[field], label, {'min': 0, 'step': 'any'}) }}
+      {% endfor %}
+      {{ fields.textField('currency', creation ? currency : account.currency, __('Currency', 'finops'), {
+         'maxlength': 3,
+         'add_field_html': '<div class="form-hint">' ~ __('ISO 4217 code of the prices (EUR, USD...).', 'finops')|e ~ '</div>',
+      }) }}
+      <button type="submit" name="{{ creation ? 'add' : 'update' }}" value="1" class="btn btn-primary">
+         <i class="ti ti-device-floppy me-1"></i>{{ creation ? __('Add') : __('Save') }}
+      </button>
+   </form>
+{% endmacro %}
+
+<div class="card mt-3" style="max-width: 1100px;">
+   <div class="card-header">
+      <h3 class="card-title"><i class="ti ti-server-2 me-2"></i>{{ __('Sangfor SCP platforms', 'finops') }}</h3>
+   </div>
+   <div class="card-body">
+      <div class="alert alert-info">
+         <h4 class="alert-title"><i class="ti ti-key me-1"></i>{{ __('Which account?', 'finops') }}</h4>
+         {{ __('Sangfor Cloud Platform (SCP) 6.3.0 or later, which sees all the nodes. Create on SCP an operator account with read-only rights on the virtual machines and the hosts. The plugin only reads: it never starts, stops or changes a machine. The user name and the password are encrypted by GLPI and never shown again.', 'finops') }}
+      </div>
+      {% if sangfor_accounts is not empty %}
+         <div class="table-responsive mb-3">
+            <table class="table table-vcenter card-table">
+               <thead>
+                  <tr>
+                     <th>{{ __('Name') }}</th>
+                     <th>{{ __('Entity') }}</th>
+                     <th>{{ __('Login', 'finops') }}</th>
+                     <th>{{ __('Last read', 'finops') }}</th>
+                     <th></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for account in sangfor_accounts %}
+                     <tr>
+                        <td><strong>{{ account.name }}</strong>
+                           <div class="small text-muted text-break">{{ account.url }}</div>
+                           {% if account.allow_self_signed %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Self-signed certificate accepted', 'finops')} %}
+                           {% endif %}
+                        </td>
+                        <td>{{ account.entity }}</td>
+                        <td>
+                           {% if account.keys_set %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'ok', label: __('Saved, encrypted', 'finops')} %}
+                           {% else %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Incomplete', 'finops')} %}
+                           {% endif %}
+                        </td>
+                        <td>{% include '@finops/_ovh_status.html.twig' with {account: account} %}</td>
+                        <td class="text-end">
+                           <form method="post" action="{{ sangfor_url }}" class="d-inline"
+                                 onsubmit="return confirm('{{ __('Delete this Sangfor SCP platform? The costs already read are kept.', 'finops')|e('js') }}');">
+                              <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                              <input type="hidden" name="id" value="{{ account.id }}" />
+                              <button type="submit" name="purge" value="1" class="btn btn-sm btn-ghost-danger">
+                                 <i class="ti ti-trash me-1"></i>{{ __('Delete') }}
+                              </button>
+                           </form>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td colspan="5" class="border-top-0 pt-0">
+                           <details>
+                              <summary class="small"><i class="ti ti-pencil me-1"></i>{{ __('Edit') }}</summary>
+                              <div class="mt-2">{{ _self.platform_form(account, sangfor_url, entity, currency) }}</div>
+                           </details>
+                        </td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      {% endif %}
+      <details {{ sangfor_accounts is empty ? 'open' : '' }}>
+         <summary><i class="ti ti-plus me-1"></i>{{ __('Add a Sangfor SCP platform', 'finops') }}</summary>
+         <div class="mt-2">{{ _self.platform_form(null, sangfor_url, entity, currency) }}</div>
+      </details>
+   </div>
+</div>

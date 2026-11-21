@@ -1,8 +1,8 @@
 {#
  # -------------------------------------------------------------------------
- # Mon plugin for GLPI
+ # FinOps plugin for GLPI
  # Copyright (C) 2026 Vincent GUILLOTTE
- # https://github.com/parime/glpi-plugin-template
+ # https://github.com/parime/glpi-finops
  # -------------------------------------------------------------------------
  # LICENSE
  #
@@ -15,7 +15,7 @@
 
 {# Badge de statut, couleurs et icônes communes à tous les plugins (charte section 8) :
    ok (vert), warning (orange), danger (rouge), info (bleu), neutral (gris).
-   Usage : {% include '@monplugin/_badge.html.twig' with {kind: 'ok', label: __('Up to date', 'monplugin')} %} #}
+   Usage : {% include '@finops/_badge.html.twig' with {kind: 'ok', label: __('Up to date', 'finops')} %} #}
 {% set styles = {
    'ok':      ['bg-green-lt', 'ti-circle-check'],
    'warning': ['bg-orange-lt', 'ti-alert-triangle'],

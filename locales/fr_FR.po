@@ -1,64 +1,802 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: monplugin\n"
+"Project-Id-Version: finops\n"
 "Language: fr_FR\n"
+"PO-Revision-Date: 2026-11-21 00:00+0000\n"
+"Last-Translator: Vincent GUILLOTTE\n"
+"Language-Team: parime\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-msgid "My plugin"
-msgstr "Mon plugin"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Settings saved."
 msgstr "Réglages enregistrés."
 
-msgid "Overview"
-msgstr "Vue d'ensemble"
+msgid "Choose an entity you have access to."
+msgstr "Choisissez une entité à laquelle vous avez accès."
 
-msgid "What is this page for?"
-msgstr "À quoi sert cette page ?"
+msgid "Choose a CSV file."
+msgstr "Choisissez un fichier CSV."
 
-msgid "What is expected:"
-msgstr "Ce qui est attendu :"
+msgid "Only .csv and .txt files are accepted."
+msgstr "Seuls les fichiers .csv et .txt sont acceptés."
 
-msgid "This page gathers what the plugin follows for you."
-msgstr "Cette page rassemble ce que le plugin suit pour vous."
+msgid "No valid cost line in the file."
+msgstr "Aucune ligne de coût valide dans le fichier."
 
-msgid "Review the items marked in orange or red first."
-msgstr "Commencez par les éléments signalés en orange ou en rouge."
+msgid "The file cannot be read."
+msgstr "Le fichier ne peut pas être lu."
 
-msgid "Up to date"
-msgstr "À jour"
+msgid "The preview has expired: upload the file again."
+msgstr "L'aperçu a expiré : déposez de nouveau le fichier."
 
-msgid "Nothing to show yet"
-msgstr "Rien à afficher pour l'instant"
+msgid "Import done: %1$d new lines, %2$d already known, %3$d rejected."
+msgstr "Import terminé : %1$d nouvelles lignes, %2$d déjà connues, %3$d rejetées."
 
-msgid "Start by setting up the plugin in Setup > Plugins."
-msgstr "Commencez par régler le plugin dans Configuration > Plugins."
+msgid "Import deleted with its cost lines."
+msgstr "Import supprimé avec ses lignes de coût."
 
-msgid "All the settings of the plugin, and only here."
-msgstr "Tous les réglages du plugin, et seulement ici."
+msgid "Link removed."
+msgstr "Rattachement retiré."
 
-msgid "Fill in each tab, then save."
-msgstr "Renseignez chaque onglet, puis enregistrez."
+msgid "Resource linked to the asset."
+msgstr "Ressource rattachée à l'actif."
+
+msgid "Choose an asset you can see."
+msgstr "Choisissez un actif que vous pouvez voir."
 
 msgid "General"
 msgstr "Général"
 
+msgid "Cost sources"
+msgstr "Sources de coûts"
+
 msgid "About"
 msgstr "À propos"
 
-msgid "Enable the example"
-msgstr "Activer l'exemple"
+msgid "Cost import"
+msgid_plural "Cost imports"
+msgstr[0] "Import de coûts"
+msgstr[1] "Imports de coûts"
 
-msgid "Example label"
-msgstr "Libellé d'exemple"
+msgid "Cost line"
+msgid_plural "Cost lines"
+msgstr[0] "Ligne de coût"
+msgstr[1] "Lignes de coût"
 
-msgid "Shown on the overview page."
-msgstr "Affiché sur la page de vue d'ensemble."
+msgid "The file is larger than the size allowed in the settings."
+msgstr "Le fichier dépasse la taille autorisée dans les réglages."
+
+msgid "The file is empty."
+msgstr "Le fichier est vide."
+
+msgid "The file is not a text file."
+msgstr "Le fichier n'est pas un fichier texte."
+
+msgid "The file contains program code and was refused."
+msgstr "Le fichier contient du code de programme et a été refusé."
+
+msgid "Required columns missing: %s."
+msgstr "Colonnes obligatoires absentes : %s."
+
+msgid "The file has too many columns."
+msgstr "Le fichier a trop de colonnes."
+
+msgid "The file has too many lines."
+msgstr "Le fichier a trop de lignes."
+
+msgid "Invalid date (expected YYYY-MM-DD or DD/MM/YYYY)."
+msgstr "Date invalide (AAAA-MM-JJ ou JJ/MM/AAAA attendu)."
+
+msgid "Missing or invalid provider."
+msgstr "Fournisseur absent ou invalide."
+
+msgid "Invalid cost (expected a number)."
+msgstr "Coût invalide (nombre attendu)."
+
+msgid "Invalid currency (expected a three-letter code)."
+msgstr "Devise invalide (code de trois lettres attendu)."
+
+msgid "Too many cells on the line."
+msgstr "Trop de cellules sur la ligne."
+
+msgid "FinOps"
+msgstr "FinOps"
+
+msgid "Costs"
+msgstr "Coûts"
+
+msgid "Import"
+msgstr "Import"
+
+msgid "Cloud and virtualisation costs"
+msgstr "Coûts du cloud et de la virtualisation"
+
+msgid "Import costs"
+msgstr "Importer des coûts"
+
+msgid "Link resources to assets"
+msgstr "Rattacher les ressources aux actifs"
+
+msgid "Delete an import"
+msgstr "Supprimer un import"
+
+msgid "Resource"
+msgid_plural "Resources"
+msgstr[0] "Ressource"
+msgstr[1] "Ressources"
+
+msgid "Generic CSV file"
+msgstr "Fichier CSV générique"
+
+msgid "Any billing export brought back to the common columns: date, provider, account, service, resource, cost, currency, tags."
+msgstr "Tout export de facturation ramené aux colonnes communes : date, fournisseur, compte, service, ressource, coût, devise, étiquettes."
+
+msgid "What is expected:"
+msgstr "Ce qui est attendu :"
+
+msgid "What is this page for?"
+msgstr "À quoi sert cette page ?"
+
+msgid "AWS, Azure, Google Cloud, Proxmox, Hyper-V and VMware are planned: see the roadmap issues of the project."
+msgstr "AWS, Azure, Google Cloud, Proxmox, Hyper-V et VMware sont prévus : voir les issues de la feuille de route du projet."
+
+msgid "All the settings of the FinOps plugin, and only here."
+msgstr "Tous les réglages du plugin FinOps, et seulement ici."
+
+msgid "Available"
+msgstr "Disponible"
+
+msgid "Choose the default currency and the largest file accepted, then check which cost sources are available."
+msgstr "Choisissez la devise par défaut et la taille maximale d'un fichier, puis vérifiez les sources de coûts disponibles."
+
+msgid "Default currency"
+msgstr "Devise par défaut"
+
+msgid "File upload"
+msgstr "Dépôt de fichier"
+
+msgid "ISO 4217 code (EUR, USD, GBP...), used when a cost line gives no currency."
+msgstr "Code ISO 4217 (EUR, USD, GBP...), utilisé quand une ligne de coût ne donne pas de devise."
+
+msgid "Larger files are refused before being read. Between %1$s and %2$s MB."
+msgstr "Les fichiers plus gros sont refusés avant d'être lus. Entre %1$s et %2$s Mo."
+
+msgid "Largest cost file (MB)"
+msgstr "Taille maximale d'un fichier de coûts (Mo)"
+
+msgid "License"
+msgstr "Licence"
+
+msgid "Open the costs (Management > FinOps)"
+msgstr "Ouvrir les coûts (Gestion > FinOps)"
+
+msgid "Planned"
+msgstr "Prévue"
+
+msgid "Read-only API"
+msgstr "API en lecture seule"
+
+msgid "Source"
+msgstr "Source"
+
+msgid "Status"
+msgstr "État"
+
+msgid "The plugin only reads from the providers: it never stops, deletes or changes anything on their side."
+msgstr "Le plugin ne fait que lire chez les fournisseurs : il n'arrête, ne supprime ni ne modifie rien chez eux."
+
+msgid "Type"
+msgstr "Type"
 
 msgid "Version"
 msgstr "Version"
 
-msgid "License"
-msgstr "Licence"
+msgid "%s already imported"
+msgstr "%s déjà importées"
+
+msgid "%s new lines"
+msgstr "%s nouvelles lignes"
+
+msgid "%s rejected"
+msgstr "%s rejetées"
+
+msgid "Account"
+msgstr "Compte"
+
+msgid "Bring the costs of a provider into GLPI from a CSV file, whatever the provider."
+msgstr "Ramener dans GLPI les coûts d'un fournisseur depuis un fichier CSV, quel que soit le fournisseur."
+
+msgid "By"
+msgstr "Par"
+
+msgid "CSV file"
+msgstr "Fichier CSV"
+
+msgid "CSV or text file, %s MB at most."
+msgstr "Fichier CSV ou texte, %s Mo au plus."
+
+msgid "Cost"
+msgstr "Coût"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Dates as YYYY-MM-DD or DD/MM/YYYY. Without currency, %s is used. Tags as key=value;key2=value2 or a JSON object."
+msgstr "Dates au format AAAA-MM-JJ ou JJ/MM/AAAA. Sans devise, %s est utilisée. Étiquettes au format clé=valeur;clé2=valeur2 ou objet JSON."
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Delete this import and its cost lines?"
+msgstr "Supprimer cet import et ses lignes de coût ?"
+
+msgid "Expected columns"
+msgstr "Colonnes attendues"
+
+msgid "File"
+msgstr "Fichier"
+
+msgid "First line: column names. Separator: comma, semicolon or tab. Other names accepted for each column:"
+msgstr "Première ligne : noms des colonnes. Séparateur : virgule, point-virgule ou tabulation. Autres noms acceptés pour chaque colonne :"
+
+msgid "First new lines"
+msgstr "Premières lignes nouvelles"
+
+msgid "Import a cost file"
+msgstr "Importer un fichier de coûts"
+
+msgid "Import log"
+msgstr "Journal des imports"
+
+msgid "Import the new lines"
+msgstr "Importer les nouvelles lignes"
+
+msgid "Line %1$s: %2$s"
+msgstr "Ligne %1$s : %2$s"
+
+msgid "Months"
+msgstr "Mois"
+
+msgid "New costs"
+msgstr "Nouveaux coûts"
+
+msgid "No import yet."
+msgstr "Aucun import pour l'instant."
+
+msgid "Preview"
+msgstr "Aperçu"
+
+msgid "Preview before import"
+msgstr "Aperçu avant import"
+
+msgid "Provider"
+msgstr "Fournisseur"
+
+msgid "Providers"
+msgstr "Fournisseurs"
+
+msgid "Rejected lines"
+msgstr "Lignes rejetées"
+
+msgid "Result"
+msgstr "Résultat"
+
+msgid "Service"
+msgstr "Service"
+
+msgid "The cost lines and resources belong to this entity."
+msgstr "Les lignes de coût et les ressources appartiennent à cette entité."
+
+msgid "Upload the file, check the preview, then confirm. Importing the same file again creates no duplicate."
+msgstr "Déposez le fichier, vérifiez l'aperçu, puis confirmez. Importer de nouveau le même fichier ne crée aucun doublon."
+
+msgid "required"
+msgstr "obligatoire"
+
+msgid "Amounts in different currencies are never added up: one table per currency."
+msgstr "Les montants dans des devises différentes ne sont jamais additionnés : une table par devise."
+
+msgid "Cost lines"
+msgstr "Lignes de coût"
+
+msgid "Costs by provider and by month"
+msgstr "Coûts par fournisseur et par mois"
+
+msgid "Export the costs of your provider as CSV, then import the file."
+msgstr "Exportez les coûts de votre fournisseur en CSV, puis importez le fichier."
+
+msgid "Import a cost file, then review the months and providers that cost the most."
+msgstr "Importez un fichier de coûts, puis examinez les mois et les fournisseurs qui coûtent le plus."
+
+msgid "Last import"
+msgstr "Dernier import"
+
+msgid "Month"
+msgstr "Mois"
+
+msgid "No cost imported yet"
+msgstr "Aucun coût importé pour l'instant"
+
+msgid "Resources"
+msgstr "Ressources"
+
+msgid "Resources not linked to an asset"
+msgstr "Ressources non rattachées à un actif"
+
+msgid "This page shows what your cloud and virtualised resources cost, by provider and by month."
+msgstr "Cette page montre ce que coûtent vos ressources cloud et virtualisées, par fournisseur et par mois."
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Cost by month"
+msgstr "Coût par mois"
+
+msgid "Link a resource to this asset from Management > FinOps > Resources."
+msgstr "Rattachez une ressource à cet actif depuis Gestion > FinOps > Ressources."
+
+msgid "Linked resources"
+msgstr "Ressources rattachées"
+
+msgid "No billed resource is linked to this asset"
+msgstr "Aucune ressource facturée n'est rattachée à cet actif"
+
+msgid "Total cost"
+msgstr "Coût total"
+
+msgid "%1$s to %2$s of %3$s"
+msgstr "%1$s à %2$s sur %3$s"
+
+msgid "Asset"
+msgstr "Actif"
+
+msgid "Computers, appliances and network devices of the entity of the resource."
+msgstr "Ordinateurs, applications et matériels réseau de l'entité de la ressource."
+
+msgid "Each resource billed by a provider (instance, VM, database, disk...) and the GLPI asset it belongs to."
+msgstr "Chaque ressource facturée par un fournisseur (instance, VM, base de données, disque...) et l'actif GLPI auquel elle appartient."
+
+msgid "Last seen"
+msgstr "Vue pour la dernière fois"
+
+msgid "Link"
+msgstr "Rattacher"
+
+msgid "Link the resources shown in orange to the computer, appliance or network device they run on."
+msgstr "Rattachez les ressources marquées en orange à l'ordinateur, l'application ou le matériel réseau sur lequel elles tournent."
+
+msgid "Linked asset"
+msgstr "Actif rattaché"
+
+msgid "No resource to show"
+msgstr "Aucune ressource à afficher"
+
+msgid "Not linked"
+msgstr "Non rattachée"
+
+msgid "Not linked only"
+msgstr "Non rattachées seulement"
+
+msgid "Open"
+msgstr "Ouvrir"
+
+msgid "Remove the link"
+msgstr "Retirer le rattachement"
+
+msgid "Resources appear here when a cost file names them (resource column)."
+msgstr "Les ressources apparaissent ici quand un fichier de coûts les nomme (colonne resource)."
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "OVHcloud account"
+msgid_plural "OVHcloud accounts"
+msgstr[0] "Compte OVHcloud"
+msgstr[1] "Comptes OVHcloud"
+
+msgid "OVHcloud cannot be reached (network, proxy or firewall)."
+msgstr "OVHcloud est injoignable (réseau, proxy ou pare-feu)."
+
+msgid "OVHcloud refused the keys: check them and the rights of the consumer key."
+msgstr "OVHcloud a refusé les clés : vérifiez-les ainsi que les droits de la consumer key."
+
+msgid "OVHcloud does not know an item asked for: check the project identifiers."
+msgstr "OVHcloud ne connaît pas un élément demandé : vérifiez les identifiants de projet."
+
+msgid "OVHcloud limits the number of calls: try again in a few minutes."
+msgstr "OVHcloud limite le nombre d'appels : réessayez dans quelques minutes."
+
+msgid "OVHcloud is unavailable: try again later."
+msgstr "OVHcloud est indisponible : réessayez plus tard."
+
+msgid "Too much data to read at once: reduce the number of months."
+msgstr "Trop de données à lire d'un coup : réduisez le nombre de mois."
+
+msgid "The keys of this account are incomplete."
+msgstr "Les clés de ce compte sont incomplètes."
+
+msgid "OVHcloud sent an unexpected answer."
+msgstr "OVHcloud a envoyé une réponse inattendue."
+
+msgid "Europe"
+msgstr "Europe"
+
+msgid "Canada"
+msgstr "Canada"
+
+msgid "Give the account a name."
+msgstr "Donnez un nom au compte."
+
+msgid "Each Public Cloud project identifier has 32 hexadecimal characters."
+msgstr "Chaque identifiant de projet Public Cloud compte 32 caractères hexadécimaux."
+
+msgid "The three OVHcloud keys are required."
+msgstr "Les trois clés OVHcloud sont obligatoires."
+
+msgid "An OVHcloud key only contains letters and digits."
+msgstr "Une clé OVHcloud ne contient que des lettres et des chiffres."
+
+msgid "OVHcloud"
+msgstr "OVHcloud"
+
+msgid "Bills and Public Cloud consumption per resource, read on request from the OVHcloud API (Europe or Canada)."
+msgstr "Factures et consommation Public Cloud par ressource, lues à la demande dans l'API OVHcloud (Europe ou Canada)."
+
+msgid "OVHcloud account saved."
+msgstr "Compte OVHcloud enregistré."
+
+msgid "OVHcloud account deleted; the costs already read are kept."
+msgstr "Compte OVHcloud supprimé ; les coûts déjà lus sont conservés."
+
+#, php-format
+msgid "OVHcloud read: %1$d new lines, %2$d already known."
+msgstr "Lecture OVHcloud : %1$d nouvelles lignes, %2$d déjà connues."
+
+#, php-format
+msgid "OVHcloud read failed, the costs already read are kept: %s"
+msgstr "Échec de la lecture OVHcloud, les coûts déjà lus sont conservés : %s"
+
+msgid "Shown in the import journal, for example the customer account or the department."
+msgstr "Affiché dans le journal des imports, par exemple le compte client ou le service."
+
+msgid "The cost lines read belong to this entity."
+msgstr "Les lignes de coût lues appartiennent à cette entité."
+
+msgid "API region"
+msgstr "Région de l'API"
+
+msgid "Region where the OVHcloud account was created: Europe (ovh.com) or Canada (ovh.ca)."
+msgstr "Région où le compte OVHcloud a été créé : Europe (ovh.com) ou Canada (ovh.ca)."
+
+msgid "Application key"
+msgstr "Application key"
+
+msgid "Application secret"
+msgstr "Application secret"
+
+msgid "Consumer key"
+msgstr "Consumer key"
+
+msgid "Saved, unchanged if left empty"
+msgstr "Enregistrée, inchangée si laissée vide"
+
+msgid "Public Cloud projects"
+msgstr "Projets Public Cloud"
+
+#, php-format
+msgid "Optional, %s at most: identifiers of 32 characters, separated by commas. Their consumption is read per resource, and their bill lines are left out to avoid counting them twice."
+msgstr "Facultatif, %s au plus : identifiants de 32 caractères, séparés par des virgules. Leur consommation est lue par ressource et leurs lignes de facture sont écartées pour ne pas les compter deux fois."
+
+msgid "Months read"
+msgstr "Mois lus"
+
+msgid "The current month and the previous ones. Lines already read are never duplicated."
+msgstr "Le mois en cours et les précédents. Les lignes déjà lues ne sont jamais dupliquées."
+
+msgid "Which keys?"
+msgstr "Quelles clés ?"
+
+msgid "Create an application on the OVHcloud API (createToken page of your region) with only these rights, all in GET: /me, /me/bill/*, /cloud/project/*/usage/*. The plugin never changes anything at OVHcloud. The keys are encrypted by GLPI and never shown again."
+msgstr "Créez une application sur l'API OVHcloud (page createToken de votre région) avec seulement ces droits, tous en GET : /me, /me/bill/*, /cloud/project/*/usage/*. Le plugin ne modifie jamais rien chez OVHcloud. Les clés sont chiffrées par GLPI et ne sont plus jamais affichées."
+
+msgid "Keys"
+msgstr "Clés"
+
+msgid "Last read"
+msgstr "Dernière lecture"
+
+msgid "Saved, encrypted"
+msgstr "Enregistrées, chiffrées"
+
+msgid "Incomplete"
+msgstr "Incomplètes"
+
+msgid "Delete this OVHcloud account? The costs already read are kept."
+msgstr "Supprimer ce compte OVHcloud ? Les coûts déjà lus sont conservés."
+
+msgid "Add an OVHcloud account"
+msgstr "Ajouter un compte OVHcloud"
+
+msgid "Read from OVHcloud"
+msgstr "Lire depuis OVHcloud"
+
+msgid "Reads the bills and the Public Cloud consumption of the account, in read-only mode. A failed read writes nothing: the costs already read stay as they are."
+msgstr "Lit les factures et la consommation Public Cloud du compte, en lecture seule. Une lecture en échec n'écrit rien : les coûts déjà lus restent tels quels."
+
+msgid "No OVHcloud account yet."
+msgstr "Aucun compte OVHcloud pour l'instant."
+
+msgid "Add one in the settings (Cost sources tab)"
+msgstr "En ajouter un dans la configuration (onglet Sources de coûts)"
+
+msgid "An administrator adds them in the settings of the plugin."
+msgstr "Un administrateur les ajoute dans la configuration du plugin."
+
+msgid "Read now"
+msgstr "Lire maintenant"
+
+msgid "Manage the OVHcloud accounts"
+msgstr "Gérer les comptes OVHcloud"
+
+#, php-format
+msgid "Read on %s"
+msgstr "Lu le %s"
+
+#, php-format
+msgid "Failed on %s"
+msgstr "Échec le %s"
+
+#, php-format
+msgid "Last success: %s"
+msgstr "Dernière réussite : %s"
+
+msgid "Never read"
+msgstr "Jamais lu"
+
+msgid "OVHcloud accounts"
+msgstr "Comptes OVHcloud"
+
+msgid "Sangfor SCP platform saved."
+msgstr "Plateforme Sangfor SCP enregistrée."
+
+msgid "Sangfor SCP platform deleted; the costs already read are kept."
+msgstr "Plateforme Sangfor SCP supprimée ; les coûts déjà lus sont conservés."
+
+#, php-format
+msgid "Sangfor SCP read: %1$d virtual machines, %2$d new cost lines, %3$d already known."
+msgstr "Lecture Sangfor SCP : %1$d machines virtuelles, %2$d nouvelles lignes de coût, %3$d déjà connues."
+
+#, php-format
+msgid "Sangfor SCP read failed, the inventory and the costs already read are kept: %s"
+msgstr "Lecture Sangfor SCP en échec, l'inventaire et les coûts déjà lus sont conservés : %s"
+
+msgid "Sangfor SCP cannot be reached (address, network, proxy or firewall)."
+msgstr "Sangfor SCP est injoignable (adresse, réseau, proxy ou pare-feu)."
+
+msgid "The certificate of Sangfor SCP is not trusted: install its authority on the GLPI server, or allow self-signed certificates for this platform."
+msgstr "Le certificat de Sangfor SCP n'est pas reconnu : installez son autorité sur le serveur GLPI, ou acceptez les certificats auto-signés pour cette plateforme."
+
+msgid "Sangfor SCP refused the login: check the user name, the password and the rights of the account."
+msgstr "Sangfor SCP a refusé la connexion : vérifiez l'identifiant, le mot de passe et les droits du compte."
+
+msgid "This address does not answer like Sangfor SCP 6.3.0 or later (OpenAPI not found)."
+msgstr "Cette adresse ne répond pas comme Sangfor SCP 6.3.0 ou plus (OpenAPI introuvable)."
+
+msgid "Sangfor SCP limits the number of calls: try again in a few minutes."
+msgstr "Sangfor SCP limite le nombre d'appels : réessayez dans quelques minutes."
+
+msgid "Sangfor SCP is unavailable: try again later."
+msgstr "Sangfor SCP est indisponible : réessayez plus tard."
+
+msgid "Too many virtual machines to read at once."
+msgstr "Trop de machines virtuelles à lire en une fois."
+
+msgid "The address or the login of this platform is incomplete."
+msgstr "L'adresse ou la connexion de cette plateforme est incomplète."
+
+msgid "The password cannot be encrypted for Sangfor SCP (OpenSSL extension of PHP missing or public key not recognized)."
+msgstr "Le mot de passe ne peut pas être chiffré pour Sangfor SCP (extension OpenSSL de PHP absente ou clé publique non reconnue)."
+
+msgid "Sangfor SCP sent an unexpected answer."
+msgstr "Sangfor SCP a envoyé une réponse inattendue."
+
+msgid "Sangfor SCP platform"
+msgid_plural "Sangfor SCP platforms"
+msgstr[0] "Plateforme Sangfor SCP"
+msgstr[1] "Plateformes Sangfor SCP"
+
+msgid "Give the platform a name."
+msgstr "Donnez un nom à la plateforme."
+
+msgid "The address of Sangfor SCP is https:// followed by its name or IP address, and an optional port, without path."
+msgstr "L'adresse de Sangfor SCP est https:// suivi de son nom ou de son adresse IP, et d'un port facultatif, sans chemin."
+
+msgid "Each price is a positive number, or 0."
+msgstr "Chaque prix est un nombre positif, ou 0."
+
+msgid "The user name and the password are required."
+msgstr "L'identifiant et le mot de passe sont obligatoires."
+
+msgid "The user name or the password is too long or not printable."
+msgstr "L'identifiant ou le mot de passe est trop long ou non imprimable."
+
+msgid "Sangfor HCI (SCP)"
+msgstr "Sangfor HCI (SCP)"
+
+msgid "Virtual machines, nodes and allocations read on request from the Sangfor Cloud Platform OpenAPI, with a monthly cost from your own price grid."
+msgstr "Machines virtuelles, nœuds et allocations lus à la demande depuis l'OpenAPI de Sangfor Cloud Platform, avec un coût mensuel tiré de votre grille de prix."
+
+msgid "Accept a self-signed certificate"
+msgstr "Accepter un certificat auto-signé"
+
+msgid "Add a Sangfor SCP platform"
+msgstr "Ajouter une plateforme Sangfor SCP"
+
+msgid "Address of Sangfor SCP"
+msgstr "Adresse de Sangfor SCP"
+
+msgid "Currency"
+msgstr "Devise"
+
+msgid "Delete this Sangfor SCP platform? The costs already read are kept."
+msgstr "Supprimer cette plateforme Sangfor SCP ? Les coûts déjà lus sont conservés."
+
+msgid "ISO 4217 code of the prices (EUR, USD...)."
+msgstr "Code ISO 4217 des prix (EUR, USD...)."
+
+msgid "Login"
+msgstr "Connexion"
+
+msgid "Off by default. Turn it on only if SCP keeps its factory certificate: the connection stays encrypted but the identity of the server is no longer checked. Installing the authority of the certificate on the GLPI server is safer."
+msgstr "Désactivée par défaut. À activer seulement si SCP garde son certificat d'usine : la connexion reste chiffrée mais l'identité du serveur n'est plus vérifiée. Installer l'autorité du certificat sur le serveur GLPI est plus sûr."
+
+msgid "Price grid (per month)"
+msgstr "Grille de prix (par mois)"
+
+msgid "Price of 1 GB of disk"
+msgstr "Prix de 1 Go de disque"
+
+msgid "Price of 1 GB of memory"
+msgstr "Prix de 1 Go de mémoire"
+
+msgid "Price of one vCPU"
+msgstr "Prix d'un vCPU"
+
+msgid "Sangfor Cloud Platform (SCP) 6.3.0 or later, which sees all the nodes. Create on SCP an operator account with read-only rights on the virtual machines and the hosts. The plugin only reads: it never starts, stops or changes a machine. The user name and the password are encrypted by GLPI and never shown again."
+msgstr "Sangfor Cloud Platform (SCP) 6.3.0 ou plus, qui voit tous les nœuds. Créez sur SCP un compte d'opérateur avec des droits en lecture seule sur les machines virtuelles et les hôtes. Le plugin ne fait que lire : il ne démarre, n'arrête et ne modifie jamais une machine. L'identifiant et le mot de passe sont chiffrés par GLPI et jamais réaffichés."
+
+msgid "Sangfor SCP platforms"
+msgstr "Plateformes Sangfor SCP"
+
+msgid "Sangfor does not bill by use: give your internal prices to turn allocations into costs, or leave 0 for an inventory without cost. vCPU and memory count only when the machine is not powered off; the disk always counts."
+msgstr "Sangfor ne facture pas à l'usage : indiquez vos prix internes pour convertir les allocations en coûts, ou laissez 0 pour un inventaire sans coût. vCPU et mémoire ne comptent que si la machine n'est pas éteinte ; le disque compte toujours."
+
+msgid "Self-signed certificate accepted"
+msgstr "Certificat auto-signé accepté"
+
+msgid "Shown in the import journal, for example the site or the cluster."
+msgstr "Affiché dans le journal des imports, par exemple le site ou le cluster."
+
+msgid "The cost lines and virtual machines read belong to this entity."
+msgstr "Les lignes de coût et les machines virtuelles lues appartiennent à cette entité."
+
+msgid "The only address called by the plugin: https:// followed by the name or IP address of SCP, and a port if needed. No redirect is followed."
+msgstr "La seule adresse appelée par le plugin : https:// suivi du nom ou de l'adresse IP de SCP, et d'un port si besoin. Aucune redirection n'est suivie."
+
+msgid "User name"
+msgstr "Identifiant"
+
+msgid "Which account?"
+msgstr "Quel compte ?"
+
+#, php-format
+msgid "%s machines: see the inventory"
+msgstr "%s machines : voir l'inventaire"
+
+msgid "Manage the Sangfor SCP platforms"
+msgstr "Gérer les plateformes Sangfor SCP"
+
+msgid "No Sangfor SCP platform yet."
+msgstr "Aucune plateforme Sangfor SCP pour l'instant."
+
+msgid "Not read yet"
+msgstr "Pas encore lue"
+
+msgid "Read from Sangfor SCP"
+msgstr "Lire depuis Sangfor SCP"
+
+msgid "Reads the nodes and the virtual machines with their allocations, in read-only mode, and adds the cost of the month from the price grid. A failed read writes nothing: the inventory and the costs already read stay as they are."
+msgstr "Lit les nœuds et les machines virtuelles avec leurs allocations, en lecture seule, et ajoute le coût du mois d'après la grille de prix. Une lecture en échec n'écrit rien : l'inventaire et les coûts déjà lus restent tels quels."
+
+msgid "Virtual machines"
+msgstr "Machines virtuelles"
+
+#, php-format
+msgid "%1$s of %2$s linked to an asset"
+msgstr "%1$s sur %2$s rattachées à un actif"
+
+#, php-format
+msgid "%s GB of disk allocated"
+msgstr "%s Go de disque alloués"
+
+#, php-format
+msgid "%s GB of memory allocated"
+msgstr "%s Go de mémoire alloués"
+
+#, php-format
+msgid "%s nodes"
+msgstr "%s nœuds"
+
+#, php-format
+msgid "%s vCPU allocated"
+msgstr "%s vCPU alloués"
+
+#, php-format
+msgid "%s virtual machines"
+msgstr "%s machines virtuelles"
+
+msgid "Asset in GLPI"
+msgstr "Actif dans GLPI"
+
+msgid "Check the allocations, then confirm the proposed links one by one. Nothing is linked without your click."
+msgstr "Vérifiez les allocations, puis confirmez une à une les liaisons proposées. Rien n'est rattaché sans votre clic."
+
+msgid "Choose an asset"
+msgstr "Choisir un actif"
+
+msgid "Cores"
+msgstr "Cœurs"
+
+#, php-format
+msgid "Cost of the month: %s"
+msgstr "Coût du mois : %s"
+
+msgid "Cost per month"
+msgstr "Coût par mois"
+
+msgid "Disk (GB)"
+msgstr "Disque (Go)"
+
+msgid "IP address"
+msgstr "Adresse IP"
+
+msgid "Memory (GB)"
+msgstr "Mémoire (Go)"
+
+msgid "No virtual machine read yet: click Read now."
+msgstr "Aucune machine virtuelle lue pour l'instant : cliquez sur Lire maintenant."
+
+msgid "Node"
+msgstr "Nœud"
+
+msgid "Nodes"
+msgstr "Nœuds"
+
+msgid "Power"
+msgstr "Alimentation"
+
+msgid "Powered off"
+msgstr "Éteinte"
+
+msgid "Powered on"
+msgstr "Allumée"
+
+msgid "See what a Sangfor HCI platform runs and what it costs, and link each virtual machine to its computer in GLPI."
+msgstr "Voir ce que fait tourner une plateforme Sangfor HCI et ce qu'elle coûte, et rattacher chaque machine virtuelle à son ordinateur dans GLPI."
+
+msgid "Storage (GB)"
+msgstr "Stockage (Go)"
+
+msgid "Unknown"
+msgstr "Inconnu"
+
+msgid "same UUID"
+msgstr "même UUID"
+
+msgid "same name"
+msgstr "même nom"
+
+msgid "vCPU"
+msgstr "vCPU"

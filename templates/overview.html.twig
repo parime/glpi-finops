@@ -1,0 +1,140 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Page d'accueil du plugin (Gestion > FinOps) : chiffres clés, puis une table par devise, mois en
+   lignes et fournisseurs en colonnes. État vide qui dit quoi faire ensuite. #}
+<div class="container-fluid mt-2">
+   {% include '@finops/_page_help.html.twig' with {
+      page: 'overview',
+      purpose: __('This page shows what your cloud and virtualised resources cost, by provider and by month.', 'finops'),
+      expected: __('Import a cost file, then review the months and providers that cost the most.', 'finops'),
+   } %}
+
+   {% include '@finops/_section_nav.html.twig' with {tabs: tabs} %}
+
+   {% if tables is empty %}
+      <div class="card">
+         <div class="card-body">
+            <div class="empty">
+               <div class="empty-icon"><i class="ti ti-report-money"></i></div>
+               <p class="empty-title">{{ __('No cost imported yet', 'finops') }}</p>
+               <p class="empty-subtitle text-muted">
+                  {{ __('Export the costs of your provider as CSV, then import the file.', 'finops') }}
+               </p>
+               {% if import_url %}
+                  <div class="empty-action">
+                     <a href="{{ import_url }}" class="btn btn-primary">
+                        <i class="ti ti-file-import me-1"></i>{{ __('Import a cost file', 'finops') }}
+                     </a>
+                  </div>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   {% else %}
+      <div class="row row-cards mb-3">
+         <div class="col-sm-6 col-lg-3">
+            <div class="card card-sm"><div class="card-body d-flex align-items-center">
+               <span class="bg-blue-lt avatar me-3"><i class="ti ti-receipt"></i></span>
+               <div>
+                  <div class="fw-bold">{{ summary.lines }}</div>
+                  <div class="text-muted small">{{ __('Cost lines', 'finops') }}</div>
+               </div>
+            </div></div>
+         </div>
+         <div class="col-sm-6 col-lg-3">
+            <div class="card card-sm"><div class="card-body d-flex align-items-center">
+               <span class="bg-blue-lt avatar me-3"><i class="ti ti-server-2"></i></span>
+               <div>
+                  <div class="fw-bold">{{ summary.resources }}</div>
+                  <div class="text-muted small">{{ __('Resources', 'finops') }}</div>
+               </div>
+            </div></div>
+         </div>
+         <div class="col-sm-6 col-lg-3">
+            <a class="card card-sm card-link" href="{{ resources_url }}?unlinked=1">
+               <div class="card-body d-flex align-items-center">
+                  <span class="{{ summary.unlinked > 0 ? 'bg-orange-lt' : 'bg-green-lt' }} avatar me-3">
+                     <i class="ti {{ summary.unlinked > 0 ? 'ti-alert-triangle' : 'ti-circle-check' }}"></i>
+                  </span>
+                  <div>
+                     <div class="fw-bold">{{ summary.unlinked }}</div>
+                     <div class="text-muted small">{{ __('Resources not linked to an asset', 'finops') }}</div>
+                  </div>
+               </div>
+            </a>
+         </div>
+         <div class="col-sm-6 col-lg-3">
+            <div class="card card-sm"><div class="card-body d-flex align-items-center">
+               <span class="bg-secondary-lt avatar me-3"><i class="ti ti-clock"></i></span>
+               <div>
+                  <div class="fw-bold">{{ summary.last_import ? summary.last_import|date('Y-m-d H:i') : '-' }}</div>
+                  <div class="text-muted small">{{ __('Last import', 'finops') }}</div>
+               </div>
+            </div></div>
+         </div>
+      </div>
+
+      {% for table in tables %}
+         <div class="card mb-3">
+            <div class="card-header">
+               <h3 class="card-title">
+                  <i class="ti ti-chart-bar me-2"></i>{{ __('Costs by provider and by month', 'finops') }}
+                  <span class="badge bg-blue-lt ms-2"><i class="ti ti-currency me-1"></i>{{ table.currency }}</span>
+               </h3>
+            </div>
+            <div class="table-responsive">
+               <table class="table table-vcenter card-table table-striped">
+                  <thead>
+                     <tr>
+                        <th>{{ __('Month', 'finops') }}</th>
+                        {% for provider in table.providers %}
+                           <th class="text-end"><i class="ti ti-cloud me-1"></i>{{ provider }}</th>
+                        {% endfor %}
+                        <th class="text-end">{{ __('Total', 'finops') }}</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% for row in table.rows %}
+                        <tr>
+                           <td><i class="ti ti-calendar-month me-1 text-muted"></i>{{ row.month }}</td>
+                           {% for provider in table.providers %}
+                              <td class="text-end">
+                                 {{ row.values[provider] is defined ? row.values[provider]|number_format(2, '.', ' ') : '-' }}
+                              </td>
+                           {% endfor %}
+                           <td class="text-end fw-bold">{{ row.total|number_format(2, '.', ' ') }}</td>
+                        </tr>
+                     {% endfor %}
+                  </tbody>
+                  <tfoot>
+                     <tr class="fw-bold">
+                        <td>{{ __('Total', 'finops') }}</td>
+                        {% for provider in table.providers %}
+                           <td class="text-end">{{ table.totals[provider]|number_format(2, '.', ' ') }}</td>
+                        {% endfor %}
+                        <td class="text-end">{{ table.total|number_format(2, '.', ' ') }} {{ table.currency }}</td>
+                     </tr>
+                  </tfoot>
+               </table>
+            </div>
+         </div>
+      {% endfor %}
+      <p class="small text-muted">
+         <i class="ti ti-info-circle me-1"></i>
+         {{ __('Amounts in different currencies are never added up: one table per currency.', 'finops') }}
+      </p>
+   {% endif %}
+</div>

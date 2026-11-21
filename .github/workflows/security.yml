@@ -1,21 +1,22 @@
-# Contrôles de sécurité communs à tous les plugins GLPI (parime/glpi-plugin-security).
-# À rendre obligatoire dans la protection de la branche principale.
-name: Sécurité
+# Contrôles de sécurité communs à tous les plugins GLPI (parime/glpi-plugin-security) : règles
+# Semgrep, onglets sans droit, droits attribuables, traductions, archive, charte, restes après
+# désinstallation. À rendre obligatoire dans la protection des branches main et dev.
+name: Sécurité commune
 
 on:
-  # Push : seulement les branches principales ; les branches de travail sont contrôlées par leur
-  # PR. Évite deux exécutions (et deux notifications d'échec) pour chaque commit d'une PR.
+  # Push : seulement les branches principales ; les branches de travail sont contrôlées par leur PR.
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   security:
-    uses: parime/glpi-plugin-security/.github/workflows/plugin-security.yml@v1.9.0
+    uses: parime/glpi-plugin-security/.github/workflows/plugin-security.yml@v1.9.1
     with:
-      plugin-key: monplugin
-      # Jeu de données créé avant la désinstallation (facultatif, conseillé dès qu'il existe) :
-      # seed-command: php plugins/monplugin/tests/security/setup.php
+      plugin-key: finops
+      seed-command: php plugins/finops/tests/security/setup.php
+      charter-mode: error

@@ -1,0 +1,172 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Dernier inventaire d'une plateforme Sangfor SCP (issue #11) : nœuds, VM et allocations, coût du
+   mois, rattachement de chaque VM à un ordinateur de GLPI (proposé par UUID ou par nom, validé par
+   un clic). #}
+<div class="container-fluid mt-2">
+   {% include '@finops/_page_help.html.twig' with {
+      page: 'sangfor',
+      purpose: __('See what a Sangfor HCI platform runs and what it costs, and link each virtual machine to its computer in GLPI.', 'finops'),
+      expected: __('Check the allocations, then confirm the proposed links one by one. Nothing is linked without your click.', 'finops'),
+   } %}
+
+   {% include '@finops/_section_nav.html.twig' with {tabs: tabs} %}
+
+   <div class="card mb-3">
+      <div class="card-header">
+         <h3 class="card-title"><i class="ti ti-server-2 me-2"></i>{{ account.name }}</h3>
+         <div class="card-actions d-flex gap-2 align-items-center">
+            {% include '@finops/_ovh_status.html.twig' with {account: account} %}
+            {% if can_read %}
+               <form method="post" action="{{ page_url }}">
+                  <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="id" value="{{ account.id }}" />
+                  <button type="submit" name="read" value="1" class="btn btn-sm btn-primary">
+                     <i class="ti ti-refresh me-1"></i>{{ __('Read now', 'finops') }}
+                  </button>
+               </form>
+            {% endif %}
+         </div>
+      </div>
+      <div class="card-body">
+         <div class="d-flex flex-wrap gap-2">
+            {% include '@finops/_badge.html.twig' with {kind: 'neutral', label: __('%s nodes', 'finops')|format(inventory.nodes|length)} %}
+            {% include '@finops/_badge.html.twig' with {kind: 'neutral', label: __('%s virtual machines', 'finops')|format(inventory.vms|length)} %}
+            {% include '@finops/_badge.html.twig' with {kind: 'neutral', label: __('%s vCPU allocated', 'finops')|format(inventory.totals.vcpu)} %}
+            {% include '@finops/_badge.html.twig' with {kind: 'neutral', label: __('%s GB of memory allocated', 'finops')|format((inventory.totals.memory_mb / 1024)|round(1))} %}
+            {% include '@finops/_badge.html.twig' with {kind: 'neutral', label: __('%s GB of disk allocated', 'finops')|format((inventory.totals.disk_mb / 1024)|round(1))} %}
+            {% include '@finops/_badge.html.twig' with {kind: 'info', label: __('Cost of the month: %s', 'finops')|format(inventory.totals.cost|number_format(2, '.', ' ') ~ ' ' ~ account.currency)} %}
+            {% include '@finops/_badge.html.twig' with {
+               kind: inventory.totals.linked == inventory.vms|length ? 'ok' : 'warning',
+               label: __('%1$s of %2$s linked to an asset', 'finops')|format(inventory.totals.linked, inventory.vms|length)
+            } %}
+         </div>
+      </div>
+   </div>
+
+   {% if inventory.nodes is not empty %}
+      <div class="card mb-3">
+         <div class="card-header">
+            <h3 class="card-title"><i class="ti ti-server me-2"></i>{{ __('Nodes', 'finops') }}</h3>
+         </div>
+         <div class="table-responsive">
+            <table class="table table-vcenter card-table">
+               <thead>
+                  <tr>
+                     <th>{{ __('Name') }}</th>
+                     <th>{{ __('IP address', 'finops') }}</th>
+                     <th>{{ __('Status') }}</th>
+                     <th class="text-end">{{ __('Cores', 'finops') }}</th>
+                     <th class="text-end">{{ __('Memory (GB)', 'finops') }}</th>
+                     <th class="text-end">{{ __('Storage (GB)', 'finops') }}</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for node in inventory.nodes %}
+                     <tr>
+                        <td><strong>{{ node.name }}</strong></td>
+                        <td>{{ node.ip }}</td>
+                        <td>
+                           {% include '@finops/_badge.html.twig' with {kind: node.status == 'running' ? 'ok' : 'warning', label: node.status} %}
+                        </td>
+                        <td class="text-end">{{ node.cores }}</td>
+                        <td class="text-end">{{ (node.memory_mb / 1024)|round(1) }}</td>
+                        <td class="text-end">{{ (node.storage_mb / 1024)|round(1) }}</td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      </div>
+   {% endif %}
+
+   <div class="card">
+      <div class="card-header">
+         <h3 class="card-title"><i class="ti ti-device-desktop-analytics me-2"></i>{{ __('Virtual machines', 'finops') }}</h3>
+      </div>
+      {% if inventory.vms is empty %}
+         <div class="card-body text-muted">{{ __('No virtual machine read yet: click Read now.', 'finops') }}</div>
+      {% else %}
+         <div class="table-responsive">
+            <table class="table table-vcenter card-table">
+               <thead>
+                  <tr>
+                     <th>{{ __('Name') }}</th>
+                     <th>{{ __('Power', 'finops') }}</th>
+                     <th>{{ __('Node', 'finops') }}</th>
+                     <th class="text-end">{{ __('vCPU', 'finops') }}</th>
+                     <th class="text-end">{{ __('Memory (GB)', 'finops') }}</th>
+                     <th class="text-end">{{ __('Disk (GB)', 'finops') }}</th>
+                     <th class="text-end">{{ __('Cost per month', 'finops') }}</th>
+                     <th>{{ __('Asset in GLPI', 'finops') }}</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for vm in inventory.vms %}
+                     <tr>
+                        <td>
+                           <strong>{{ vm.name }}</strong>
+                           <div class="small text-muted text-break">{{ vm.vm_id }}</div>
+                           {% if vm.os %}<div class="small text-muted">{{ vm.os }}</div>{% endif %}
+                        </td>
+                        <td>
+                           {% if vm.power == 'on' %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'ok', label: __('Powered on', 'finops')} %}
+                           {% elseif vm.power == 'off' %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'neutral', label: __('Powered off', 'finops')} %}
+                           {% else %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Unknown', 'finops')} %}
+                           {% endif %}
+                        </td>
+                        <td>{{ vm.node }}{% if vm.pool %}<div class="small text-muted">{{ vm.pool }}</div>{% endif %}</td>
+                        <td class="text-end">{{ vm.vcpu }}</td>
+                        <td class="text-end">{{ vm.memory_gb }}</td>
+                        <td class="text-end">{{ vm.disk_gb }}</td>
+                        <td class="text-end">{{ vm.monthly_cost|number_format(2, '.', ' ') }} {{ vm.currency }}</td>
+                        <td>
+                           {% if vm.linked %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'ok', label: vm.linked} %}
+                           {% elseif vm.suggestion %}
+                              <div class="small">
+                                 <i class="ti ti-bulb me-1"></i>{{ vm.suggestion.name }}
+                                 <span class="text-muted">({{ vm.suggestion.by == 'uuid' ? __('same UUID', 'finops') : __('same name', 'finops') }})</span>
+                              </div>
+                              {% if can_link %}
+                                 <form method="post" action="{{ page_url }}" class="mt-1">
+                                    <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                                    <input type="hidden" name="id" value="{{ account.id }}" />
+                                    <input type="hidden" name="vm" value="{{ vm.id }}" />
+                                    <input type="hidden" name="items_id" value="{{ vm.suggestion.id }}" />
+                                    <button type="submit" name="link" value="1" class="btn btn-sm btn-outline-primary">
+                                       <i class="ti ti-link me-1"></i>{{ __('Link', 'finops') }}
+                                    </button>
+                                 </form>
+                              {% endif %}
+                           {% else %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Not linked', 'finops')} %}
+                              {% if vm.resource_id and can_link %}
+                                 <div class="small mt-1"><a href="{{ resource_url }}?id={{ vm.resource_id }}"><i class="ti ti-link me-1"></i>{{ __('Choose an asset', 'finops') }}</a></div>
+                              {% endif %}
+                           {% endif %}
+                        </td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      {% endif %}
+   </div>
+</div>

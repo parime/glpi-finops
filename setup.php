@@ -2,9 +2,9 @@
 
 /**
  * -------------------------------------------------------------------------
- * Mon plugin for GLPI
+ * FinOps plugin for GLPI
  * Copyright (C) 2026 Vincent GUILLOTTE
- * https://github.com/parime/glpi-plugin-template
+ * https://github.com/parime/glpi-finops
  * -------------------------------------------------------------------------
  * LICENSE
  *
@@ -15,57 +15,79 @@
  * -------------------------------------------------------------------------
  */
 
-/**
- * Modèle de plugin GLPI (parime/glpi-plugin-template).
- *
- * Après « Use this template » : remplacer « monplugin » / « Monplugin » / « MONPLUGIN » par la clé du
- * plugin (nom du dossier dans plugins/), dans les noms de fichiers comme dans le code, puis
- * renseigner plugin-key dans .github/workflows/security.yml. Voir README.md et CHARTE.md.
- */
-
 use Glpi\Plugin\Hooks;
-use GlpiPlugin\Monplugin\Menu;
-use GlpiPlugin\Monplugin\Profile;
+use GlpiPlugin\Finops\CostImport;
+use GlpiPlugin\Finops\CostLine;
+use GlpiPlugin\Finops\Menu;
+use GlpiPlugin\Finops\Profile;
+use GlpiPlugin\Finops\Resource;
 
-define('PLUGIN_MONPLUGIN_VERSION', '0.1.0');
-define('PLUGIN_MONPLUGIN_MIN_GLPI', '11.0.0');
-define('PLUGIN_MONPLUGIN_MAX_GLPI', '12.99.99');
+define('PLUGIN_FINOPS_VERSION', '0.1.0');
+define('PLUGIN_FINOPS_MIN_GLPI', '11.0.0');
+// GLPI 11 et 12 depuis un seul code source (voir src/Compat/).
+define('PLUGIN_FINOPS_MAX_GLPI', '12.99.99');
+define('PLUGIN_FINOPS_MIN_PHP', '8.2.0');
 
-function plugin_version_monplugin(): array
+function plugin_init_finops(): void
+{
+    global $PLUGIN_HOOKS;
+
+    // Clé littérale : GLPI 12 a supprimé la constante Hooks::CSRF_COMPLIANT (la clé reste la même).
+    $PLUGIN_HOOKS['csrf_compliant']['finops'] = true;
+
+    // Version majeure de GLPI non vérifiée : rien n'est déclaré (les classes pourraient ne pas
+    // se charger). Comparaison de version et non isPluginActive() : cette fonction sert aussi
+    // pendant l'installation, avant l'activation.
+    if (version_compare(GLPI_VERSION, PLUGIN_FINOPS_MAX_GLPI, '>')) {
+        return;
+    }
+
+    // Onglet « FinOps » des profils (droits du plugin) et des actifs rattachés à une ressource.
+    Plugin::registerClass(Profile::class, ['addtabon' => ['Profile']]);
+    Plugin::registerClass(Resource::class, ['addtabon' => Resource::ASSET_TYPES]);
+    Plugin::registerClass(CostLine::class);
+    Plugin::registerClass(CostImport::class);
+
+    // Charte commune, section 9 : une seule entrée de menu d'usage (Gestion > FinOps, écrans en
+    // onglets) et tous les réglages dans la page de configuration du plugin (Configuration > Plugins).
+    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['finops'] = ['management' => [Menu::class]];
+    $PLUGIN_HOOKS[Hooks::CONFIG_PAGE]['finops'] = 'front/config.php';
+}
+
+/**
+ * @return array<string, mixed>
+ */
+function plugin_version_finops(): array
 {
     return [
-        'name'         => 'Mon plugin',
-        'version'      => PLUGIN_MONPLUGIN_VERSION,
+        'name'         => 'FinOps',
+        'version'      => PLUGIN_FINOPS_VERSION,
         'author'       => 'Vincent GUILLOTTE',
         'license'      => 'GPL-3.0-or-later',
-        'homepage'     => 'https://github.com/parime/glpi-plugin-template',
+        'homepage'     => 'https://github.com/parime/glpi-finops',
         'requirements' => [
-            'glpi' => ['min' => PLUGIN_MONPLUGIN_MIN_GLPI, 'max' => PLUGIN_MONPLUGIN_MAX_GLPI],
-            'php'  => ['min' => '8.2'],
+            'glpi' => [
+                'min' => PLUGIN_FINOPS_MIN_GLPI,
+                'max' => PLUGIN_FINOPS_MAX_GLPI,
+            ],
+            'php'  => [
+                'min' => PLUGIN_FINOPS_MIN_PHP,
+            ],
         ],
     ];
 }
 
-function plugin_monplugin_check_prerequisites(): bool
+function plugin_finops_check_prerequisites(): bool
 {
+    if (version_compare(PHP_VERSION, PLUGIN_FINOPS_MIN_PHP, '<')) {
+        echo sprintf('PHP %s or later is required.', PLUGIN_FINOPS_MIN_PHP);
+        return false;
+    }
+
     return true;
 }
 
-function plugin_monplugin_check_config($verbose = false): bool
+function plugin_finops_check_config(bool $verbose = false): bool
 {
     return true;
-}
-
-function plugin_init_monplugin(): void
-{
-    global $PLUGIN_HOOKS;
-
-    $PLUGIN_HOOKS['csrf_compliant']['monplugin'] = true;
-    // Onglet des profils : attribuer les droits du plugin depuis l'interface.
-    Plugin::registerClass(Profile::class, ['addtabon' => ['Profile']]);
-
-    // Charte, section 9 : tous les réglages dans la page du plugin (Configuration > Plugins)...
-    $PLUGIN_HOOKS[Hooks::CONFIG_PAGE]['monplugin'] = 'front/config.php';
-    // ... et une seule entrée de menu d'usage, dans le secteur natif qui convient.
-    $PLUGIN_HOOKS[Hooks::MENU_TOADD]['monplugin'] = ['tools' => Menu::class];
 }

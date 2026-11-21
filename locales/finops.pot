@@ -1,0 +1,1164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-21 18:36+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: front/config.php:33
+msgid "Settings saved."
+msgstr ""
+
+#: front/import.php:43
+msgid "Choose an entity you have access to."
+msgstr ""
+
+#: front/import.php:47
+msgid "Choose a CSV file."
+msgstr ""
+
+#: front/import.php:49
+msgid "Only .csv and .txt files are accepted."
+msgstr ""
+
+#: front/import.php:63
+msgid "No valid cost line in the file."
+msgstr ""
+
+#: front/import.php:67 src/Import/CostImporter.php:237
+msgid "The file cannot be read."
+msgstr ""
+
+#: front/import.php:90
+msgid "The preview has expired: upload the file again."
+msgstr ""
+
+#: front/import.php:103
+#, php-format
+msgid "Import done: %1$d new lines, %2$d already known, %3$d rejected."
+msgstr ""
+
+#: front/import.php:118
+msgid "Import deleted with its cost lines."
+msgstr ""
+
+#: front/ovh.php:39 front/ovh.php:50
+msgid "OVHcloud account saved."
+msgstr ""
+
+#: front/ovh.php:57
+msgid "OVHcloud account deleted; the costs already read are kept."
+msgstr ""
+
+#: front/ovh.php:66
+#, php-format
+msgid "OVHcloud read: %1$d new lines, %2$d already known."
+msgstr ""
+
+#: front/ovh.php:73
+#, php-format
+msgid "OVHcloud read failed, the costs already read are kept: %s"
+msgstr ""
+
+#: front/resource.php:37
+msgid "Link removed."
+msgstr ""
+
+#: front/resource.php:37 front/sangfor.php:89
+msgid "Resource linked to the asset."
+msgstr ""
+
+#: front/resource.php:40 front/sangfor.php:91
+msgid "Choose an asset you can see."
+msgstr ""
+
+#: front/sangfor.php:39
+msgid "Sangfor SCP platform saved."
+msgstr ""
+
+#: front/sangfor.php:63
+msgid "Sangfor SCP platform deleted; the costs already read are kept."
+msgstr ""
+
+#: front/sangfor.php:72
+#, php-format
+msgid ""
+"Sangfor SCP read: %1$d virtual machines, %2$d new cost lines, %3$d already "
+"known."
+msgstr ""
+
+#: front/sangfor.php:80
+#, php-format
+msgid ""
+"Sangfor SCP read failed, the inventory and the costs already read are kept: "
+"%s"
+msgstr ""
+
+#: src/ConfigPage.php:51 templates/config.html.twig
+msgid "General"
+msgstr ""
+
+#: src/ConfigPage.php:52 templates/config.html.twig
+msgid "Cost sources"
+msgstr ""
+
+#: src/ConfigPage.php:53 templates/config.html.twig
+msgid "About"
+msgstr ""
+
+#: src/CostImport.php:38
+msgid "Cost import"
+msgid_plural "Cost imports"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/CostLine.php:35
+msgid "Cost line"
+msgid_plural "Cost lines"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Import/CostImporter.php:220
+msgid "The file is larger than the size allowed in the settings."
+msgstr ""
+
+#: src/Import/CostImporter.php:223
+msgid "The file is empty."
+msgstr ""
+
+#: src/Import/CostImporter.php:224
+msgid "The file is not a text file."
+msgstr ""
+
+#: src/Import/CostImporter.php:225
+msgid "The file contains program code and was refused."
+msgstr ""
+
+#: src/Import/CostImporter.php:227
+#, php-format
+msgid "Required columns missing: %s."
+msgstr ""
+
+#: src/Import/CostImporter.php:230
+msgid "The file has too many columns."
+msgstr ""
+
+#: src/Import/CostImporter.php:231
+msgid "The file has too many lines."
+msgstr ""
+
+#: src/Import/CostImporter.php:232
+msgid "Invalid date (expected YYYY-MM-DD or DD/MM/YYYY)."
+msgstr ""
+
+#: src/Import/CostImporter.php:233
+msgid "Missing or invalid provider."
+msgstr ""
+
+#: src/Import/CostImporter.php:234
+msgid "Invalid cost (expected a number)."
+msgstr ""
+
+#: src/Import/CostImporter.php:235
+msgid "Invalid currency (expected a three-letter code)."
+msgstr ""
+
+#: src/Import/CostImporter.php:236
+msgid "Too many cells on the line."
+msgstr ""
+
+#: src/Menu.php:44
+msgid "FinOps"
+msgstr ""
+
+#: src/Menu.php:111
+msgid "Costs"
+msgstr ""
+
+#: src/Menu.php:123
+msgid "Import"
+msgstr ""
+
+#: src/Ovh/OvhException.php:46
+msgid "OVHcloud cannot be reached (network, proxy or firewall)."
+msgstr ""
+
+#: src/Ovh/OvhException.php:48
+msgid ""
+"OVHcloud refused the keys: check them and the rights of the consumer key."
+msgstr ""
+
+#: src/Ovh/OvhException.php:52
+msgid ""
+"OVHcloud does not know an item asked for: check the project identifiers."
+msgstr ""
+
+#: src/Ovh/OvhException.php:55
+msgid "OVHcloud limits the number of calls: try again in a few minutes."
+msgstr ""
+
+#: src/Ovh/OvhException.php:56
+msgid "OVHcloud is unavailable: try again later."
+msgstr ""
+
+#: src/Ovh/OvhException.php:57
+msgid "Too much data to read at once: reduce the number of months."
+msgstr ""
+
+#: src/Ovh/OvhException.php:58
+msgid "The keys of this account are incomplete."
+msgstr ""
+
+#: src/Ovh/OvhException.php:59
+msgid "OVHcloud sent an unexpected answer."
+msgstr ""
+
+#: src/OvhAccount.php:54
+msgid "OVHcloud account"
+msgid_plural "OVHcloud accounts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/OvhAccount.php:87
+msgid "Canada"
+msgstr ""
+
+#: src/OvhAccount.php:87
+msgid "Europe"
+msgstr ""
+
+#: src/OvhAccount.php:126
+msgid "Give the account a name."
+msgstr ""
+
+#: src/OvhAccount.php:140
+msgid "Each Public Cloud project identifier has 32 hexadecimal characters."
+msgstr ""
+
+#: src/OvhAccount.php:149
+msgid "The three OVHcloud keys are required."
+msgstr ""
+
+#: src/OvhAccount.php:154
+msgid "An OVHcloud key only contains letters and digits."
+msgstr ""
+
+#: src/Profile.php:57
+msgid "Cloud and virtualisation costs"
+msgstr ""
+
+#: src/Profile.php:61
+msgid "Import costs"
+msgstr ""
+
+#: src/Profile.php:62
+msgid "Link resources to assets"
+msgstr ""
+
+#: src/Profile.php:63
+msgid "Delete an import"
+msgstr ""
+
+#: src/Resource.php:47 templates/import.html.twig
+#: templates/resource_tab.html.twig templates/resources.html.twig
+msgid "Resource"
+msgid_plural "Resources"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Sangfor/ScpException.php:48
+msgid "Sangfor SCP cannot be reached (address, network, proxy or firewall)."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:50
+msgid ""
+"The certificate of Sangfor SCP is not trusted: install its authority on the "
+"GLPI server, or allow self-signed certificates for this platform."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:55
+msgid ""
+"Sangfor SCP refused the login: check the user name, the password and the "
+"rights of the account."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:59
+msgid ""
+"This address does not answer like Sangfor SCP 6.3.0 or later (OpenAPI not "
+"found)."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:62
+msgid "Sangfor SCP limits the number of calls: try again in a few minutes."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:63
+msgid "Sangfor SCP is unavailable: try again later."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:64
+msgid "Too many virtual machines to read at once."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:65
+msgid "The address or the login of this platform is incomplete."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:67
+msgid ""
+"The password cannot be encrypted for Sangfor SCP (OpenSSL extension of PHP "
+"missing or public key not recognized)."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:71
+msgid "Sangfor SCP sent an unexpected answer."
+msgstr ""
+
+#: src/SangforAccount.php:57
+msgid "Sangfor SCP platform"
+msgid_plural "Sangfor SCP platforms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/SangforAccount.php:116
+msgid "Give the platform a name."
+msgstr ""
+
+#: src/SangforAccount.php:123
+msgid ""
+"The address of Sangfor SCP is https:// followed by its name or IP address, "
+"and an optional port, without path."
+msgstr ""
+
+#: src/SangforAccount.php:139
+msgid "Each price is a positive number, or 0."
+msgstr ""
+
+#: src/SangforAccount.php:152
+msgid "The user name and the password are required."
+msgstr ""
+
+#: src/SangforAccount.php:157
+msgid "The user name or the password is too long or not printable."
+msgstr ""
+
+#: src/Source/GenericCsvSource.php:35
+msgid "Generic CSV file"
+msgstr ""
+
+#: src/Source/GenericCsvSource.php:41
+msgid ""
+"Any billing export brought back to the common columns: date, provider, "
+"account, service, resource, cost, currency, tags."
+msgstr ""
+
+#: src/Source/OvhCloudSource.php:36
+msgid "OVHcloud"
+msgstr ""
+
+#: src/Source/OvhCloudSource.php:42
+msgid ""
+"Bills and Public Cloud consumption per resource, read on request from the "
+"OVHcloud API (Europe or Canada)."
+msgstr ""
+
+#: src/Source/SangforScpSource.php:36
+msgid "Sangfor HCI (SCP)"
+msgstr ""
+
+#: src/Source/SangforScpSource.php:42
+msgid ""
+"Virtual machines, nodes and allocations read on request from the Sangfor "
+"Cloud Platform OpenAPI, with a monthly cost from your own price grid."
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "API region"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "Add an OVHcloud account"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "Application key"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "Application secret"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "Consumer key"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid ""
+"Create an application on the OVHcloud API (createToken page of your region) "
+"with only these rights, all in GET: /me, /me/bill/*, /cloud/project/*/usage/"
+"*. The plugin never changes anything at OVHcloud. The keys are encrypted by "
+"GLPI and never shown again."
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "Delete this OVHcloud account? The costs already read are kept."
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig templates/_sangfor_accounts.html.twig
+msgid "Incomplete"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "Keys"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig templates/_ovh_read.html.twig
+#: templates/_sangfor_accounts.html.twig templates/_sangfor_read.html.twig
+msgid "Last read"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig templates/_ovh_read.html.twig
+msgid "Months read"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "OVHcloud accounts"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+#, php-format
+msgid ""
+"Optional, %s at most: identifiers of 32 characters, separated by commas. "
+"Their consumption is read per resource, and their bill lines are left out to "
+"avoid counting them twice."
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "Public Cloud projects"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid ""
+"Region where the OVHcloud account was created: Europe (ovh.com) or Canada "
+"(ovh.ca)."
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig templates/_sangfor_accounts.html.twig
+msgid "Saved, encrypted"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig templates/_sangfor_accounts.html.twig
+msgid "Saved, unchanged if left empty"
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid ""
+"Shown in the import journal, for example the customer account or the "
+"department."
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "The cost lines read belong to this entity."
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid ""
+"The current month and the previous ones. Lines already read are never "
+"duplicated."
+msgstr ""
+
+#: templates/_ovh_accounts.html.twig
+msgid "Which keys?"
+msgstr ""
+
+#: templates/_ovh_read.html.twig templates/_sangfor_read.html.twig
+msgid "Add one in the settings (Cost sources tab)"
+msgstr ""
+
+#: templates/_ovh_read.html.twig templates/_sangfor_read.html.twig
+msgid "An administrator adds them in the settings of the plugin."
+msgstr ""
+
+#: templates/_ovh_read.html.twig
+msgid "Manage the OVHcloud accounts"
+msgstr ""
+
+#: templates/_ovh_read.html.twig
+msgid "No OVHcloud account yet."
+msgstr ""
+
+#: templates/_ovh_read.html.twig
+msgid "Read from OVHcloud"
+msgstr ""
+
+#: templates/_ovh_read.html.twig templates/_sangfor_read.html.twig
+#: templates/sangfor_inventory.html.twig
+msgid "Read now"
+msgstr ""
+
+#: templates/_ovh_read.html.twig
+msgid ""
+"Reads the bills and the Public Cloud consumption of the account, in read-"
+"only mode. A failed read writes nothing: the costs already read stay as they "
+"are."
+msgstr ""
+
+#: templates/_ovh_status.html.twig
+#, php-format
+msgid "Failed on %s"
+msgstr ""
+
+#: templates/_ovh_status.html.twig
+#, php-format
+msgid "Last success: %s"
+msgstr ""
+
+#: templates/_ovh_status.html.twig
+msgid "Never read"
+msgstr ""
+
+#: templates/_ovh_status.html.twig
+#, php-format
+msgid "Read on %s"
+msgstr ""
+
+#: templates/_page_help.html.twig
+msgid "What is expected:"
+msgstr ""
+
+#: templates/_page_help.html.twig
+msgid "What is this page for?"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Accept a self-signed certificate"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Add a Sangfor SCP platform"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Address of Sangfor SCP"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Currency"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Delete this Sangfor SCP platform? The costs already read are kept."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "ISO 4217 code of the prices (EUR, USD...)."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Login"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid ""
+"Off by default. Turn it on only if SCP keeps its factory certificate: the "
+"connection stays encrypted but the identity of the server is no longer "
+"checked. Installing the authority of the certificate on the GLPI server is "
+"safer."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Price grid (per month)"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Price of 1 GB of disk"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Price of 1 GB of memory"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Price of one vCPU"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid ""
+"Sangfor Cloud Platform (SCP) 6.3.0 or later, which sees all the nodes. "
+"Create on SCP an operator account with read-only rights on the virtual "
+"machines and the hosts. The plugin only reads: it never starts, stops or "
+"changes a machine. The user name and the password are encrypted by GLPI and "
+"never shown again."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Sangfor SCP platforms"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid ""
+"Sangfor does not bill by use: give your internal prices to turn allocations "
+"into costs, or leave 0 for an inventory without cost. vCPU and memory count "
+"only when the machine is not powered off; the disk always counts."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Self-signed certificate accepted"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Shown in the import journal, for example the site or the cluster."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "The cost lines and virtual machines read belong to this entity."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid ""
+"The only address called by the plugin: https:// followed by the name or IP "
+"address of SCP, and a port if needed. No redirect is followed."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "User name"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Which account?"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+#, php-format
+msgid "%s machines: see the inventory"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid "Manage the Sangfor SCP platforms"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid "No Sangfor SCP platform yet."
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid "Not read yet"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid "Read from Sangfor SCP"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid ""
+"Reads the nodes and the virtual machines with their allocations, in read-"
+"only mode, and adds the cost of the month from the price grid. A failed read "
+"writes nothing: the inventory and the costs already read stay as they are."
+msgstr ""
+
+#: templates/_sangfor_read.html.twig templates/sangfor_inventory.html.twig
+msgid "Virtual machines"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"AWS, Azure, Google Cloud, Proxmox, Hyper-V and VMware are planned: see the "
+"roadmap issues of the project."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "All the settings of the FinOps plugin, and only here."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Available"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"Choose the default currency and the largest file accepted, then check which "
+"cost sources are available."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Default currency"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "File upload"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"ISO 4217 code (EUR, USD, GBP...), used when a cost line gives no currency."
+msgstr ""
+
+#: templates/config.html.twig
+#, php-format
+msgid "Larger files are refused before being read. Between %1$s and %2$s MB."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Largest cost file (MB)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "License"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Open the costs (Management > FinOps)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Planned"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Read-only API"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Source"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Status"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"The plugin only reads from the providers: it never stops, deletes or changes "
+"anything on their side."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Type"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Version"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "%s already imported"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "%s new lines"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "%s rejected"
+msgstr ""
+
+#: templates/import.html.twig templates/resources.html.twig
+msgid "Account"
+msgstr ""
+
+#: templates/import.html.twig
+msgid ""
+"Bring the costs of a provider into GLPI from a CSV file, whatever the "
+"provider."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "By"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "CSV file"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "CSV or text file, %s MB at most."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Cost"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Date"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid ""
+"Dates as YYYY-MM-DD or DD/MM/YYYY. Without currency, %s is used. Tags as "
+"key=value;key2=value2 or a JSON object."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Delete"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Delete this import and its cost lines?"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Expected columns"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "File"
+msgstr ""
+
+#: templates/import.html.twig
+msgid ""
+"First line: column names. Separator: comma, semicolon or tab. Other names "
+"accepted for each column:"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "First new lines"
+msgstr ""
+
+#: templates/import.html.twig templates/overview.html.twig
+#: templates/resources.html.twig
+msgid "Import a cost file"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Import log"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Import the new lines"
+msgstr ""
+
+#: templates/import.html.twig
+#, php-format
+msgid "Line %1$s: %2$s"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Months"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "New costs"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "No import yet."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Preview"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Preview before import"
+msgstr ""
+
+#: templates/import.html.twig templates/resource_tab.html.twig
+#: templates/resources.html.twig
+msgid "Provider"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Providers"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Rejected lines"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "Result"
+msgstr ""
+
+#: templates/import.html.twig templates/resource_tab.html.twig
+#: templates/resources.html.twig
+msgid "Service"
+msgstr ""
+
+#: templates/import.html.twig
+msgid "The cost lines and resources belong to this entity."
+msgstr ""
+
+#: templates/import.html.twig
+msgid ""
+"Upload the file, check the preview, then confirm. Importing the same file "
+"again creates no duplicate."
+msgstr ""
+
+#: templates/import.html.twig
+msgid "required"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid ""
+"Amounts in different currencies are never added up: one table per currency."
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Cost lines"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Costs by provider and by month"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Export the costs of your provider as CSV, then import the file."
+msgstr ""
+
+#: templates/overview.html.twig
+msgid ""
+"Import a cost file, then review the months and providers that cost the most."
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Last import"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Month"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "No cost imported yet"
+msgstr ""
+
+#: templates/overview.html.twig templates/resources.html.twig
+msgid "Resources"
+msgstr ""
+
+#: templates/overview.html.twig templates/resource_tab.html.twig
+msgid "Resources not linked to an asset"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid ""
+"This page shows what your cloud and virtualised resources cost, by provider "
+"and by month."
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Total"
+msgstr ""
+
+#: templates/resource_tab.html.twig
+msgid "Cost by month"
+msgstr ""
+
+#: templates/resource_tab.html.twig
+msgid "Link a resource to this asset from Management > FinOps > Resources."
+msgstr ""
+
+#: templates/resource_tab.html.twig
+msgid "Linked resources"
+msgstr ""
+
+#: templates/resource_tab.html.twig
+msgid "No billed resource is linked to this asset"
+msgstr ""
+
+#: templates/resource_tab.html.twig templates/resources.html.twig
+msgid "Total cost"
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
+msgid "%1$s to %2$s of %3$s"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Asset"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid ""
+"Computers, appliances and network devices of the entity of the resource."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid ""
+"Each resource billed by a provider (instance, VM, database, disk...) and the "
+"GLPI asset it belongs to."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Last seen"
+msgstr ""
+
+#: templates/resources.html.twig templates/sangfor_inventory.html.twig
+msgid "Link"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid ""
+"Link the resources shown in orange to the computer, appliance or network "
+"device they run on."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Linked asset"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "No resource to show"
+msgstr ""
+
+#: templates/resources.html.twig templates/sangfor_inventory.html.twig
+msgid "Not linked"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Not linked only"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Open"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Remove the link"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Resources appear here when a cost file names them (resource column)."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Search"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%1$s of %2$s linked to an asset"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s GB of disk allocated"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s GB of memory allocated"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s nodes"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s vCPU allocated"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s virtual machines"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Asset in GLPI"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid ""
+"Check the allocations, then confirm the proposed links one by one. Nothing "
+"is linked without your click."
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Choose an asset"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Cores"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "Cost of the month: %s"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Cost per month"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Disk (GB)"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "IP address"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Memory (GB)"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "No virtual machine read yet: click Read now."
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Node"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Nodes"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Power"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Powered off"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Powered on"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid ""
+"See what a Sangfor HCI platform runs and what it costs, and link each "
+"virtual machine to its computer in GLPI."
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Storage (GB)"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Unknown"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "same UUID"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "same name"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "vCPU"
+msgstr ""

@@ -1,8 +1,8 @@
 {#
  # -------------------------------------------------------------------------
- # Mon plugin for GLPI
+ # FinOps plugin for GLPI
  # Copyright (C) 2026 Vincent GUILLOTTE
- # https://github.com/parime/glpi-plugin-template
+ # https://github.com/parime/glpi-finops
  # -------------------------------------------------------------------------
  # LICENSE
  #
@@ -15,17 +15,17 @@
 
 {# Encadré « À quoi sert cette page ? » en tête de chaque page d'usage (charte section 8).
    Repliable, choix mémorisé par page dans le navigateur.
-   Usage : {% include '@monplugin/_page_help.html.twig' with {page: 'overview', purpose: '...', expected: '...'} %} #}
-{% set help_id = 'monplugin-help-' ~ page %}
+   Usage : {% include '@finops/_page_help.html.twig' with {page: 'overview', purpose: '...', expected: '...'} %} #}
+{% set help_id = 'finops-help-' ~ page %}
 <div class="card border-info-subtle mb-3" style="max-width: 1100px;">
    <div class="card-body py-2">
       <a class="d-flex align-items-center text-decoration-none" data-bs-toggle="collapse" href="#{{ help_id }}" role="button" aria-expanded="true" aria-controls="{{ help_id }}">
-         <i class="ti ti-help-circle text-info me-2"></i><strong>{{ __('What is this page for?', 'monplugin') }}</strong>
+         <i class="ti ti-help-circle text-info me-2"></i><strong>{{ __('What is this page for?', 'finops') }}</strong>
          <i class="ti ti-chevron-down ms-auto"></i>
       </a>
       <div class="collapse show" id="{{ help_id }}">
          <p class="mb-1 mt-2">{{ purpose }}</p>
-         <p class="mb-1"><i class="ti ti-checklist me-1 text-muted"></i><strong>{{ __('What is expected:', 'monplugin') }}</strong> {{ expected }}</p>
+         <p class="mb-1"><i class="ti ti-checklist me-1 text-muted"></i><strong>{{ __('What is expected:', 'finops') }}</strong> {{ expected }}</p>
          {% if reference is defined and reference %}
             <p class="mb-0 small text-muted"><i class="ti ti-book me-1"></i>{{ reference }}</p>
          {% endif %}
@@ -34,7 +34,7 @@
 </div>
 <script>
    (function () {
-      const key = 'monplugin.help.{{ page|e('js') }}';
+      const key = 'finops.help.{{ page|e('js') }}';
       const panel = document.getElementById('{{ help_id|e('js') }}');
       try {
          if (window.localStorage.getItem(key) === 'hidden') {

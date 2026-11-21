@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <name>FinOps</name>
+    <key>finops</key>
+    <state>beta</state> <!-- stable | unstable | beta | alpha -->
+    <logo>https://raw.githubusercontent.com/parime/glpi-finops/main/logo-40.png</logo>
+    <description>
+        <short>
+            <en>Cost of cloud and virtualised resources inside GLPI: cost import by provider and month, resources linked to GLPI assets.</en>
+            <fr>Coût des ressources cloud et virtualisées dans GLPI : import des coûts par fournisseur et par mois, ressources rattachées aux actifs de GLPI.</fr>
+        </short>
+        <long>
+            <en>
+Cloud and virtualisation bills often live outside the asset inventory: nobody knows which computer, application or department a cost line belongs to. FinOps brings these costs into GLPI, next to the assets they pay for.
+
+- **Cost import** from a CSV file in a common format (date, provider, account or subscription, service, resource, cost, currency, tags): any billing export from AWS, Azure, Google Cloud, OVHcloud, a hosting company or a hypervisor can be brought back to it. Size-limited and safe reading, preview before writing, re-runnable import without duplicates, import log.
+- **Costs by provider and by month**, one table per currency (two currencies are never added up).
+- **Resources linked to GLPI assets** (computers, appliances, network devices), with a FinOps tab on the asset.
+- **Extensible sources**: each provider or hypervisor is a separate class, discovered automatically. AWS, Azure, Google Cloud, OVHcloud, Scaleway, Proxmox, Hyper-V and VMware are on the roadmap, Sangfor and H3C are open to contributions.
+
+**Principles**: read-only towards providers, nothing changes by itself in GLPI, entities respected, settings only in the plugin page, a single menu entry (Management > FinOps), 18 languages.
+            </en>
+            <fr>
+Les factures du cloud et de la virtualisation vivent souvent hors du parc : personne ne sait à quel ordinateur, quelle application ou quel service se rattache une ligne de coût. FinOps ramène ces coûts dans GLPI, à côté des actifs qu'ils paient.
+
+- **Import des coûts** depuis un fichier CSV au format commun (date, fournisseur, compte ou abonnement, service, ressource, coût, devise, étiquettes) : tout export de facturation AWS, Azure, Google Cloud, OVHcloud, d'un hébergeur ou d'un hyperviseur peut y être ramené. Lecture sûre et de taille bornée, aperçu avant écriture, import rejouable sans doublon, journal des imports.
+- **Coûts par fournisseur et par mois**, une table par devise (deux devises ne sont jamais additionnées).
+- **Ressources rattachées aux actifs de GLPI** (ordinateurs, applications, matériels réseau), avec un onglet FinOps sur l'actif.
+- **Sources extensibles** : chaque fournisseur ou hyperviseur est une classe à part, découverte automatiquement. AWS, Azure, Google Cloud, OVHcloud, Scaleway, Proxmox, Hyper-V et VMware sont sur la feuille de route, Sangfor et H3C attendent des contributions.
+
+**Principes** : lecture seule vers les fournisseurs, rien ne change tout seul dans GLPI, entités respectées, réglages dans la page du plugin seulement, une seule entrée de menu (Gestion > FinOps), 18 langues.
+            </fr>
+        </long>
+    </description>
+    <homepage>https://github.com/parime/glpi-finops</homepage>
+    <download>https://github.com/parime/glpi-finops/releases</download>
+    <issues>https://github.com/parime/glpi-finops/issues</issues>
+    <readme>https://raw.githubusercontent.com/parime/glpi-finops/main/README.md</readme>
+    <changelog>https://github.com/parime/glpi-finops/releases</changelog>
+    <authors>
+        <author>Vincent GUILLOTTE</author>
+    </authors>
+    <versions>
+    </versions>
+    <langs>
+        <lang>fr_FR</lang>
+        <lang>en_GB</lang>
+        <lang>en_US</lang>
+        <lang>de_DE</lang>
+        <lang>es_ES</lang>
+        <lang>es_MX</lang>
+        <lang>it_IT</lang>
+        <lang>pl_PL</lang>
+        <lang>pt_BR</lang>
+        <lang>pt_PT</lang>
+        <lang>fr_CA</lang>
+    </langs>
+    <license>GPL v3</license>
+    <tags>
+        <en>
+            <tag>finops</tag>
+            <tag>cloud</tag>
+            <tag>costs</tag>
+            <tag>showback</tag>
+            <tag>virtualisation</tag>
+            <tag>asset management</tag>
+        </en>
+        <fr>
+            <tag>finops</tag>
+            <tag>cloud</tag>
+            <tag>coûts</tag>
+            <tag>refacturation</tag>
+            <tag>virtualisation</tag>
+            <tag>gestion de parc</tag>
+        </fr>
+    </tags>
+    <!-- Captures ajoutées avec le premier lot visible (docs/screenshots/), une balise <screenshot> par image. -->
+    <screenshots>
+    </screenshots>
+</root>
