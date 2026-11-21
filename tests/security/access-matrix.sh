@@ -64,13 +64,16 @@ else
   expect "front/config.php : enregistrer sans droit de configuration" 403 \
     "$(code -d "update=1&default_currency=USD&max_upload_mb=9&_glpi_csrf_token=$(csrf)" "$P/config.php")"
 fi
+# Requête d'un autre site sans jeton : GLPI 11 exige le jeton, GLPI 12 refuse l'origine étrangère.
 expect "front/config.php : enregistrer sans jeton CSRF" 403 \
-  "$(code -d "update=1&default_currency=USD&max_upload_mb=9" "$P/config.php")"
+  "$(code -H 'Sec-Fetch-Site: cross-site' -d "update=1&default_currency=USD&max_upload_mb=9" "$P/config.php")"
 
-# Onglet FinOps du profil : seulement avec le droit du plugin et le droit des profils du coeur.
-profile_tab=$(tab Profile 'GlpiPlugin%5CFinops%5CProfile$0' 4)
-[ "$ROLE" = admin ] && want=oui || want=non
-contains "onglet FinOps d'un profil" "plugin_finops" $want "$profile_tab"
+# Onglet FinOps d'un profil : jamais servi sans le droit des profils du coeur. (Le super-admin n'est
+# pas vérifié ici : GLPI 12 demande une nouvelle authentification avant d'ouvrir un profil ; les
+# contrôles communs vérifient que le droit s'attribue depuis cet onglet.)
+if [ "$ROLE" != admin ]; then
+  contains "onglet FinOps d'un profil" "plugin_finops" non "$(tab Profile 'GlpiPlugin%5CFinops%5CProfile$1' 4)"
+fi
 
 # Fragments : une fonctionnalite ajoute ses controles dans un NOUVEAU fichier
 # tests/security/access-matrix.d/<issue>-<sujet>.sh, charge ici dans l'ordre des noms, avec les

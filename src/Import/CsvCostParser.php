@@ -74,8 +74,7 @@ final class CsvCostParser
     public function __construct(
         private readonly string $defaultCurrency = 'EUR',
         private readonly int $maxBytes = 5242880
-    )
-    {
+    ) {
     }
 
     public static function isAllowedName(string $filename): bool

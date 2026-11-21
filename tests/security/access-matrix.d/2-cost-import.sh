@@ -25,7 +25,8 @@ printf 'date,provider,account,service,resource,cost,currency\n2026-11-02,finops-
 printf '\x89PNG\r\n\x1a\n\0\0\0\rIHDR' > "$bin"
 upload() { # fichier, nom, entité, [jeton : oui|non]
   local token=(-F "_glpi_csrf_token=$(csrf)")
-  [ "${4:-oui}" = non ] && token=()
+  # Sans jeton : requête d'un autre site (GLPI 12 contrôle l'origine, GLPI 11 le jeton).
+  [ "${4:-oui}" = non ] && token=(-H 'Sec-Fetch-Site: cross-site')
   curl -s -w '\n%{http_code}' -c "$JAR" -b "$JAR" -F upload=1 -F "entities_id=$3" -F "cost_file=@$1;filename=$2" \
     "${token[@]}" "$P/import.php"
 }

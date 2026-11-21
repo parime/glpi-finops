@@ -48,7 +48,8 @@ if (isset($_POST['upload'])) {
         $error = CostImporter::errorLabel(CsvCostParser::E_TOO_LARGE);
     } else {
         $mime = (string) (new finfo(FILEINFO_MIME_TYPE))->file((string) $file['tmp_name']);
-        $textMime = str_starts_with($mime, 'text/') || in_array($mime, ['application/csv', 'application/vnd.ms-excel'], true);
+        $textMime = str_starts_with($mime, 'text/')
+            || in_array($mime, ['application/csv', 'application/vnd.ms-excel'], true);
         if (!$textMime) {
             $error = CostImporter::errorLabel(CsvCostParser::E_BINARY);
         } else {
