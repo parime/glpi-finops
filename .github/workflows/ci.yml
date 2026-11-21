@@ -39,6 +39,9 @@ jobs:
       glpi-version: "${{ matrix.glpi-version }}"
       php-version: "${{ matrix.php-version }}"
       db-image: "${{ matrix.db-image }}"
+      # Entrées de CHANGELOG en fragments (changes/unreleased/) : le job « CHANGELOG et tutoriel en
+      # fragments » exige un fragment par PR, à la place du contrôle de CHANGELOG.md de la CI officielle.
+      skip-changelog-check: true
 
   glpi12:
     name: "GLPI 12 : installation, PHPUnit et PHPStan"
