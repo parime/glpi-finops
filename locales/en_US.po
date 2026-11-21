@@ -1,64 +1,125 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: monplugin\n"
+"Project-Id-Version: finops\n"
 "Language: en_US\n"
+"PO-Revision-Date: 2026-11-21 00:00+0000\n"
+"Last-Translator: Vincent GUILLOTTE\n"
+"Language-Team: parime\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-msgid "My plugin"
-msgstr "My plugin"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Settings saved."
 msgstr "Settings saved."
 
-msgid "Overview"
-msgstr "Overview"
-
-msgid "What is this page for?"
-msgstr "What is this page for?"
-
-msgid "What is expected:"
-msgstr "What is expected:"
-
-msgid "This page gathers what the plugin follows for you."
-msgstr "This page gathers what the plugin follows for you."
-
-msgid "Review the items marked in orange or red first."
-msgstr "Review the items marked in orange or red first."
-
-msgid "Up to date"
-msgstr "Up to date"
-
-msgid "Nothing to show yet"
-msgstr "Nothing to show yet"
-
-msgid "Start by setting up the plugin in Setup > Plugins."
-msgstr "Start by setting up the plugin in Setup > Plugins."
-
-msgid "All the settings of the plugin, and only here."
-msgstr "All the settings of the plugin, and only here."
-
-msgid "Fill in each tab, then save."
-msgstr "Fill in each tab, then save."
-
 msgid "General"
 msgstr "General"
+
+msgid "Cost sources"
+msgstr "Cost sources"
 
 msgid "About"
 msgstr "About"
 
-msgid "Enable the example"
-msgstr "Enable the example"
+msgid "FinOps"
+msgstr "FinOps"
 
-msgid "Example label"
-msgstr "Example label"
+msgid "Costs"
+msgstr "Costs"
 
-msgid "Shown on the overview page."
-msgstr "Shown on the overview page."
+msgid "Cloud and virtualisation costs"
+msgstr "Cloud and virtualisation costs"
+
+msgid "Import costs"
+msgstr "Import costs"
+
+msgid "Link resources to assets"
+msgstr "Link resources to assets"
+
+msgid "Delete an import"
+msgstr "Delete an import"
+
+msgid "Generic CSV file"
+msgstr "Generic CSV file"
+
+msgid "Any billing export brought back to the common columns: date, provider, account, service, resource, cost, currency, tags."
+msgstr "Any billing export brought back to the common columns: date, provider, account, service, resource, cost, currency, tags."
+
+msgid "What is expected:"
+msgstr "What is expected:"
+
+msgid "What is this page for?"
+msgstr "What is this page for?"
+
+msgid "AWS, Azure, Google Cloud, Proxmox, Hyper-V and VMware are planned: see the roadmap issues of the project."
+msgstr "AWS, Azure, Google Cloud, Proxmox, Hyper-V and VMware are planned: see the roadmap issues of the project."
+
+msgid "All the settings of the FinOps plugin, and only here."
+msgstr "All the settings of the FinOps plugin, and only here."
+
+msgid "Available"
+msgstr "Available"
+
+msgid "Choose the default currency and the largest file accepted, then check which cost sources are available."
+msgstr "Choose the default currency and the largest file accepted, then check which cost sources are available."
+
+msgid "Default currency"
+msgstr "Default currency"
+
+msgid "File upload"
+msgstr "File upload"
+
+msgid "ISO 4217 code (EUR, USD, GBP...), used when a cost line gives no currency."
+msgstr "ISO 4217 code (EUR, USD, GBP...), used when a cost line gives no currency."
+
+msgid "Larger files are refused before being read. Between %1$s and %2$s MB."
+msgstr "Larger files are refused before being read. Between %1$s and %2$s MB."
+
+msgid "Largest cost file (MB)"
+msgstr "Largest cost file (MB)"
+
+msgid "License"
+msgstr "License"
+
+msgid "Open the costs (Management > FinOps)"
+msgstr "Open the costs (Management > FinOps)"
+
+msgid "Planned"
+msgstr "Planned"
+
+msgid "Read-only API"
+msgstr "Read-only API"
+
+msgid "Source"
+msgstr "Source"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "The plugin only reads from the providers: it never stops, deletes or changes anything on their side."
+msgstr "The plugin only reads from the providers: it never stops, deletes or changes anything on their side."
+
+msgid "Type"
+msgstr "Type"
 
 msgid "Version"
 msgstr "Version"
 
-msgid "License"
-msgstr "License"
+msgid "Cost import arrives with the next version of the plugin."
+msgstr "Cost import arrives with the next version of the plugin."
+
+msgid "Costs by provider and by month"
+msgstr "Costs by provider and by month"
+
+msgid "Import a cost file, then review the months and providers that cost the most."
+msgstr "Import a cost file, then review the months and providers that cost the most."
+
+msgid "No cost imported yet"
+msgstr "No cost imported yet"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "This page shows what your cloud and virtualised resources cost, by provider and by month."
+msgstr "This page shows what your cloud and virtualised resources cost, by provider and by month."

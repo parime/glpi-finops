@@ -1,52 +1,258 @@
-# CI de départ d'un plugin (charte section 7). À compléter dès que le plugin grandit, en copiant
-# les jobs du plugin le plus récent : CI officielle GLPI, installation GLPI 12, php-compat,
-# PHPStan niveau 6, PHP-CS-Fixer, PHPUnit, marketplace (SQL brut, Twig), matrice d'accès.
+# Intégration continue : CI officielle GLPI (GLPI 11), installation et tests sur GLPI 12, chargement
+# des classes sur chaque PHP supporté, matrice d'accès et test XSS de bout en bout, traductions
+# complètes, CHANGELOG et tutoriel en fragments.
 name: CI
 
 on:
   push:
+    branches: [main, dev]
   pull_request:
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
-  lint:
-    name: "Syntaxe PHP ${{ matrix.php }}"
-    runs-on: ubuntu-latest
+  generate-ci-matrix:
+    name: "Matrice de la CI officielle GLPI"
+    uses: "glpi-project/plugin-ci-workflows/.github/workflows/generate-ci-matrix.yml@v1"
+    with:
+      glpi-version: "11.0.x"
+
+  # Lint, PHP_CodeSniffer, PHP-CS-Fixer, PHPStan (phpstan.neon, contre le vrai cœur GLPI 11),
+  # en-têtes de licence, installation, PHPUnit (phpunit.xml), propreté de la désinstallation.
+  ci:
+    name: "GLPI ${{ matrix.glpi-version }} - php:${{ matrix.php-version }} - ${{ matrix.db-image }}"
+    needs: "generate-ci-matrix"
     strategy:
-      matrix:
-        php: ["8.2", "8.3", "8.4", "8.5"]
+      fail-fast: false
+      matrix: ${{ fromJson(needs.generate-ci-matrix.outputs.matrix) }}
+    uses: "glpi-project/plugin-ci-workflows/.github/workflows/continuous-integration.yml@v1"
+    with:
+      plugin-key: "finops"
+      glpi-version: "${{ matrix.glpi-version }}"
+      php-version: "${{ matrix.php-version }}"
+      db-image: "${{ matrix.db-image }}"
+
+  glpi12:
+    name: "GLPI 12 : installation, PHPUnit et PHPStan"
+    runs-on: ubuntu-latest
+    env:
+      GLPI12_IMAGE: glpi/glpi:12.0.1
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 (SHA pinned)
-      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2 (SHA pinned)
+      - name: "Checkout"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 (SHA pinned)
+
+      - name: "Dépendances de développement (sur le runner)"
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2 (SHA pinned)
         with:
-          php-version: ${{ matrix.php }}
+          php-version: "8.3"
           coverage: none
-      - run: find . -path ./vendor -prune -o -name "*.php" -print0 | xargs -0 -n1 php -l
+          tools: composer
+
+      - name: "Installe les dépendances"
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: "Démarre MariaDB et GLPI 12"
+        run: |
+          docker network create finops-glpi12
+          docker run -d --name mariadb --network finops-glpi12 \
+            -e MARIADB_ROOT_PASSWORD=glpi_password -e MARIADB_DATABASE=glpidb \
+            -e MARIADB_USER=glpi_user -e MARIADB_PASSWORD=glpi_password mariadb:11
+          for i in $(seq 1 30); do
+            docker exec mariadb mariadb-admin ping -h 127.0.0.1 -u root -pglpi_password --silent && break
+            sleep 2
+          done
+          docker run -d --name glpi --network finops-glpi12 -p 8080:80 -e TIMEZONE=Europe/Paris "$GLPI12_IMAGE"
+          for i in $(seq 1 12); do
+            docker exec glpi php bin/console database:install --db-host=mariadb --db-name=glpidb \
+              --db-user=glpi_user --db-password=glpi_password --no-interaction && exit 0
+            echo "database:install pas encore prêt (essai $i/12)"
+            sleep 5
+          done
+          exit 1
+
+      - name: "Installe, active, désinstalle puis réinstalle le plugin (sans dépendances de dev)"
+        run: |
+          docker exec glpi mkdir -p /var/www/glpi/plugins/finops
+          tar cf - setup.php hook.php src front templates locales | \
+            docker cp - glpi:/var/www/glpi/plugins/finops
+          docker exec -u root glpi chown -R www-data:www-data /var/www/glpi/plugins/finops
+          c="docker exec -u www-data glpi php bin/console"
+          $c plugin:install finops --username=glpi --no-interaction
+          $c plugin:activate finops --no-interaction
+          $c plugin:deactivate finops --no-interaction
+          $c plugin:uninstall finops --no-interaction
+          $c plugin:install finops --username=glpi --no-interaction
+          $c plugin:activate finops --no-interaction
+
+      # Dépendances de dev APRÈS les commandes console : leur symfony/console entrerait en conflit
+      # avec celui de GLPI 12.
+      - name: "PHPUnit et PHPStan sur GLPI 12"
+        run: |
+          tar cf - vendor tests phpunit.xml phpstan.neon phpstan.glpi12.neon .phpstan-bootstrap.php composer.json | \
+            docker cp - glpi:/var/www/glpi/plugins/finops
+          docker exec -u root glpi chown -R www-data:www-data /var/www/glpi/plugins/finops
+          docker exec -u www-data glpi sh -c 'cd /var/www/glpi/plugins/finops && php vendor/bin/phpunit'
+          docker exec -u www-data glpi sh -c 'cd /var/www/glpi/plugins/finops && \
+            php vendor/bin/phpstan analyse -c phpstan.glpi12.neon --no-progress --memory-limit=2G'
+
+      # Matrice d'accès et test XSS de bout en bout (vraies requêtes HTTP, vraie session) :
+      # tests/security/ (fragments par fonctionnalité dans tests/security/*.d/).
+      - name: "Matrice de contrôle d'accès (profils limités à une entité, puis super-admin)"
+        run: |
+          docker exec -u root glpi sh -c 'chown -R www-data:www-data /var/glpi/files 2>/dev/null || true'
+          setup() { docker exec -u www-data glpi php /var/www/glpi/plugins/finops/tests/security/setup.php "$@" | tail -1; }
+          ids=$(setup); echo "$ids"
+          before=$(setup counts)
+          bash tests/security/access-matrix.sh http://localhost:8080 none finops-sans-droit 'Secfin#2026' "$ids"
+          bash tests/security/access-matrix.sh http://localhost:8080 reader finops-lecteur 'Secfin#2026' "$ids"
+          after=$(setup counts)
+          [ "$before" = "$after" ] || { echo "::error::un profil sans droit ou lecteur a modifié des données"; echo "avant : $before"; echo "après : $after"; exit 1; }
+          echo "OK  aucune ligne créée ni supprimée par les profils sans droit et lecteur"
+          bash tests/security/access-matrix.sh http://localhost:8080 manager finops-gestionnaire 'Secfin#2026' "$ids"
+          bash tests/security/access-matrix.sh http://localhost:8080 admin glpi glpi "$ids"
+
+      - name: "Test XSS (charge piégée dans chaque champ texte libre)"
+        run: |
+          setup() { docker exec -u www-data glpi php /var/www/glpi/plugins/finops/tests/security/setup.php "$@" | tail -1; }
+          ids=$(setup)
+          xss=$(setup xss "$ids")
+          bash tests/security/xss-check.sh http://localhost:8080 "$ids" "$xss"
+
+      - name: "Journal GLPI (en cas d'échec)"
+        if: failure()
+        run: docker logs glpi --tail 200
+
+  php-compat:
+    name: "Chargement des classes : PHP 8.2-8.5 x GLPI 11/12"
+    # Les installations réelles tournent sur le seul PHP de l'image GLPI : ce job charge chaque classe
+    # héritant d'une classe Compat/Base sous chaque PHP supporté par chaque version de GLPI.
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 (SHA pinned)
+
+      - name: "Code de GLPI 11 et 12 (images officielles)"
+        run: |
+          for v in 11.0.12 12.0.1; do
+            docker create --name "glpi-$v" "glpi/glpi:$v"
+            mkdir -p "/tmp/glpi-$v"
+            docker cp "glpi-$v:/var/www/glpi/src" "/tmp/glpi-$v/src"
+            docker cp "glpi-$v:/var/www/glpi/vendor" "/tmp/glpi-$v/vendor"
+          done
+
+      - name: "Charge les classes du plugin"
+        run: |
+          status=0
+          for combo in "8.2 11.0.12" "8.3 11.0.12" "8.4 11.0.12" "8.5 11.0.12" \
+                       "8.3 12.0.1" "8.4 12.0.1" "8.5 12.0.1"; do
+            set -- $combo
+            docker run --rm -v "$PWD:/p" -v "/tmp/glpi-$2:/g" "php:$1-cli" \
+              php /p/.github/scripts/compat-smoke.php /g /p || status=1
+          done
+          exit $status
 
   locales:
     name: "Traductions complètes"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 (SHA pinned)
-      - name: "Installe gettext"
-        run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends gettext
-      # Le .pot est la source unique des traductions (charte section 2 bis). Le régénérer avec
-      # vendor/bin/extract-locales (composer require --dev glpi-project/tools) puis le versionner.
+      - name: "Checkout"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 (SHA pinned)
+
+      - name: "Setup PHP"
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2 (SHA pinned)
+        with:
+          php-version: "8.2"
+          coverage: none
+          tools: composer
+
+      - name: "Installe les dépendances et gettext"
+        run: |
+          composer install --prefer-dist --no-progress --no-interaction
+          sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends gettext
+
+      - name: "Régénère le .pot depuis le code"
+        run: |
+          vendor/bin/extract-locales
+          # extract-locales réécrit en_GB.po : on garde la vraie traduction anglaise.
+          git checkout -- locales/en_GB.po
+
+      - name: "Le .pot versionné est à jour"
+        run: |
+          if ! diff <(msgcat --sort-output --no-location locales/finops.pot | grep -v POT-Creation) \
+                    <(git show HEAD:locales/finops.pot | msgcat --sort-output --no-location - \
+                      | grep -v POT-Creation); then
+            echo "::error::locales/finops.pot n'est pas à jour : relancer vendor/bin/extract-locales"
+            exit 1
+          fi
+
       - name: "Variantes régionales à jour"
         run: sh .github/scripts/sync-locale-variants.sh --check
-      - name: "Chaque langue de base traduit chaque chaîne du .pot"
+
+      - name: "Chaque langue traduit chaque chaîne"
         run: |
           status=0
-          pot=$(ls locales/*.pot)
-          for lang in fr_FR en_GB de_DE es_ES it_IT pl_PL pt_BR; do
+          for lang in fr_FR en_GB de_DE es_ES it_IT pt_BR pl_PL; do
             msgfmt -c -o /dev/null "locales/$lang.po" || status=1
-            msgmerge --no-fuzzy-matching --quiet -o "/tmp/$lang.po" "locales/$lang.po" "$pot"
+            msgmerge --no-fuzzy-matching --quiet -o "/tmp/$lang.po" "locales/$lang.po" locales/finops.pot
             missing=$(msgattrib --untranslated "/tmp/$lang.po" | grep -c '^msgid "[^"]' || true)
             if [ "$missing" -gt 0 ]; then
               echo "::error::$lang.po : $missing chaîne(s) sans traduction"
+              msgattrib --untranslated "/tmp/$lang.po" | grep '^msgid "[^"]'
               status=1
             fi
           done
           exit $status
+
+  repo-hygiene:
+    name: "CHANGELOG et tutoriel en fragments"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 (SHA pinned)
+        with:
+          fetch-depth: 0
+
+      # Entrées de CHANGELOG en fragments (changes/unreleased/<issue>-<sujet>.md), rangées dans la
+      # section de la version par tools/build_changelog.py à la publication.
+      - name: "CHANGELOG : fragments valides, un fragment par PR"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          python3 tools/build_changelog.py --check
+          if [ -n "$BASE_SHA" ] && ! git diff --name-only "$BASE_SHA...HEAD" | grep -qE '^(changes/unreleased/.+\.md|CHANGELOG\.md)$'; then
+            echo "::error::ajouter une entrée de CHANGELOG dans changes/unreleased/<issue>-<sujet>.md"
+            exit 1
+          fi
+
+      # Tutoriel en fragments (docs/tutorial/{fr,en}/NNNN-*.md), assemblé par tools/build_tutorial.py
+      # à la publication : une PR ajoute un fragment et ne touche pas à docs/TUTORIAL.md.
+      - name: "Tutoriel : fragments valides, TUTORIAL.md jamais modifié à la main"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          python3 tools/build_tutorial.py --check
+          if [ -n "$BASE_SHA" ] && git diff --name-only "$BASE_SHA...HEAD" | grep -qx docs/TUTORIAL.md; then
+            python3 tools/build_tutorial.py --check-file
+          fi
+
+      - name: "Catalogue de la marketplace (finops.xml) bien formé"
+        run: python3 -c "import xml.etree.ElementTree as E; E.parse('finops.xml')"
+
+  # Points d'entrée, couverture de la matrice d'accès, SQL brut et HTML écrit en PHP : contrôles
+  # communs de glpi-plugin-security (security.yml).
+
+  quality-gate:
+    name: "Quality Gate"
+    runs-on: ubuntu-latest
+    needs: [ci, glpi12, php-compat, locales, repo-hygiene]
+    steps:
+      - name: "Tous les contrôles sont passés"
+        run: echo "OK"

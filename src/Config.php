@@ -2,9 +2,9 @@
 
 /**
  * -------------------------------------------------------------------------
- * Mon plugin for GLPI
+ * FinOps plugin for GLPI
  * Copyright (C) 2026 Vincent GUILLOTTE
- * https://github.com/parime/glpi-plugin-template
+ * https://github.com/parime/glpi-finops
  * -------------------------------------------------------------------------
  * LICENSE
  *
@@ -17,21 +17,23 @@
 
 declare(strict_types=1);
 
-namespace GlpiPlugin\Monplugin;
+namespace GlpiPlugin\Finops;
 
 /**
- * Réglages du plugin, dans la table de configuration du cœur (contexte « plugin:monplugin »).
- * Saisis uniquement depuis la page du plugin (front/config.php), retirés à la désinstallation.
- * Chaque valeur est validée ici, jamais reprise telle quelle de la requête.
+ * Réglages du plugin, enregistrés dans la configuration de GLPI (contexte plugin:finops) et
+ * modifiés seulement depuis la page de configuration du plugin (front/config.php).
  */
 final class Config
 {
-    private const CONTEXT = 'plugin:monplugin';
+    private const CONTEXT = 'plugin:finops';
+
+    public const MIN_UPLOAD_MB = 1;
+    public const MAX_UPLOAD_MB = 50;
 
     /** @var array<string, string> */
     public const DEFAULTS = [
-        'example_enabled' => '0',
-        'example_label'   => '',
+        'default_currency' => 'EUR',
+        'max_upload_mb'    => '5',
     ];
 
     /**
@@ -39,18 +41,40 @@ final class Config
      */
     public static function load(): array
     {
-        return array_intersect_key(\Config::getConfigurationValues(self::CONTEXT), self::DEFAULTS) + self::DEFAULTS;
+        $values = \Config::getConfigurationValues(self::CONTEXT, array_keys(self::DEFAULTS));
+
+        return array_intersect_key($values, self::DEFAULTS) + self::DEFAULTS;
     }
 
     /**
+     * Valeurs validées : devise ISO 4217 (trois lettres), taille maximale bornée.
+     *
      * @param array<string, mixed> $input
+     * @return array<string, string> Valeurs enregistrées.
      */
-    public static function save(array $input): void
+    public static function save(array $input): array
     {
-        \Config::setConfigurationValues(self::CONTEXT, [
-            'example_enabled' => empty($input['example_enabled']) ? '0' : '1',
-            'example_label'   => mb_substr(trim((string) ($input['example_label'] ?? '')), 0, 255),
-        ]);
+        $currency = strtoupper(trim((string) ($input['default_currency'] ?? '')));
+        if (preg_match('/^[A-Z]{3}$/', $currency) !== 1) {
+            $currency = self::DEFAULTS['default_currency'];
+        }
+        $size = max(self::MIN_UPLOAD_MB, min(self::MAX_UPLOAD_MB, (int) ($input['max_upload_mb'] ?? 0)));
+        $values = ['default_currency' => $currency, 'max_upload_mb' => (string) $size];
+        \Config::setConfigurationValues(self::CONTEXT, $values);
+
+        return $values;
+    }
+
+    public static function defaultCurrency(): string
+    {
+        return self::load()['default_currency'];
+    }
+
+    public static function maxUploadBytes(): int
+    {
+        $size = max(self::MIN_UPLOAD_MB, min(self::MAX_UPLOAD_MB, (int) self::load()['max_upload_mb']));
+
+        return $size * 1024 * 1024;
     }
 
     public static function uninstall(): void

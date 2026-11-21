@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "📖 Documentation"
+    url: https://github.com/parime/glpi-finops#readme
+    about: "README et feuille de route (issues étiquetées) avant d'ouvrir une issue · README and roadmap (labelled issues) before opening an issue"

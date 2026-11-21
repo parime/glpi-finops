@@ -2,9 +2,9 @@
 
 /**
  * -------------------------------------------------------------------------
- * Mon plugin for GLPI
+ * FinOps plugin for GLPI
  * Copyright (C) 2026 Vincent GUILLOTTE
- * https://github.com/parime/glpi-plugin-template
+ * https://github.com/parime/glpi-finops
  * -------------------------------------------------------------------------
  * LICENSE
  *
@@ -15,27 +15,14 @@
  * -------------------------------------------------------------------------
  */
 
-use GlpiPlugin\Monplugin\Config;
+use GlpiPlugin\Finops\Install\Installer;
 
-/**
- * Installation et désinstallation. Règles communes (vérifiées par le contrôle de sécurité) :
- * - DDL via $DB->doQuery() seul (jamais « or die() ») ou via Migration ; pas de SQL brut ailleurs ;
- * - la désinstallation retire tout ce que le plugin a écrit dans les tables du cœur (droits,
- *   configuration, notifications, liens de documents, suivis, notes, journaux, règles…), par la
- *   classe du cœur quand elle existe.
- */
-
-function plugin_monplugin_install(): bool
+function plugin_finops_install(): bool
 {
-    ProfileRight::addProfileRights(['plugin_monplugin']);
-
-    return true;
+    return (new Installer())->install(new Migration(PLUGIN_FINOPS_VERSION));
 }
 
-function plugin_monplugin_uninstall(): bool
+function plugin_finops_uninstall(): bool
 {
-    ProfileRight::deleteProfileRights(['plugin_monplugin']);
-    Config::uninstall();
-
-    return true;
+    return (new Installer())->uninstall(new Migration(PLUGIN_FINOPS_VERSION));
 }

@@ -2,9 +2,9 @@
 
 /**
  * -------------------------------------------------------------------------
- * Mon plugin for GLPI
+ * FinOps plugin for GLPI
  * Copyright (C) 2026 Vincent GUILLOTTE
- * https://github.com/parime/glpi-plugin-template
+ * https://github.com/parime/glpi-finops
  * -------------------------------------------------------------------------
  * LICENSE
  *
@@ -17,22 +17,28 @@
 
 declare(strict_types=1);
 
-namespace GlpiPlugin\Monplugin;
+namespace GlpiPlugin\Finops;
 
 use CommonGLPI;
 use Glpi\Application\View\TemplateRenderer;
 use Session;
 
 /**
- * Onglet des profils : chaque droit du plugin s'attribue depuis Administration > Profils, avec la
- * matrice du cœur. Le formulaire est enregistré par front/profile.form.php du cœur (droit
- * « profile »). Contrôle commun « profile-right » : tout droit du plugin doit figurer ici.
+ * Onglet « FinOps » des profils : le droit du plugin s'attribue depuis Administration > Profils,
+ * avec la matrice du cœur (enregistrée par front/profile.form.php du cœur, droit « profile »).
  */
 class Profile extends CommonGLPI
 {
+    public static function getTypeName($nb = 0)
+    {
+        return Menu::getTypeName($nb);
+    }
+
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        return self::canManage($item) ? self::createTabEntry(Menu::getTypeName(), 0, static::class, Menu::getIcon()) : '';
+        return self::canManage($item)
+            ? self::createTabEntry(self::getTypeName(), 0, static::class, Menu::getIcon())
+            : '';
     }
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
@@ -41,14 +47,21 @@ class Profile extends CommonGLPI
         if (!self::canManage($item)) {
             return false;
         }
-        TemplateRenderer::getInstance()->display('@monplugin/profile_rights.html.twig', [
-            'item'   => $item,
-            'title'  => Menu::getTypeName(),
-            'rights' => [
+        TemplateRenderer::getInstance()->display('@finops/profile_rights.html.twig', [
+            'item'     => $item,
+            'title'    => self::getTypeName(),
+            'can_edit' => (bool) Session::haveRight('profile', UPDATE),
+            'rights'   => [
                 [
-                    'rights' => [READ => __('Read'), UPDATE => __('Update'), CREATE => __('Create'), PURGE => __('Purge')],
-                    'label'  => Menu::getTypeName(),
-                    'field'  => Menu::RIGHTNAME,
+                    'itemtype' => Menu::class,
+                    'label'    => __('Cloud and virtualisation costs', 'finops'),
+                    'field'    => Menu::RIGHTNAME,
+                    'rights'   => [
+                        READ   => __('Read'),
+                        CREATE => __('Import costs', 'finops'),
+                        UPDATE => __('Link resources to assets', 'finops'),
+                        PURGE  => __('Delete an import', 'finops'),
+                    ],
                 ],
             ],
         ]);
@@ -56,7 +69,7 @@ class Profile extends CommonGLPI
         return true;
     }
 
-    // Droit « profile » du cœur, et accès au plugin : on ne délègue pas un module qu'on ne voit pas.
+    // Droit « profile » du cœur et accès au plugin : on ne délègue pas un module qu'on ne voit pas.
     private static function canManage(CommonGLPI $item): bool
     {
         return $item instanceof \Profile && !$item->isNewItem()

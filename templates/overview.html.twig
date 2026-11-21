@@ -1,0 +1,44 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Page d'accueil du plugin (Gestion > FinOps) : encadré d'aide, onglets de la rubrique, état vide
+   qui dit quoi faire ensuite. #}
+<div class="container-fluid mt-2">
+   {% include '@finops/_page_help.html.twig' with {
+      page: 'overview',
+      purpose: __('This page shows what your cloud and virtualised resources cost, by provider and by month.', 'finops'),
+      expected: __('Import a cost file, then review the months and providers that cost the most.', 'finops'),
+   } %}
+
+   {% include '@finops/_section_nav.html.twig' with {tabs: tabs} %}
+
+   <div class="card">
+      <div class="card-header">
+         <h3 class="card-title"><i class="ti ti-chart-bar me-2"></i>{{ __('Costs by provider and by month', 'finops') }}</h3>
+      </div>
+      <div class="card-body">
+         <div class="empty">
+            <div class="empty-icon"><i class="ti ti-report-money"></i></div>
+            <p class="empty-title">{{ __('No cost imported yet', 'finops') }}</p>
+            <p class="empty-subtitle text-muted">{{ __('Cost import arrives with the next version of the plugin.', 'finops') }}</p>
+            {% if config_url %}
+               <div class="empty-action">
+                  <a href="{{ config_url }}" class="btn btn-outline-primary"><i class="ti ti-settings me-1"></i>{{ __('Settings', 'finops') }}</a>
+               </div>
+            {% endif %}
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,183 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-21 10:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: front/config.php:31
+msgid "Settings saved."
+msgstr ""
+
+#: src/ConfigPage.php:51 templates/config.html.twig
+msgid "General"
+msgstr ""
+
+#: src/ConfigPage.php:52 templates/config.html.twig
+msgid "Cost sources"
+msgstr ""
+
+#: src/ConfigPage.php:53 templates/config.html.twig
+msgid "About"
+msgstr ""
+
+#: src/Menu.php:44
+msgid "FinOps"
+msgstr ""
+
+#: src/Menu.php:111
+msgid "Costs"
+msgstr ""
+
+#: src/Profile.php:57
+msgid "Cloud and virtualisation costs"
+msgstr ""
+
+#: src/Profile.php:61
+msgid "Import costs"
+msgstr ""
+
+#: src/Profile.php:62
+msgid "Link resources to assets"
+msgstr ""
+
+#: src/Profile.php:63
+msgid "Delete an import"
+msgstr ""
+
+#: src/Source/GenericCsvSource.php:35
+msgid "Generic CSV file"
+msgstr ""
+
+#: src/Source/GenericCsvSource.php:41
+msgid ""
+"Any billing export brought back to the common columns: date, provider, "
+"account, service, resource, cost, currency, tags."
+msgstr ""
+
+#: templates/_page_help.html.twig
+msgid "What is expected:"
+msgstr ""
+
+#: templates/_page_help.html.twig
+msgid "What is this page for?"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"AWS, Azure, Google Cloud, Proxmox, Hyper-V and VMware are planned: see the "
+"roadmap issues of the project."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "All the settings of the FinOps plugin, and only here."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Available"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"Choose the default currency and the largest file accepted, then check which "
+"cost sources are available."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Default currency"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "File upload"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"ISO 4217 code (EUR, USD, GBP...), used when a cost line gives no currency."
+msgstr ""
+
+#: templates/config.html.twig
+#, php-format
+msgid "Larger files are refused before being read. Between %1$s and %2$s MB."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Largest cost file (MB)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "License"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Open the costs (Management > FinOps)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Planned"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Read-only API"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Source"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Status"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"The plugin only reads from the providers: it never stops, deletes or changes "
+"anything on their side."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Type"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Version"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Cost import arrives with the next version of the plugin."
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Costs by provider and by month"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid ""
+"Import a cost file, then review the months and providers that cost the most."
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "No cost imported yet"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid "Settings"
+msgstr ""
+
+#: templates/overview.html.twig
+msgid ""
+"This page shows what your cloud and virtualised resources cost, by provider "
+"and by month."
+msgstr ""

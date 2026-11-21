@@ -1,64 +1,125 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: monplugin\n"
+"Project-Id-Version: finops\n"
 "Language: fr_BE\n"
+"PO-Revision-Date: 2026-11-21 00:00+0000\n"
+"Last-Translator: Vincent GUILLOTTE\n"
+"Language-Team: parime\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-msgid "My plugin"
-msgstr "Mon plugin"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Settings saved."
 msgstr "Réglages enregistrés."
 
-msgid "Overview"
-msgstr "Vue d'ensemble"
-
-msgid "What is this page for?"
-msgstr "À quoi sert cette page ?"
-
-msgid "What is expected:"
-msgstr "Ce qui est attendu :"
-
-msgid "This page gathers what the plugin follows for you."
-msgstr "Cette page rassemble ce que le plugin suit pour vous."
-
-msgid "Review the items marked in orange or red first."
-msgstr "Commencez par les éléments signalés en orange ou en rouge."
-
-msgid "Up to date"
-msgstr "À jour"
-
-msgid "Nothing to show yet"
-msgstr "Rien à afficher pour l'instant"
-
-msgid "Start by setting up the plugin in Setup > Plugins."
-msgstr "Commencez par régler le plugin dans Configuration > Plugins."
-
-msgid "All the settings of the plugin, and only here."
-msgstr "Tous les réglages du plugin, et seulement ici."
-
-msgid "Fill in each tab, then save."
-msgstr "Renseignez chaque onglet, puis enregistrez."
-
 msgid "General"
 msgstr "Général"
+
+msgid "Cost sources"
+msgstr "Sources de coûts"
 
 msgid "About"
 msgstr "À propos"
 
-msgid "Enable the example"
-msgstr "Activer l'exemple"
+msgid "FinOps"
+msgstr "FinOps"
 
-msgid "Example label"
-msgstr "Libellé d'exemple"
+msgid "Costs"
+msgstr "Coûts"
 
-msgid "Shown on the overview page."
-msgstr "Affiché sur la page de vue d'ensemble."
+msgid "Cloud and virtualisation costs"
+msgstr "Coûts du cloud et de la virtualisation"
+
+msgid "Import costs"
+msgstr "Importer des coûts"
+
+msgid "Link resources to assets"
+msgstr "Rattacher les ressources aux actifs"
+
+msgid "Delete an import"
+msgstr "Supprimer un import"
+
+msgid "Generic CSV file"
+msgstr "Fichier CSV générique"
+
+msgid "Any billing export brought back to the common columns: date, provider, account, service, resource, cost, currency, tags."
+msgstr "Tout export de facturation ramené aux colonnes communes : date, fournisseur, compte, service, ressource, coût, devise, étiquettes."
+
+msgid "What is expected:"
+msgstr "Ce qui est attendu :"
+
+msgid "What is this page for?"
+msgstr "À quoi sert cette page ?"
+
+msgid "AWS, Azure, Google Cloud, Proxmox, Hyper-V and VMware are planned: see the roadmap issues of the project."
+msgstr "AWS, Azure, Google Cloud, Proxmox, Hyper-V et VMware sont prévus : voir les issues de la feuille de route du projet."
+
+msgid "All the settings of the FinOps plugin, and only here."
+msgstr "Tous les réglages du plugin FinOps, et seulement ici."
+
+msgid "Available"
+msgstr "Disponible"
+
+msgid "Choose the default currency and the largest file accepted, then check which cost sources are available."
+msgstr "Choisissez la devise par défaut et la taille maximale d'un fichier, puis vérifiez les sources de coûts disponibles."
+
+msgid "Default currency"
+msgstr "Devise par défaut"
+
+msgid "File upload"
+msgstr "Dépôt de fichier"
+
+msgid "ISO 4217 code (EUR, USD, GBP...), used when a cost line gives no currency."
+msgstr "Code ISO 4217 (EUR, USD, GBP...), utilisé quand une ligne de coût ne donne pas de devise."
+
+msgid "Larger files are refused before being read. Between %1$s and %2$s MB."
+msgstr "Les fichiers plus gros sont refusés avant d'être lus. Entre %1$s et %2$s Mo."
+
+msgid "Largest cost file (MB)"
+msgstr "Taille maximale d'un fichier de coûts (Mo)"
+
+msgid "License"
+msgstr "Licence"
+
+msgid "Open the costs (Management > FinOps)"
+msgstr "Ouvrir les coûts (Gestion > FinOps)"
+
+msgid "Planned"
+msgstr "Prévue"
+
+msgid "Read-only API"
+msgstr "API en lecture seule"
+
+msgid "Source"
+msgstr "Source"
+
+msgid "Status"
+msgstr "État"
+
+msgid "The plugin only reads from the providers: it never stops, deletes or changes anything on their side."
+msgstr "Le plugin ne fait que lire chez les fournisseurs : il n'arrête, ne supprime ni ne modifie rien chez eux."
+
+msgid "Type"
+msgstr "Type"
 
 msgid "Version"
 msgstr "Version"
 
-msgid "License"
-msgstr "Licence"
+msgid "Cost import arrives with the next version of the plugin."
+msgstr "L'import des coûts arrive avec la prochaine version du plugin."
+
+msgid "Costs by provider and by month"
+msgstr "Coûts par fournisseur et par mois"
+
+msgid "Import a cost file, then review the months and providers that cost the most."
+msgstr "Importez un fichier de coûts, puis examinez les mois et les fournisseurs qui coûtent le plus."
+
+msgid "No cost imported yet"
+msgstr "Aucun coût importé pour l'instant"
+
+msgid "Settings"
+msgstr "Réglages"
+
+msgid "This page shows what your cloud and virtualised resources cost, by provider and by month."
+msgstr "Cette page montre ce que coûtent vos ressources cloud et virtualisées, par fournisseur et par mois."
