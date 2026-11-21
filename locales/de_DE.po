@@ -554,3 +554,6 @@ msgstr "Letzter Erfolg: %s"
 
 msgid "Never read"
 msgstr "Nie gelesen"
+
+msgid "OVHcloud accounts"
+msgstr "OVHcloud-Konten"

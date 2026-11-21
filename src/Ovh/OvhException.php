@@ -44,8 +44,14 @@ final class OvhException extends \RuntimeException
     {
         return match ($this->reason) {
             self::R_NETWORK   => __('OVHcloud cannot be reached (network, proxy or firewall).', 'finops'),
-            self::R_AUTH      => __('OVHcloud refused the keys: check them and the rights of the consumer key.', 'finops'),
-            self::R_NOT_FOUND => __('OVHcloud does not know an item asked for: check the project identifiers.', 'finops'),
+            self::R_AUTH      => __(
+                'OVHcloud refused the keys: check them and the rights of the consumer key.',
+                'finops'
+            ),
+            self::R_NOT_FOUND => __(
+                'OVHcloud does not know an item asked for: check the project identifiers.',
+                'finops'
+            ),
             self::R_RATE      => __('OVHcloud limits the number of calls: try again in a few minutes.', 'finops'),
             self::R_SERVER    => __('OVHcloud is unavailable: try again later.', 'finops'),
             self::R_TOO_MUCH  => __('Too much data to read at once: reduce the number of months.', 'finops'),

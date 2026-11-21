@@ -44,7 +44,12 @@ final class OvhClient
         private readonly string $applicationSecret,
         private readonly string $consumerKey,
     ) {
-        if (!isset(self::ENDPOINTS[$region]) || $applicationKey === '' || $applicationSecret === '' || $consumerKey === '') {
+        if (
+            !isset(self::ENDPOINTS[$region])
+            || $applicationKey === ''
+            || $applicationSecret === ''
+            || $consumerKey === ''
+        ) {
             throw new OvhException(OvhException::R_KEYS);
         }
     }
@@ -52,8 +57,14 @@ final class OvhClient
     /**
      * Signature OVHcloud : "$1$" suivi du SHA1 de secret+consumer+méthode+URL+corps+horodatage.
      */
-    public static function sign(string $secret, string $consumer, string $method, string $url, string $body, int $time): string
-    {
+    public static function sign(
+        string $secret,
+        string $consumer,
+        string $method,
+        string $url,
+        string $body,
+        int $time
+    ): string {
         return '$1$' . sha1(implode('+', [$secret, $consumer, $method, $url, $body, (string) $time]));
     }
 
@@ -90,10 +101,12 @@ final class OvhClient
     private function delta(): int
     {
         if ($this->delta === null) {
-            [$status, $body] = $this->send(self::ENDPOINTS[$this->region] . '/auth/time', ['Accept' => 'application/json']);
+            $url = self::ENDPOINTS[$this->region] . '/auth/time';
+            [$status, $body] = $this->send($url, ['Accept' => 'application/json']);
             $server = $status === 200 ? self::decode($body, '/auth/time') : null;
             if (!is_int($server)) {
-                throw new OvhException($status >= 500 ? OvhException::R_SERVER : OvhException::R_RESPONSE, '/auth/time');
+                $reason = $status >= 500 ? OvhException::R_SERVER : OvhException::R_RESPONSE;
+                throw new OvhException($reason, '/auth/time');
             }
             $this->delta = $server - time();
         }

@@ -134,7 +134,9 @@ class OvhAccount extends RecordBase
         if ($creation || isset($input['projects'])) {
             $projects = self::parseProjects((string) ($input['projects'] ?? ''));
             if ($projects === null) {
-                return $this->refuse(__('Each Public Cloud project identifier has 32 hexadecimal characters.', 'finops'));
+                return $this->refuse(
+                    __('Each Public Cloud project identifier has 32 hexadecimal characters.', 'finops')
+                );
             }
             $clean['projects'] = implode(',', $projects);
         }
@@ -204,13 +206,23 @@ class OvhAccount extends RecordBase
                 (string) $key->decrypt((string) $this->fields['consumer_key'])
             );
             $since = date('Y-m-01', strtotime(sprintf('-%d months', max(1, (int) $this->fields['months']) - 1)));
-            $parsed = (new OvhCostReader($client))->read($since, self::parseProjects((string) $this->fields['projects']) ?? []);
+            $projects = self::parseProjects((string) $this->fields['projects']) ?? [];
+            $parsed = (new OvhCostReader($client))->read($since, $projects);
         } catch (OvhException $e) {
-            $this->writeStatus($id, ['last_read' => $now, 'last_status' => self::STATUS_ERROR, 'last_message' => $e->reason]);
+            $this->writeStatus($id, [
+                'last_read'    => $now,
+                'last_status'  => self::STATUS_ERROR,
+                'last_message' => $e->reason,
+            ]);
 
             return ['ok' => false, 'message' => $e->label(), 'created' => 0, 'known' => 0];
         }
-        $result = (new CostImporter())->import($parsed, (int) $this->fields['entities_id'], (string) $this->fields['name'], OvhCostReader::PROVIDER);
+        $result = (new CostImporter())->import(
+            $parsed,
+            (int) $this->fields['entities_id'],
+            (string) $this->fields['name'],
+            OvhCostReader::PROVIDER
+        );
         $this->writeStatus($id, [
             'last_read'                    => $now,
             'last_success'                 => $now,

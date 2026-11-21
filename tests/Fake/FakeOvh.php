@@ -63,7 +63,8 @@ final class FakeOvh implements OvhTransport
                 'periodStart' => '2026-09-01', 'totalPrice' => ['currencyCode' => 'EUR', 'value' => 120.5],
             ],
             '/me/bill/FR0001/details/D4' => [
-                'description' => 'Ligne illisible', 'domain' => 'x', 'periodStart' => '2026-09-01', 'totalPrice' => 'n/a',
+                'description' => 'Ligne illisible', 'domain' => 'x', 'periodStart' => '2026-09-01',
+                'totalPrice' => 'n/a',
             ],
             '/cloud/project/' . self::PROJECT . '/usage/history' => [
                 ['id' => 'U1', 'period' => ['from' => '2026-09-01T00:00:00Z', 'to' => '2026-10-01T00:00:00Z']],

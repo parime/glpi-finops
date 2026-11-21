@@ -175,8 +175,15 @@ final class OvhCostReader
     /**
      * @param array<string, string> $tags
      */
-    private function add(string $date, string $service, string $resource, mixed $amount, string $currency, array $tags, string $key): void
-    {
+    private function add(
+        string $date,
+        string $service,
+        string $resource,
+        mixed $amount,
+        string $currency,
+        array $tags,
+        string $key
+    ): void {
         $cost = is_int($amount) || is_float($amount) || (is_string($amount) && is_numeric($amount))
             ? CsvCostParser::parseAmount(sprintf('%.6F', (float) $amount))
             : null;
