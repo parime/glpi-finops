@@ -1,4 +1,20 @@
 #!/usr/bin/env bash
+
+#
+# -------------------------------------------------------------------------
+# FinOps plugin for GLPI
+# Copyright (C) 2026 Vincent GUILLOTTE
+# https://github.com/parime/glpi-finops
+# -------------------------------------------------------------------------
+# LICENSE
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version. See LICENSE for the full text.
+# -------------------------------------------------------------------------
+#
+
 # Test XSS de bout en bout : apres `setup.php xss`, chaque champ texte libre contient
 # <svg/onload=alert('xss-canary')>. Aucune page ni onglet ne doit restituer cette charge telle
 # quelle (non echappee).
@@ -11,7 +27,8 @@ CANARY="<svg/onload=alert('xss-canary')>"
 JAR=$(mktemp)
 FAIL=0
 RENDERED=0
-MIN_RENDERED=${MIN_RENDERED:-1}
+# Au moins une page affichée (échappée) par fragment : sinon les données piégées ne sont pas lues.
+MIN_RENDERED=${MIN_RENDERED:-$(find "$(dirname "${BASH_SOURCE[0]}")/xss-check.d" -name '*.sh' | wc -l)}
 id() { jq -r ".$1" <<< "$IDS"; }
 xid() { jq -r ".$1" <<< "$XSS"; }
 check() { # libelle, url
