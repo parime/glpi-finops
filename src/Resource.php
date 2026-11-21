@@ -87,8 +87,8 @@ class Resource extends RecordBase
         if (!in_array($itemtype, self::ASSET_TYPES, true)) {
             return false;
         }
-        $asset = getItemForItemtype($itemtype);
-        if (!$asset instanceof CommonDBTM || !$asset->can($itemsId, READ)) {
+        $asset = new $itemtype();
+        if (!$asset->can($itemsId, READ)) {
             return false;
         }
 

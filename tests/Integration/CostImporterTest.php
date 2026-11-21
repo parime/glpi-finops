@@ -56,6 +56,10 @@ final class CostImporterTest extends TestCase
         }
     }
 
+    /**
+     * @return array{rows: list<array<string, string>>, errors: list<array{line: int, code: string}>,
+     *     rejected: int, fatal: ?string, missing: list<string>}
+     */
     private function parsed(): array
     {
         $p = self::PROVIDER;
@@ -97,7 +101,7 @@ final class CostImporterTest extends TestCase
         $this->assertSame(0, $importer->preview($parsed, 0)['new']);
 
         // Deux ressources nommées (la ligne sans ressource n'en crée pas), première et dernière date.
-        $resources = getAllDataFromTable(CostTables::RESOURCES, ['provider' => self::PROVIDER], false, 'resource');
+        $resources = getAllDataFromTable(CostTables::RESOURCES, ['provider' => self::PROVIDER]);
         $this->assertCount(2, $resources);
         $vm = array_values(array_filter($resources, static fn (array $r): bool => $r['resource'] === 'vm-test-1'))[0];
         $this->assertSame('2026-09-30', $vm['first_seen']);

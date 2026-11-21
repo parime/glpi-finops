@@ -31,6 +31,10 @@ final class CsvCostParserTest extends TestCase
 {
     private const HEADER = "date,provider,account,service,resource,cost,currency,tags\n";
 
+    /**
+     * @return array{rows: list<array<string, string>>, errors: list<array{line: int, code: string}>,
+     *     rejected: int, fatal: ?string, missing: list<string>}
+     */
     private function parse(string $content, int $maxBytes = 1048576): array
     {
         return (new CsvCostParser('EUR', $maxBytes))->parseString($content);
