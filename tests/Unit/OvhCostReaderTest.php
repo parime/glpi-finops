@@ -36,7 +36,14 @@ final class OvhCostReaderTest extends TestCase
     {
         $this->assertSame(
             '$1$339c490c60fda4ea0be481ea35727374852af496',
-            OvhClient::sign('secretAAAA1111', 'consumerBBBB2222', 'GET', OvhClient::ENDPOINTS['eu'] . '/me', '', 1700000000)
+            OvhClient::sign(
+                'secretAAAA1111',
+                'consumerBBBB2222',
+                'GET',
+                'https://eu.api.ovh.com/1.0/me',
+                '',
+                1700000000
+            )
         );
     }
 
