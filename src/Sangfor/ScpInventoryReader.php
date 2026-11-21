@@ -189,6 +189,7 @@ final class ScpInventoryReader
                 'memory_gb' => (string) round($vm['memory_mb'] / 1024, 2),
                 'disk_gb'   => (string) round($vm['disk_mb'] / 1024, 2),
             ];
+            $tags = array_filter($tags, static fn (string $value): bool => $value !== '');
             $rows[] = [
                 'usage_date'  => $month . '-01',
                 'usage_month' => $month,
@@ -198,7 +199,7 @@ final class ScpInventoryReader
                 'resource'    => CsvCostParser::clean($vm['vm_id']),
                 'cost'        => number_format(min(self::monthlyCost($vm, $grid), 1.0e12), 6, '.', ''),
                 'currency'    => $currency,
-                'tags'        => CsvCostParser::parseTags((string) json_encode(array_filter($tags, static fn (string $value): bool => $value !== ''))),
+                'tags'        => CsvCostParser::parseTags((string) json_encode($tags)),
                 'source_key'  => hash('sha256', self::PROVIDER . '|' . $accountId . '|' . $vm['vm_id'] . '|' . $month),
             ];
         }
