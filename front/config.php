@@ -19,6 +19,7 @@ use Glpi\Application\View\TemplateRenderer;
 use GlpiPlugin\Finops\Config;
 use GlpiPlugin\Finops\ConfigPage;
 use GlpiPlugin\Finops\Menu;
+use GlpiPlugin\Finops\OvhAccount;
 use GlpiPlugin\Finops\Source\SourceRegistry;
 
 // Page de configuration du plugin (Configuration > Plugins > FinOps) : le seul endroit où le plugin
@@ -43,5 +44,11 @@ TemplateRenderer::getInstance()->display('@finops/config.html.twig', [
     'sources'   => SourceRegistry::describe(),
     'version'   => PLUGIN_FINOPS_VERSION,
     'usage_url' => Menu::url(Menu::TAB_OVERVIEW),
+    // Comptes OVHcloud (issue #26), sans leurs clés.
+    'ovh_accounts' => $tab === ConfigPage::TAB_SOURCES ? OvhAccount::listing() : [],
+    'ovh_url'      => Menu::url('ovh'),
+    'regions'      => OvhAccount::regions(),
+    'max_projects' => OvhAccount::MAX_PROJECTS,
+    'entity'       => (int) Session::getActiveEntity(),
 ]);
 Html::footer();

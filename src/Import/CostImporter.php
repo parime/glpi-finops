@@ -76,11 +76,12 @@ final class CostImporter
 
     /**
      * Écrit les lignes nouvelles et le journal. L'appelant a vérifié le droit CREATE et l'entité.
+     * $source : clé de la source (csv, ovhcloud...) ; $filename : fichier ou nom du compte lu.
      *
      * @param array{rows: list<array<string, string>>, rejected: int} $parsed
      * @return array{import: int, created: int, known: int, rejected: int}
      */
-    public function import(array $parsed, int $entity, string $filename): array
+    public function import(array $parsed, int $entity, string $filename, string $source = 'csv'): array
     {
         global $DB;
 
@@ -90,7 +91,7 @@ final class CostImporter
         $importId = (int) $journal->add([
             'entities_id' => $entity,
             'users_id'    => (int) Session::getLoginUserID(),
-            'source'      => 'csv',
+            'source'      => $source,
             'filename'    => mb_substr(CsvCostParser::clean($filename), 0, 255),
         ]);
         $created = 0;

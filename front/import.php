@@ -17,11 +17,13 @@
 
 use Glpi\Application\View\TemplateRenderer;
 use GlpiPlugin\Finops\Config;
+use GlpiPlugin\Finops\ConfigPage;
 use GlpiPlugin\Finops\CostImport;
 use GlpiPlugin\Finops\Import\CostImporter;
 use GlpiPlugin\Finops\Import\CsvCostParser;
 use GlpiPlugin\Finops\Import\PendingUpload;
 use GlpiPlugin\Finops\Menu;
+use GlpiPlugin\Finops\OvhAccount;
 
 // Import d'un fichier de coûts (Gestion > FinOps > Import) : dépôt, aperçu, confirmation, journal.
 // Droit d'import du plugin (CREATE) ; supprimer un import exige PURGE. Jeton CSRF vérifié par GLPI
@@ -128,5 +130,9 @@ TemplateRenderer::getInstance()->display('@finops/import.html.twig', [
     'required'   => CsvCostParser::REQUIRED,
     'imports'    => CostImport::recent(),
     'can_purge'  => CostImport::canPurge(),
+    // Lecture des comptes OVHcloud (issue #26).
+    'ovh_accounts'  => OvhAccount::listing(),
+    'ovh_url'       => Menu::url('ovh'),
+    'ovh_config'    => OvhAccount::canCreate() ? ConfigPage::url(ConfigPage::TAB_SOURCES) : '',
 ]);
 Html::footer();
