@@ -86,7 +86,8 @@ final class OvhAccountTest extends TestCase
         $this->assertCount(1, $listed);
         $this->assertTrue($listed[0]['keys_set']);
         $dump = (string) json_encode($listed);
-        foreach ([FakeOvh::APP_KEY, FakeOvh::APP_SECRET, FakeOvh::CONSUMER, $account->fields['consumer_key']] as $secret) {
+        $secrets = [FakeOvh::APP_KEY, FakeOvh::APP_SECRET, FakeOvh::CONSUMER, $account->fields['consumer_key']];
+        foreach ($secrets as $secret) {
             $this->assertStringNotContainsString($secret, $dump);
         }
     }
