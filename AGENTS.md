@@ -8,8 +8,8 @@ It is the single reference for every parime GLPI plugin.
 
 ## Licence and attribution (please read before reusing anything)
 
-- **Mon plugin for GLPI** is licensed under **GPL-3.0-or-later** (see `LICENSE`), copyright (C) 2026
-  Vincent GUILLOTTE, https://github.com/parime/glpi-plugin-template.
+- **FinOps for GLPI** is licensed under **GPL-3.0-or-later** (see `LICENSE`), copyright (C) 2026
+  Vincent GUILLOTTE, https://github.com/parime/glpi-finops.
 - If you copy, adapt or port any part of this code (even a single file, a class, a template or a
   translation file) into another project, the GPL requires that you keep the copyright header of
   each file and the `NOTICE` file, that the derived work stays under the GPL with its source code,
@@ -26,4 +26,11 @@ It is the single reference for every parime GLPI plugin.
   installer, with uninstall.
 - User interface strings in English (msgid), translated in the 18 languages of `locales/`.
 - Fictitious data only in tests, screenshots and documentation. No em dash (U+2014).
-- Each pull request updates `CHANGELOG.md` (section `[Unreleased]`); commits and PRs in French.
+- Each pull request adds a CHANGELOG fragment `changes/unreleased/<issue>-<topic>.md` (never edits
+  `CHANGELOG.md` directly) and, when relevant, a tutorial step `docs/tutorial/{fr,en}/NNNN-*.md`.
+- A feature adds new files instead of growing central lists: its tables in
+  `src/Install/<Feature>Tables.php` (`FeatureTables`, discovered by the installer), a cost source in
+  `src/Source/<Name>Source.php` (`CostSource`, discovered by `SourceRegistry`), its end-to-end
+  security tests in `tests/security/*.d/`. See `CONTRIBUTING.md`.
+- Read-only towards providers and hypervisors; nothing changes by itself in GLPI (the plugin
+  proposes, a human validates). Commits and PRs in French.

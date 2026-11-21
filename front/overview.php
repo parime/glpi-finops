@@ -2,9 +2,9 @@
 
 /**
  * -------------------------------------------------------------------------
- * Mon plugin for GLPI
+ * FinOps plugin for GLPI
  * Copyright (C) 2026 Vincent GUILLOTTE
- * https://github.com/parime/glpi-plugin-template
+ * https://github.com/parime/glpi-finops
  * -------------------------------------------------------------------------
  * LICENSE
  *
@@ -16,16 +16,14 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
-use GlpiPlugin\Monplugin\Menu;
+use GlpiPlugin\Finops\Menu;
 
-// Page d'usage, seule entrée de menu du plugin (Outils > Mon plugin) : droit de lecture du plugin.
+// Page d'accueil du plugin, seule entrée de menu (Gestion > FinOps) : droit de lecture du plugin.
 Session::checkRight(Menu::RIGHTNAME, READ);
 
-Html::header(Menu::getTypeName(), '', 'tools', Menu::class);
-TemplateRenderer::getInstance()->display('@monplugin/menu.html.twig', [
-    // Onglets de la rubrique : un écran par onglet, selon les droits (ici un seul).
-    'tabs' => [
-        ['label' => __('Overview', 'monplugin'), 'icon' => 'ti ti-layout-dashboard', 'url' => Menu::getSearchURL(), 'active' => true],
-    ],
+Html::header(Menu::getTypeName(), '', 'management', Menu::class, Menu::TAB_OVERVIEW);
+TemplateRenderer::getInstance()->display('@finops/overview.html.twig', [
+    'tabs'       => Menu::tabs(Menu::TAB_OVERVIEW),
+    'config_url' => Session::haveRight('config', UPDATE) ? Menu::url('config') : '',
 ]);
 Html::footer();

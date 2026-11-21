@@ -1,0 +1,51 @@
+{
+    "name": "parime/glpi-finops",
+    "description": "GLPI plugin: costs of cloud and virtualised resources (FinOps), showback and under-used resources",
+    "type": "glpi-plugin",
+    "license": "GPL-3.0-or-later",
+    "keywords": [
+        "glpi",
+        "plugin",
+        "finops",
+        "cloud",
+        "costs",
+        "showback"
+    ],
+    "homepage": "https://github.com/parime/glpi-finops",
+    "authors": [
+        {
+            "name": "Vincent GUILLOTTE",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "glpi-project/tools": "^0.8",
+        "php-parallel-lint/php-parallel-lint": "^1.4",
+        "phpstan/phpstan": "^2.2",
+        "phpunit/phpunit": "^11.5",
+        "squizlabs/php_codesniffer": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "GlpiPlugin\\Finops\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GlpiPlugin\\Finops\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "8.2.99"
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -1,62 +1,73 @@
-# glpi-plugin-template
+# FinOps pour GLPI
 
-Modèle de plugin GLPI (11 et 12) de parime, conforme dès le départ à la
-**[charte commune des plugins](CHARTE.md)** (licence, traductions, sécurité, structure, logique,
-visuel, menus, documentation, publication) et avec les contrôles de sécurité communs déjà branchés
-([parime/glpi-plugin-security](https://github.com/parime/glpi-plugin-security)).
+[🇬🇧 English](README.en.md)
 
-> **CHARTE.md est la référence unique de tous les plugins.** Contributeurs et assistants de code la
-> lisent avant toute modification d'un plugin.
+Plugin GLPI qui suit le **coût des ressources cloud et virtualisées** directement dans le parc :
+coûts importés par fournisseur et par mois, ressources rattachées aux ordinateurs et applications de
+GLPI, puis (feuille de route) showback par entité, ressources sous-utilisées et alertes de surcoût.
 
-## Ce que contient le modèle
+## Présentation
 
-| Élément | Fichiers |
-|---|---|
-| Déclaration, une seule entrée de menu d'usage (Outils), page de configuration | `setup.php`, `src/Menu.php`, `front/menu.php`, `front/config.php`, `src/Config.php` |
-| Droits attribuables depuis les profils | `src/Profile.php`, `templates/profile_rights.html.twig` |
-| Installation, désinstallation sans reste | `hook.php` |
-| Visuel commun : encadré d'aide, badges, onglets de rubrique, configuration en onglets | `templates/_page_help.html.twig`, `_badge.html.twig`, `_section_nav.html.twig`, `menu.html.twig`, `config.html.twig` |
-| 18 langues, msgid en anglais, `.pot`, variantes régionales | `locales/`, `.github/scripts/sync-locale-variants.sh` |
-| Licence et attribution | `LICENSE`, `NOTICE`, `CITATION.cff`, `AGENTS.md`, `tools/HEADER` |
-| Documentation | `README.md`, `README.en.md`, `CHANGELOG.md`, `SECURITY.md` |
-| CI | `.github/workflows/ci.yml` (syntaxe PHP 8.2 à 8.5, traductions), `security.yml` (contrôles communs) |
+- **Import des coûts** depuis un fichier CSV au format commun (date, fournisseur, compte ou
+  abonnement, service, ressource, coût, devise, étiquettes) : tout export de facturation AWS, Azure,
+  Google Cloud, OVHcloud, d'un hébergeur ou d'un hyperviseur peut y être ramené. Aperçu avant
+  écriture, import rejouable sans doublon, journal des imports.
+- **Tableau par fournisseur et par mois**, une table par devise (le plugin n'additionne jamais deux
+  devises).
+- **Rattachement d'une ressource** (instance, VM, base...) à un actif de GLPI, avec un onglet
+  « FinOps » sur l'actif.
+- **Sources extensibles** : une source (AWS, Azure, GCP, OVHcloud, Proxmox, Hyper-V, VMware, Sangfor,
+  H3C...) est une classe `src/Source/<Nom>Source.php`, découverte sans liste centrale.
 
-## Démarrer un plugin
+Feuille de route : [issues du dépôt](https://github.com/parime/glpi-finops/issues).
 
-1. **Use this template** sur GitHub, puis cloner le nouveau dépôt.
-2. Remplacer `monplugin` / `Monplugin` / `MONPLUGIN` / « Mon plugin » / « My plugin » par la clé et
-   le nom du plugin, dans les noms de fichiers comme dans le code, les Twig, les `.po` et
-   `.github/workflows/security.yml`. Adapter `NOTICE`, `CITATION.cff`, `tools/HEADER` (et l'en-tête
-   des fichiers), `AGENTS.md` et les README.
-3. **Supprimer `CHARTE.md`** du nouveau dépôt : la seule référence est celle de ce modèle, vers
-   laquelle pointent déjà `AGENTS.md` et les README.
-4. Dans **Settings > Branches**, protéger la branche principale et rendre obligatoires les jobs
-   « security / ... » et « CI ».
-5. Ajouter les workflows de publication (`auto-tag.yml`, `release.yml`) et le catalogue `<clé>.xml`
-   en les copiant depuis le plugin le plus récent (charte section 11), ainsi que les jobs de CI
-   complets (charte section 7).
+## Principes
 
-## Règles de sécurité à garder en tête
+- **Lecture seule** vers les fournisseurs et les hyperviseurs : le plugin lit, il n'arrête, ne
+  supprime ni ne modifie rien chez eux.
+- **Rien ne change tout seul dans GLPI** : le plugin propose, un humain valide.
+- **Entités respectées** : chaque ligne appartient à l'entité choisie à l'import ; chacun ne voit que
+  les entités de sa session.
+- **Aucun appel sortant** sans réglage explicite d'un administrateur ; secrets chiffrés.
+- Réglages dans la page du plugin seulement, une seule entrée de menu (Gestion > FinOps).
 
-Elles sont vérifiées à chaque push par le contrôle commun (détail dans son README) :
+Le plugin suit la [charte commune des plugins](https://github.com/parime/glpi-plugin-template/blob/main/CHARTE.md).
 
-- un droit global (`Session::haveRight`) ne dit rien de l'entité d'un enregistrement : utiliser
-  `$item->can($id, READ|UPDATE)` ;
-- le contenu d'un onglet (`displayTabContentForItem()`) contrôle lui-même le droit :
-  `ajax/common.tabs.php` ne consulte pas `getTabNameForItem()` ;
-- un document généré (rapport PDF) est créé non récursif, dans l'entité de son objet source, et
-  n'est lié qu'à lui ;
-- une cible de notification propre au plugin a un identifiant ≥ 1000 ;
-- la désinstallation retire tout ce que le plugin a écrit dans les tables du cœur ;
-- toute saisie affichée est échappée (`htmlescape()`, Twig sans `|raw`).
+## Compatibilité
 
-Un faux positif se déclare dans `.glpi-security-exceptions`, avec sa justification.
+- GLPI 11 et 12 (un seul code source, voir `src/Compat/`).
+- PHP 8.2 à 8.5 (GLPI 12 : 8.3 à 8.5).
+
+## Installation
+
+1. Télécharger l'archive de la dernière version (onglet *Releases*) et l'extraire dans `plugins/` :
+   le dossier doit s'appeler `finops`.
+2. Configuration > Plugins : installer puis activer **FinOps**.
+3. Les profils qui modifient la configuration de GLPI reçoivent tous les droits du plugin ; les
+   autres se règlent dans Administration > Profils > onglet **FinOps**.
+
+## Utilisation
+
+- **Configuration > Plugins > FinOps** : devise par défaut, taille maximale d'un fichier, sources de
+  coûts disponibles.
+- **Gestion > FinOps** : coûts par fournisseur et par mois, ressources, import.
+
+Le tutoriel pas à pas est assemblé dans `docs/TUTORIAL.md` à chaque version, à partir de
+`docs/tutorial/`.
+
+## Documentation
+
+- [CHANGELOG.md](CHANGELOG.md) : évolutions par version.
+- [CONTRIBUTING.md](CONTRIBUTING.md) : contribuer, et ajouter une fonctionnalité sans conflit.
+- [SECURITY.md](SECURITY.md) : signaler une vulnérabilité.
+- [Charte commune des plugins](https://github.com/parime/glpi-plugin-template/blob/main/CHARTE.md).
 
 ## Réutilisation et citation
 
-Ce modèle et le code qu'il produit sont sous GPL-3.0-or-later : conserver l'en-tête de chaque
-fichier et `NOTICE`, et citer le projet d'origine (voir `CITATION.cff`).
+Ce plugin est sous **GPL-3.0-or-later**. Toute copie ou adaptation, même d'un seul fichier, garde
+l'en-tête de licence de chaque fichier et le fichier `NOTICE`, reste sous GPL avec son code source,
+et indique les modifications. Pour citer le projet, voir `CITATION.cff`.
 
 ## Licence
 
-GPL-3.0-or-later, voir [LICENSE](LICENSE).
+GNU General Public License v3.0 ou ultérieure : voir [LICENSE](LICENSE).
