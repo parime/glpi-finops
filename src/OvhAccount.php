@@ -39,6 +39,8 @@ use Session;
  */
 class OvhAccount extends RecordBase
 {
+    public const RIGHTNAME = Menu::RIGHTNAME;
+
     public const SECRETS = ['application_key', 'application_secret', 'consumer_key'];
     public const MAX_PROJECTS = 20;
     public const MIN_MONTHS = 1;
@@ -88,7 +90,7 @@ class OvhAccount extends RecordBase
     /** Lancer une lecture : droit d'import du plugin. */
     public static function canLaunchRead(): bool
     {
-        return (bool) Session::haveRight(Menu::RIGHTNAME, CREATE);
+        return (bool) Session::haveRight(self::RIGHTNAME, CREATE);
     }
 
     public function prepareInputForAdd($input)
