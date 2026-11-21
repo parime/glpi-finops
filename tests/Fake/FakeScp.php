@@ -81,8 +81,10 @@ final class FakeScp implements ScpTransport
         if (isset($this->failures[$path])) {
             return [$this->failures[$path], '{"code":1,"message":"<b>fake failure</b>","data":{}}'];
         }
-        if ($method === 'GET' && $path === '/janus/v2/public-key' && !$this->legacyKey) {
-            return [200, (string) json_encode(['public_key' => self::modulus() . '\n'])];
+        if ($method === 'GET' && $path === '/janus/v2/public-key') {
+            return $this->legacyKey
+                ? [404, '{"code":404,"message":"not found","data":{}}']
+                : [200, (string) json_encode(['public_key' => self::modulus() . '\n'])];
         }
         if ($method === 'GET' && $path === '/janus/public-key' && $this->legacyKey) {
             return [200, $this->envelope(['public_key' => self::modulus()])];
