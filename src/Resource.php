@@ -199,7 +199,11 @@ class Resource extends RecordBase
         }
         $or = [];
         foreach ($rows as $row) {
-            $or[] = ['entities_id' => $row['entities_id'], 'provider' => $row['provider'], 'resource' => $row['resource']];
+            $or[] = [
+                'entities_id' => $row['entities_id'],
+                'provider'    => $row['provider'],
+                'resource'    => $row['resource'],
+            ];
         }
         $costs = [];
         $iterator = $DB->request([

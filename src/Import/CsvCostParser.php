@@ -44,7 +44,9 @@ final class CsvCostParser
     public const COLUMNS = [
         'date'     => ['date', 'usage_date', 'day', 'billing_date', 'usage_start_date'],
         'provider' => ['provider', 'cloud', 'vendor', 'supplier'],
-        'account'  => ['account', 'account_id', 'account_name', 'subscription', 'subscription_id', 'project', 'project_id'],
+        'account'  => [
+            'account', 'account_id', 'account_name', 'subscription', 'subscription_id', 'project', 'project_id',
+        ],
         'service'  => ['service', 'service_name', 'product', 'product_name', 'category', 'meter_category'],
         'resource' => ['resource', 'resource_id', 'resource_name', 'instance', 'instance_id'],
         'cost'     => ['cost', 'amount', 'total', 'cost_amount', 'unblended_cost'],
@@ -69,7 +71,10 @@ final class CsvCostParser
     public const E_CURRENCY = 'currency';
     public const E_SHAPE = 'shape';
 
-    public function __construct(private readonly string $defaultCurrency = 'EUR', private readonly int $maxBytes = 5242880)
+    public function __construct(
+        private readonly string $defaultCurrency = 'EUR',
+        private readonly int $maxBytes = 5242880
+    )
     {
     }
 
@@ -186,7 +191,9 @@ final class CsvCostParser
         if (count($cells) > max($width, self::MAX_COLUMNS)) {
             return self::E_SHAPE;
         }
-        $get = static fn (string $column): string => isset($map[$column]) ? self::clean((string) ($cells[$map[$column]] ?? '')) : '';
+        $get = static fn (string $column): string => isset($map[$column])
+            ? self::clean((string) ($cells[$map[$column]] ?? ''))
+            : '';
 
         $date = self::parseDate($get('date'));
         if ($date === null) {

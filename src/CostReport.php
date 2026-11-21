@@ -65,7 +65,8 @@ final class CostReport
             'GROUPBY' => ['currency', 'usage_month', 'provider'],
         ]);
         foreach ($iterator as $row) {
-            $sums[(string) $row['currency']][(string) $row['usage_month']][(string) $row['provider']] = (float) $row['total'];
+            $month = (string) $row['usage_month'];
+            $sums[(string) $row['currency']][$month][(string) $row['provider']] = (float) $row['total'];
         }
         ksort($sums);
         $tables = [];
@@ -138,7 +139,11 @@ final class CostReport
         }
         $or = [];
         foreach ($resources as $row) {
-            $or[] = ['entities_id' => $row['entities_id'], 'provider' => $row['provider'], 'resource' => $row['resource']];
+            $or[] = [
+                'entities_id' => $row['entities_id'],
+                'provider'    => $row['provider'],
+                'resource'    => $row['resource'],
+            ];
         }
         $months = [];
         $iterator = $DB->request([

@@ -108,7 +108,10 @@ final class CsvCostParserTest extends TestCase
     {
         return [
             'binary file'         => ["\x89PNG\r\n\x1a\n\0\0\0\rIHDR", CsvCostParser::E_BINARY],
-            'php code'            => [self::HEADER . "2026-10-01,aws,<?php system('id'); ?>,EC2,i-1,1,USD,\n", CsvCostParser::E_CODE],
+            'php code'            => [
+                self::HEADER . "2026-10-01,aws,<?php system('id'); ?>,EC2,i-1,1,USD,\n",
+                CsvCostParser::E_CODE,
+            ],
             'short php tag'       => ["<?= phpinfo() ?>\n" . self::HEADER, CsvCostParser::E_CODE],
             'empty file'          => ["  \n\n", CsvCostParser::E_EMPTY],
             'no cost column'      => ["date,provider,service\n2026-10-01,aws,EC2\n", CsvCostParser::E_COLUMNS],

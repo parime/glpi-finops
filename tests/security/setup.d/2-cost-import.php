@@ -12,7 +12,11 @@ use GlpiPlugin\Finops\Install\CostTables;
 foreach (['A' => $a, 'B' => $b] as $suffix => $entity) {
     $lower = strtolower($suffix);
     $filename = 'couts-securite-' . $lower . '.csv';
-    $import = $DB->request(['FROM' => CostTables::IMPORTS, 'WHERE' => ['filename' => $filename], 'LIMIT' => 1])->current();
+    $import = $DB->request([
+        'FROM'  => CostTables::IMPORTS,
+        'WHERE' => ['filename' => $filename],
+        'LIMIT' => 1,
+    ])->current();
     if ($import === null) {
         $parsed = (new CsvCostParser('EUR', 1048576))->parseString(
             "date,provider,account,service,resource,cost,currency\n"

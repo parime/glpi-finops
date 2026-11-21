@@ -120,7 +120,8 @@ final class CostImporter
                 $created++;
                 if ($row['resource'] !== '') {
                     $key = $row['provider'] . "\x1F" . $row['resource'];
-                    $seen = $resources[$key] ?? ['row' => $row, 'first' => $row['usage_date'], 'last' => $row['usage_date']];
+                    $seen = $resources[$key]
+                        ?? ['row' => $row, 'first' => $row['usage_date'], 'last' => $row['usage_date']];
                     $seen['first'] = min($seen['first'], $row['usage_date']);
                     if ($row['usage_date'] >= $seen['last']) {
                         [$seen['last'], $seen['row']] = [$row['usage_date'], $row];
@@ -214,7 +215,10 @@ final class CostImporter
     public static function errorLabel(string $code, array $missing = []): string
     {
         return match ($code) {
-            CsvCostParser::E_TOO_LARGE        => __('The file is larger than the size allowed in the settings.', 'finops'),
+            CsvCostParser::E_TOO_LARGE        => __(
+                'The file is larger than the size allowed in the settings.',
+                'finops'
+            ),
             CsvCostParser::E_EMPTY            => __('The file is empty.', 'finops'),
             CsvCostParser::E_BINARY           => __('The file is not a text file.', 'finops'),
             CsvCostParser::E_CODE             => __('The file contains program code and was refused.', 'finops'),

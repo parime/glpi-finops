@@ -39,7 +39,7 @@ if (isset($_POST['upload'])) {
     if (!Session::haveAccessToEntity($entity)) {
         $error = __('Choose an entity you have access to.', 'finops');
     } elseif (!is_array($file) || (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
-        $error = (int) ($file['error'] ?? 0) === UPLOAD_ERR_INI_SIZE || (int) ($file['error'] ?? 0) === UPLOAD_ERR_FORM_SIZE
+        $error = in_array((int) ($file['error'] ?? 0), [UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE], true)
             ? CostImporter::errorLabel(CsvCostParser::E_TOO_LARGE)
             : __('Choose a CSV file.', 'finops');
     } elseif (!CsvCostParser::isAllowedName((string) $file['name'])) {
@@ -48,7 +48,8 @@ if (isset($_POST['upload'])) {
         $error = CostImporter::errorLabel(CsvCostParser::E_TOO_LARGE);
     } else {
         $mime = (string) (new finfo(FILEINFO_MIME_TYPE))->file((string) $file['tmp_name']);
-        if (!str_starts_with($mime, 'text/') && !in_array($mime, ['application/csv', 'application/vnd.ms-excel'], true)) {
+        $textMime = str_starts_with($mime, 'text/') || in_array($mime, ['application/csv', 'application/vnd.ms-excel'], true);
+        if (!$textMime) {
             $error = CostImporter::errorLabel(CsvCostParser::E_BINARY);
         } else {
             $parsed = $parser->parseFile((string) $file['tmp_name']);
@@ -63,7 +64,10 @@ if (isset($_POST['upload'])) {
                 } else {
                     $preview = (new CostImporter())->preview($parsed, $entity) + $pending + [
                         'errors'      => array_map(
-                            static fn (array $e): array => ['line' => $e['line'], 'message' => CostImporter::errorLabel($e['code'])],
+                            static fn (array $e): array => [
+                                'line'    => $e['line'],
+                                'message' => CostImporter::errorLabel($e['code']),
+                            ],
                             $parsed['errors']
                         ),
                         'entity_name' => Dropdown::getDropdownName('glpi_entities', $entity),
@@ -79,13 +83,15 @@ if (isset($_POST['upload'])) {
 } elseif (isset($_POST['confirm'])) {
     $pending = PendingUpload::get((string) ($_POST['token'] ?? ''));
     if ($pending === null || !Session::haveAccessToEntity($pending['entity'])) {
-        Session::addMessageAfterRedirect(htmlescape(__('The preview has expired: upload the file again.', 'finops')), false, ERROR);
+        $message = __('The preview has expired: upload the file again.', 'finops');
+        Session::addMessageAfterRedirect(htmlescape($message), false, ERROR);
         Html::redirect($pageUrl);
     }
     $parsed = $parser->parseFile($pending['path']);
     PendingUpload::clear();
     if ($parsed['fatal'] !== null) {
-        Session::addMessageAfterRedirect(htmlescape(CostImporter::errorLabel($parsed['fatal'], $parsed['missing'])), false, ERROR);
+        $message = CostImporter::errorLabel($parsed['fatal'], $parsed['missing']);
+        Session::addMessageAfterRedirect(htmlescape($message), false, ERROR);
         Html::redirect($pageUrl);
     }
     $result = (new CostImporter())->import($parsed, $pending['entity'], $pending['filename']);

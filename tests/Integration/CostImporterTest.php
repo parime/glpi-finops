@@ -156,9 +156,10 @@ final class CostImporterTest extends TestCase
     public function testDeletingAnImportDeletesItsLines(): void
     {
         $result = (new CostImporter())->import($this->parsed(), 0, 'costs-test.csv');
-        $this->assertSame(4, countElementsInTable(CostTables::LINES, ['plugin_finops_costimports_id' => $result['import']]));
+        $lines = ['plugin_finops_costimports_id' => $result['import']];
+        $this->assertSame(4, countElementsInTable(CostTables::LINES, $lines));
 
         $this->assertTrue((new CostImport())->delete(['id' => $result['import']], true));
-        $this->assertSame(0, countElementsInTable(CostTables::LINES, ['plugin_finops_costimports_id' => $result['import']]));
+        $this->assertSame(0, countElementsInTable(CostTables::LINES, $lines));
     }
 }

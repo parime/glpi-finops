@@ -65,7 +65,11 @@ final class PendingUpload
             return null;
         }
 
-        return ['path' => self::path($token), 'filename' => (string) $pending['filename'], 'entity' => (int) $pending['entity']];
+        return [
+            'path'     => self::path($token),
+            'filename' => (string) $pending['filename'],
+            'entity'   => (int) $pending['entity'],
+        ];
     }
 
     public static function clear(): void
