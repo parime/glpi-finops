@@ -393,3 +393,171 @@ msgstr "Zasoby pojawiają się tutaj, gdy plik kosztów je wymienia (kolumna res
 
 msgid "Search"
 msgstr "Szukaj"
+
+msgid "OVHcloud account"
+msgid_plural "OVHcloud accounts"
+msgstr[0] "Konto OVHcloud"
+msgstr[1] "Konta OVHcloud"
+msgstr[2] "Kont OVHcloud"
+
+msgid "OVHcloud cannot be reached (network, proxy or firewall)."
+msgstr "Brak połączenia z OVHcloud (sieć, proxy lub zapora)."
+
+msgid "OVHcloud refused the keys: check them and the rights of the consumer key."
+msgstr "OVHcloud odrzucił klucze: sprawdź je oraz uprawnienia consumer key."
+
+msgid "OVHcloud does not know an item asked for: check the project identifiers."
+msgstr "OVHcloud nie zna żądanego elementu: sprawdź identyfikatory projektów."
+
+msgid "OVHcloud limits the number of calls: try again in a few minutes."
+msgstr "OVHcloud ogranicza liczbę wywołań: spróbuj ponownie za kilka minut."
+
+msgid "OVHcloud is unavailable: try again later."
+msgstr "OVHcloud jest niedostępny: spróbuj ponownie później."
+
+msgid "Too much data to read at once: reduce the number of months."
+msgstr "Zbyt dużo danych naraz: zmniejsz liczbę miesięcy."
+
+msgid "The keys of this account are incomplete."
+msgstr "Klucze tego konta są niekompletne."
+
+msgid "OVHcloud sent an unexpected answer."
+msgstr "OVHcloud wysłał nieoczekiwaną odpowiedź."
+
+msgid "Europe"
+msgstr "Europa"
+
+msgid "Canada"
+msgstr "Kanada"
+
+msgid "Give the account a name."
+msgstr "Nadaj kontu nazwę."
+
+msgid "Each Public Cloud project identifier has 32 hexadecimal characters."
+msgstr "Każdy identyfikator projektu Public Cloud ma 32 znaki szesnastkowe."
+
+msgid "The three OVHcloud keys are required."
+msgstr "Trzy klucze OVHcloud są wymagane."
+
+msgid "An OVHcloud key only contains letters and digits."
+msgstr "Klucz OVHcloud zawiera tylko litery i cyfry."
+
+msgid "OVHcloud"
+msgstr "OVHcloud"
+
+msgid "Bills and Public Cloud consumption per resource, read on request from the OVHcloud API (Europe or Canada)."
+msgstr "Faktury i zużycie Public Cloud według zasobu, odczytywane na żądanie z API OVHcloud (Europa lub Kanada)."
+
+msgid "OVHcloud account saved."
+msgstr "Konto OVHcloud zapisane."
+
+msgid "OVHcloud account deleted; the costs already read are kept."
+msgstr "Konto OVHcloud usunięte; już odczytane koszty zostają zachowane."
+
+#, php-format
+msgid "OVHcloud read: %1$d new lines, %2$d already known."
+msgstr "Odczyt OVHcloud: %1$d nowych wierszy, %2$d już znanych."
+
+#, php-format
+msgid "OVHcloud read failed, the costs already read are kept: %s"
+msgstr "Odczyt OVHcloud nie powiódł się, już odczytane koszty zostają zachowane: %s"
+
+msgid "Shown in the import journal, for example the customer account or the department."
+msgstr "Wyświetlane w dzienniku importów, na przykład konto klienta lub dział."
+
+msgid "The cost lines read belong to this entity."
+msgstr "Odczytane wiersze kosztów należą do tej jednostki."
+
+msgid "API region"
+msgstr "Region API"
+
+msgid "Region where the OVHcloud account was created: Europe (ovh.com) or Canada (ovh.ca)."
+msgstr "Region, w którym utworzono konto OVHcloud: Europa (ovh.com) lub Kanada (ovh.ca)."
+
+msgid "Application key"
+msgstr "Application key"
+
+msgid "Application secret"
+msgstr "Application secret"
+
+msgid "Consumer key"
+msgstr "Consumer key"
+
+msgid "Saved, unchanged if left empty"
+msgstr "Zapisany, bez zmian jeśli pusty"
+
+msgid "Public Cloud projects"
+msgstr "Projekty Public Cloud"
+
+#, php-format
+msgid "Optional, %s at most: identifiers of 32 characters, separated by commas. Their consumption is read per resource, and their bill lines are left out to avoid counting them twice."
+msgstr "Opcjonalnie, najwyżej %s: identyfikatory 32-znakowe, oddzielone przecinkami. Ich zużycie jest odczytywane według zasobu, a ich wiersze faktur są pomijane, aby nie liczyć ich dwa razy."
+
+msgid "Months read"
+msgstr "Odczytywane miesiące"
+
+msgid "The current month and the previous ones. Lines already read are never duplicated."
+msgstr "Bieżący miesiąc i poprzednie. Już odczytane wiersze nigdy nie są duplikowane."
+
+msgid "Which keys?"
+msgstr "Jakie klucze?"
+
+msgid "Create an application on the OVHcloud API (createToken page of your region) with only these rights, all in GET: /me, /me/bill/*, /cloud/project/*/usage/*. The plugin never changes anything at OVHcloud. The keys are encrypted by GLPI and never shown again."
+msgstr "Utwórz aplikację w API OVHcloud (strona createToken swojego regionu) tylko z tymi uprawnieniami, wszystkie GET: /me, /me/bill/*, /cloud/project/*/usage/*. Wtyczka nigdy niczego nie zmienia w OVHcloud. Klucze są szyfrowane przez GLPI i nigdy więcej nie są wyświetlane."
+
+msgid "Keys"
+msgstr "Klucze"
+
+msgid "Last read"
+msgstr "Ostatni odczyt"
+
+msgid "Saved, encrypted"
+msgstr "Zapisane, zaszyfrowane"
+
+msgid "Incomplete"
+msgstr "Niekompletne"
+
+msgid "Delete this OVHcloud account? The costs already read are kept."
+msgstr "Usunąć to konto OVHcloud? Już odczytane koszty zostają zachowane."
+
+msgid "Add an OVHcloud account"
+msgstr "Dodaj konto OVHcloud"
+
+msgid "Read from OVHcloud"
+msgstr "Odczytaj z OVHcloud"
+
+msgid "Reads the bills and the Public Cloud consumption of the account, in read-only mode. A failed read writes nothing: the costs already read stay as they are."
+msgstr "Odczytuje faktury i zużycie Public Cloud konta, tylko do odczytu. Nieudany odczyt niczego nie zapisuje: już odczytane koszty pozostają bez zmian."
+
+msgid "No OVHcloud account yet."
+msgstr "Brak kont OVHcloud."
+
+msgid "Add one in the settings (Cost sources tab)"
+msgstr "Dodaj je w ustawieniach (karta Źródła kosztów)"
+
+msgid "An administrator adds them in the settings of the plugin."
+msgstr "Administrator dodaje je w ustawieniach wtyczki."
+
+msgid "Read now"
+msgstr "Odczytaj teraz"
+
+msgid "Manage the OVHcloud accounts"
+msgstr "Zarządzaj kontami OVHcloud"
+
+#, php-format
+msgid "Read on %s"
+msgstr "Odczytano %s"
+
+#, php-format
+msgid "Failed on %s"
+msgstr "Niepowodzenie %s"
+
+#, php-format
+msgid "Last success: %s"
+msgstr "Ostatni sukces: %s"
+
+msgid "Never read"
+msgstr "Nigdy nie odczytano"
+
+msgid "OVHcloud accounts"
+msgstr "Konta OVHcloud"

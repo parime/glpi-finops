@@ -1,0 +1,72 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Lecture des comptes OVHcloud sur clic (issue #26), page d'import. #}
+<div class="card mb-3" style="max-width: 1100px;">
+   <div class="card-header">
+      <h3 class="card-title"><i class="ti ti-cloud-download me-2"></i>{{ __('Read from OVHcloud', 'finops') }}</h3>
+   </div>
+   <div class="card-body">
+      <p class="text-muted">
+         {{ __('Reads the bills and the Public Cloud consumption of the account, in read-only mode. A failed read writes nothing: the costs already read stay as they are.', 'finops') }}
+      </p>
+      {% if ovh_accounts is empty %}
+         <p class="mb-0">
+            <i class="ti ti-info-circle me-1"></i>{{ __('No OVHcloud account yet.', 'finops') }}
+            {% if ovh_config %}
+               <a href="{{ ovh_config }}"><i class="ti ti-arrow-right me-1"></i>{{ __('Add one in the settings (Cost sources tab)', 'finops') }}</a>
+            {% else %}
+               {{ __('An administrator adds them in the settings of the plugin.', 'finops') }}
+            {% endif %}
+         </p>
+      {% else %}
+         <div class="table-responsive">
+            <table class="table table-vcenter card-table">
+               <thead>
+                  <tr>
+                     <th>{{ __('Name') }}</th>
+                     <th>{{ __('Entity') }}</th>
+                     <th>{{ __('Months read', 'finops') }}</th>
+                     <th>{{ __('Last read', 'finops') }}</th>
+                     <th></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for account in ovh_accounts %}
+                     <tr>
+                        <td><strong>{{ account.name }}</strong></td>
+                        <td>{{ account.entity }}</td>
+                        <td>{{ account.months }}</td>
+                        <td>{% include '@finops/_ovh_status.html.twig' with {account: account} %}</td>
+                        <td class="text-end">
+                           <form method="post" action="{{ ovh_url }}">
+                              <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                              <input type="hidden" name="id" value="{{ account.id }}" />
+                              <button type="submit" name="read" value="1" class="btn btn-sm btn-primary" {{ account.keys_set ? '' : 'disabled' }}>
+                                 <i class="ti ti-refresh me-1"></i>{{ __('Read now', 'finops') }}
+                              </button>
+                           </form>
+                        </td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+         {% if ovh_config %}
+            <p class="small mt-2 mb-0"><a href="{{ ovh_config }}"><i class="ti ti-settings me-1"></i>{{ __('Manage the OVHcloud accounts', 'finops') }}</a></p>
+         {% endif %}
+      {% endif %}
+   </div>
+</div>

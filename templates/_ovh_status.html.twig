@@ -1,0 +1,28 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# État de la dernière lecture d'un compte OVHcloud : réussie, en échec (motif traduit, dernière
+   réussite gardée) ou jamais lue. #}
+{% if account.status == 'ok' %}
+   {% include '@finops/_badge.html.twig' with {kind: 'ok', label: __('Read on %s', 'finops')|format(account.last_read)} %}
+{% elseif account.status == 'error' %}
+   {% include '@finops/_badge.html.twig' with {kind: 'danger', label: __('Failed on %s', 'finops')|format(account.last_read)} %}
+   <div class="small text-muted">{{ account.failure }}</div>
+   {% if account.last_success %}
+      <div class="small text-muted">{{ __('Last success: %s', 'finops')|format(account.last_success) }}</div>
+   {% endif %}
+{% else %}
+   {% include '@finops/_badge.html.twig' with {kind: 'neutral', label: __('Never read', 'finops')} %}
+{% endif %}

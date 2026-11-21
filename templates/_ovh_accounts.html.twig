@@ -1,0 +1,137 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Comptes OVHcloud (issue #26), onglet « Sources de coûts » de la configuration : liste, ajout,
+   modification, suppression. Les clés ne sont jamais réaffichées : un champ vide garde la clé. #}
+
+{% macro account_form(account, ovh_url, entity, regions, max_projects) %}
+   {% import 'components/form/fields_macros.html.twig' as fields %}
+   {% set creation = account is null %}
+   <form method="post" action="{{ ovh_url }}" autocomplete="off">
+      <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+      {% if not creation %}<input type="hidden" name="id" value="{{ account.id }}" />{% endif %}
+      {{ fields.textField('name', creation ? '' : account.name, __('Name'), {
+         'required': true,
+         'add_field_html': '<div class="form-hint">' ~ __('Shown in the import journal, for example the customer account or the department.', 'finops')|e ~ '</div>',
+      }) }}
+      {{ fields.dropdownField('Entity', 'entities_id', creation ? entity : account.entities_id, __('Entity'), {
+         'add_field_html': '<div class="form-hint">' ~ __('The cost lines read belong to this entity.', 'finops')|e ~ '</div>',
+      }) }}
+      {{ fields.dropdownArrayField('region', creation ? 'eu' : account.region, regions, __('API region', 'finops'), {
+         'add_field_html': '<div class="form-hint">' ~ __('Region where the OVHcloud account was created: Europe (ovh.com) or Canada (ovh.ca).', 'finops')|e ~ '</div>',
+      }) }}
+      {% for field, label in {
+         'application_key': __('Application key', 'finops'),
+         'application_secret': __('Application secret', 'finops'),
+         'consumer_key': __('Consumer key', 'finops'),
+      } %}
+         <div class="form-field row col-12 mb-2">
+            <label class="col-form-label col-xxl-5 text-xxl-end" for="finops-ovh-{{ field }}-{{ creation ? 'new' : account.id }}">{{ label }}</label>
+            <div class="col-xxl-7 field-container">
+               <input type="password" class="form-control" name="{{ field }}" value="" autocomplete="new-password"
+                      id="finops-ovh-{{ field }}-{{ creation ? 'new' : account.id }}" {{ creation ? 'required' : '' }}
+                      placeholder="{{ creation ? '' : __('Saved, unchanged if left empty', 'finops') }}" />
+            </div>
+         </div>
+      {% endfor %}
+      <div class="form-field row col-12 mb-2">
+         <label class="col-form-label col-xxl-5 text-xxl-end" for="finops-ovh-projects-{{ creation ? 'new' : account.id }}">{{ __('Public Cloud projects', 'finops') }}</label>
+         <div class="col-xxl-7 field-container">
+            <textarea class="form-control" rows="2" name="projects" id="finops-ovh-projects-{{ creation ? 'new' : account.id }}">{{ creation ? '' : account.projects }}</textarea>
+            <div class="form-hint">
+               {{ __('Optional, %s at most: identifiers of 32 characters, separated by commas. Their consumption is read per resource, and their bill lines are left out to avoid counting them twice.', 'finops')|format(max_projects) }}
+            </div>
+         </div>
+      </div>
+      {{ fields.numberField('months', creation ? 3 : account.months, __('Months read', 'finops'), {
+         'min': 1,
+         'max': 12,
+         'step': 1,
+         'add_field_html': '<div class="form-hint">' ~ __('The current month and the previous ones. Lines already read are never duplicated.', 'finops')|e ~ '</div>',
+      }) }}
+      <button type="submit" name="{{ creation ? 'add' : 'update' }}" value="1" class="btn btn-primary">
+         <i class="ti ti-device-floppy me-1"></i>{{ creation ? __('Add') : __('Save') }}
+      </button>
+   </form>
+{% endmacro %}
+
+<div class="card mt-3" style="max-width: 1100px;">
+   <div class="card-header">
+      <h3 class="card-title"><i class="ti ti-cloud me-2"></i>{{ __('OVHcloud accounts', 'finops') }}</h3>
+   </div>
+   <div class="card-body">
+      <div class="alert alert-info">
+         <h4 class="alert-title"><i class="ti ti-key me-1"></i>{{ __('Which keys?', 'finops') }}</h4>
+         {{ __('Create an application on the OVHcloud API (createToken page of your region) with only these rights, all in GET: /me, /me/bill/*, /cloud/project/*/usage/*. The plugin never changes anything at OVHcloud. The keys are encrypted by GLPI and never shown again.', 'finops') }}
+      </div>
+      {% if ovh_accounts is not empty %}
+         <div class="table-responsive mb-3">
+            <table class="table table-vcenter card-table">
+               <thead>
+                  <tr>
+                     <th>{{ __('Name') }}</th>
+                     <th>{{ __('Entity') }}</th>
+                     <th>{{ __('API region', 'finops') }}</th>
+                     <th>{{ __('Keys', 'finops') }}</th>
+                     <th>{{ __('Last read', 'finops') }}</th>
+                     <th></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for account in ovh_accounts %}
+                     <tr>
+                        <td><strong>{{ account.name }}</strong>
+                           {% if account.projects %}<div class="small text-muted text-break">{{ account.projects }}</div>{% endif %}
+                        </td>
+                        <td>{{ account.entity }}</td>
+                        <td>{{ regions[account.region] ?? account.region }}</td>
+                        <td>
+                           {% if account.keys_set %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'ok', label: __('Saved, encrypted', 'finops')} %}
+                           {% else %}
+                              {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Incomplete', 'finops')} %}
+                           {% endif %}
+                        </td>
+                        <td>{% include '@finops/_ovh_status.html.twig' with {account: account} %}</td>
+                        <td class="text-end">
+                           <form method="post" action="{{ ovh_url }}" class="d-inline"
+                                 onsubmit="return confirm('{{ __('Delete this OVHcloud account? The costs already read are kept.', 'finops')|e('js') }}');">
+                              <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                              <input type="hidden" name="id" value="{{ account.id }}" />
+                              <button type="submit" name="purge" value="1" class="btn btn-sm btn-ghost-danger">
+                                 <i class="ti ti-trash me-1"></i>{{ __('Delete') }}
+                              </button>
+                           </form>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td colspan="6" class="border-top-0 pt-0">
+                           <details>
+                              <summary class="small"><i class="ti ti-pencil me-1"></i>{{ __('Edit') }}</summary>
+                              <div class="mt-2">{{ _self.account_form(account, ovh_url, entity, regions, max_projects) }}</div>
+                           </details>
+                        </td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      {% endif %}
+      <details {{ ovh_accounts is empty ? 'open' : '' }}>
+         <summary><i class="ti ti-plus me-1"></i>{{ __('Add an OVHcloud account', 'finops') }}</summary>
+         <div class="mt-2">{{ _self.account_form(null, ovh_url, entity, regions, max_projects) }}</div>
+      </details>
+   </div>
+</div>
