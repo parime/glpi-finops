@@ -1,6 +1,21 @@
 <?php
 
 /**
+ * -------------------------------------------------------------------------
+ * FinOps plugin for GLPI
+ * Copyright (C) 2026 Vincent GUILLOTTE
+ * https://github.com/parime/glpi-finops
+ * -------------------------------------------------------------------------
+ * LICENSE
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version. See LICENSE for the full text.
+ * -------------------------------------------------------------------------
+ */
+
+/**
  * Issue #2 : coûts importés dans les entités A et B, une ressource par entité, chacune rattachée à
  * l'ordinateur de son entité. Fragment de tests/security/setup.php (variables $DB, $ids, $a, $b).
  */
