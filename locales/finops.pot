@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 14:10+0000\n"
+"POT-Creation-Date: 2026-11-21 18:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,57 +18,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: front/config.php:32
+#: front/config.php:33
 msgid "Settings saved."
 msgstr ""
 
-#: front/import.php:42
+#: front/import.php:43
 msgid "Choose an entity you have access to."
 msgstr ""
 
-#: front/import.php:46
+#: front/import.php:47
 msgid "Choose a CSV file."
 msgstr ""
 
-#: front/import.php:48
+#: front/import.php:49
 msgid "Only .csv and .txt files are accepted."
 msgstr ""
 
-#: front/import.php:62
+#: front/import.php:63
 msgid "No valid cost line in the file."
 msgstr ""
 
-#: front/import.php:66 src/Import/CostImporter.php:237
+#: front/import.php:67 src/Import/CostImporter.php:237
 msgid "The file cannot be read."
 msgstr ""
 
-#: front/import.php:89
+#: front/import.php:90
 msgid "The preview has expired: upload the file again."
 msgstr ""
 
-#: front/import.php:102
+#: front/import.php:103
 #, php-format
 msgid "Import done: %1$d new lines, %2$d already known, %3$d rejected."
 msgstr ""
 
-#: front/import.php:117
+#: front/import.php:118
 msgid "Import deleted with its cost lines."
 msgstr ""
 
-#: front/ovh.php:36 front/ovh.php:47
+#: front/ovh.php:39 front/ovh.php:50
 msgid "OVHcloud account saved."
 msgstr ""
 
-#: front/ovh.php:54
+#: front/ovh.php:57
 msgid "OVHcloud account deleted; the costs already read are kept."
 msgstr ""
 
-#: front/ovh.php:63
+#: front/ovh.php:66
 #, php-format
 msgid "OVHcloud read: %1$d new lines, %2$d already known."
 msgstr ""
 
-#: front/ovh.php:70
+#: front/ovh.php:73
 #, php-format
 msgid "OVHcloud read failed, the costs already read are kept: %s"
 msgstr ""
@@ -77,12 +77,34 @@ msgstr ""
 msgid "Link removed."
 msgstr ""
 
-#: front/resource.php:37
+#: front/resource.php:37 front/sangfor.php:89
 msgid "Resource linked to the asset."
 msgstr ""
 
-#: front/resource.php:40
+#: front/resource.php:40 front/sangfor.php:91
 msgid "Choose an asset you can see."
+msgstr ""
+
+#: front/sangfor.php:39
+msgid "Sangfor SCP platform saved."
+msgstr ""
+
+#: front/sangfor.php:63
+msgid "Sangfor SCP platform deleted; the costs already read are kept."
+msgstr ""
+
+#: front/sangfor.php:72
+#, php-format
+msgid ""
+"Sangfor SCP read: %1$d virtual machines, %2$d new cost lines, %3$d already "
+"known."
+msgstr ""
+
+#: front/sangfor.php:80
+#, php-format
+msgid ""
+"Sangfor SCP read failed, the inventory and the costs already read are kept: "
+"%s"
 msgstr ""
 
 #: src/ConfigPage.php:51 templates/config.html.twig
@@ -204,33 +226,33 @@ msgstr ""
 msgid "OVHcloud sent an unexpected answer."
 msgstr ""
 
-#: src/OvhAccount.php:52
+#: src/OvhAccount.php:54
 msgid "OVHcloud account"
 msgid_plural "OVHcloud accounts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/OvhAccount.php:85
+#: src/OvhAccount.php:87
 msgid "Canada"
 msgstr ""
 
-#: src/OvhAccount.php:85
+#: src/OvhAccount.php:87
 msgid "Europe"
 msgstr ""
 
-#: src/OvhAccount.php:124
+#: src/OvhAccount.php:126
 msgid "Give the account a name."
 msgstr ""
 
-#: src/OvhAccount.php:138
+#: src/OvhAccount.php:140
 msgid "Each Public Cloud project identifier has 32 hexadecimal characters."
 msgstr ""
 
-#: src/OvhAccount.php:147
+#: src/OvhAccount.php:149
 msgid "The three OVHcloud keys are required."
 msgstr ""
 
-#: src/OvhAccount.php:152
+#: src/OvhAccount.php:154
 msgid "An OVHcloud key only contains letters and digits."
 msgstr ""
 
@@ -257,6 +279,82 @@ msgid_plural "Resources"
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/Sangfor/ScpException.php:48
+msgid "Sangfor SCP cannot be reached (address, network, proxy or firewall)."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:50
+msgid ""
+"The certificate of Sangfor SCP is not trusted: install its authority on the "
+"GLPI server, or allow self-signed certificates for this platform."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:55
+msgid ""
+"Sangfor SCP refused the login: check the user name, the password and the "
+"rights of the account."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:59
+msgid ""
+"This address does not answer like Sangfor SCP 6.3.0 or later (OpenAPI not "
+"found)."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:62
+msgid "Sangfor SCP limits the number of calls: try again in a few minutes."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:63
+msgid "Sangfor SCP is unavailable: try again later."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:64
+msgid "Too many virtual machines to read at once."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:65
+msgid "The address or the login of this platform is incomplete."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:67
+msgid ""
+"The password cannot be encrypted for Sangfor SCP (OpenSSL extension of PHP "
+"missing or public key not recognized)."
+msgstr ""
+
+#: src/Sangfor/ScpException.php:71
+msgid "Sangfor SCP sent an unexpected answer."
+msgstr ""
+
+#: src/SangforAccount.php:57
+msgid "Sangfor SCP platform"
+msgid_plural "Sangfor SCP platforms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/SangforAccount.php:116
+msgid "Give the platform a name."
+msgstr ""
+
+#: src/SangforAccount.php:123
+msgid ""
+"The address of Sangfor SCP is https:// followed by its name or IP address, "
+"and an optional port, without path."
+msgstr ""
+
+#: src/SangforAccount.php:139
+msgid "Each price is a positive number, or 0."
+msgstr ""
+
+#: src/SangforAccount.php:152
+msgid "The user name and the password are required."
+msgstr ""
+
+#: src/SangforAccount.php:157
+msgid "The user name or the password is too long or not printable."
+msgstr ""
+
 #: src/Source/GenericCsvSource.php:35
 msgid "Generic CSV file"
 msgstr ""
@@ -275,6 +373,16 @@ msgstr ""
 msgid ""
 "Bills and Public Cloud consumption per resource, read on request from the "
 "OVHcloud API (Europe or Canada)."
+msgstr ""
+
+#: src/Source/SangforScpSource.php:36
+msgid "Sangfor HCI (SCP)"
+msgstr ""
+
+#: src/Source/SangforScpSource.php:42
+msgid ""
+"Virtual machines, nodes and allocations read on request from the Sangfor "
+"Cloud Platform OpenAPI, with a monthly cost from your own price grid."
 msgstr ""
 
 #: templates/_ovh_accounts.html.twig
@@ -309,7 +417,7 @@ msgstr ""
 msgid "Delete this OVHcloud account? The costs already read are kept."
 msgstr ""
 
-#: templates/_ovh_accounts.html.twig
+#: templates/_ovh_accounts.html.twig templates/_sangfor_accounts.html.twig
 msgid "Incomplete"
 msgstr ""
 
@@ -318,6 +426,7 @@ msgid "Keys"
 msgstr ""
 
 #: templates/_ovh_accounts.html.twig templates/_ovh_read.html.twig
+#: templates/_sangfor_accounts.html.twig templates/_sangfor_read.html.twig
 msgid "Last read"
 msgstr ""
 
@@ -347,11 +456,11 @@ msgid ""
 "(ovh.ca)."
 msgstr ""
 
-#: templates/_ovh_accounts.html.twig
+#: templates/_ovh_accounts.html.twig templates/_sangfor_accounts.html.twig
 msgid "Saved, encrypted"
 msgstr ""
 
-#: templates/_ovh_accounts.html.twig
+#: templates/_ovh_accounts.html.twig templates/_sangfor_accounts.html.twig
 msgid "Saved, unchanged if left empty"
 msgstr ""
 
@@ -375,11 +484,11 @@ msgstr ""
 msgid "Which keys?"
 msgstr ""
 
-#: templates/_ovh_read.html.twig
+#: templates/_ovh_read.html.twig templates/_sangfor_read.html.twig
 msgid "Add one in the settings (Cost sources tab)"
 msgstr ""
 
-#: templates/_ovh_read.html.twig
+#: templates/_ovh_read.html.twig templates/_sangfor_read.html.twig
 msgid "An administrator adds them in the settings of the plugin."
 msgstr ""
 
@@ -395,7 +504,8 @@ msgstr ""
 msgid "Read from OVHcloud"
 msgstr ""
 
-#: templates/_ovh_read.html.twig
+#: templates/_ovh_read.html.twig templates/_sangfor_read.html.twig
+#: templates/sangfor_inventory.html.twig
 msgid "Read now"
 msgstr ""
 
@@ -431,6 +541,136 @@ msgstr ""
 
 #: templates/_page_help.html.twig
 msgid "What is this page for?"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Accept a self-signed certificate"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Add a Sangfor SCP platform"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Address of Sangfor SCP"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Currency"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Delete this Sangfor SCP platform? The costs already read are kept."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "ISO 4217 code of the prices (EUR, USD...)."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Login"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid ""
+"Off by default. Turn it on only if SCP keeps its factory certificate: the "
+"connection stays encrypted but the identity of the server is no longer "
+"checked. Installing the authority of the certificate on the GLPI server is "
+"safer."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Price grid (per month)"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Price of 1 GB of disk"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Price of 1 GB of memory"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Price of one vCPU"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid ""
+"Sangfor Cloud Platform (SCP) 6.3.0 or later, which sees all the nodes. "
+"Create on SCP an operator account with read-only rights on the virtual "
+"machines and the hosts. The plugin only reads: it never starts, stops or "
+"changes a machine. The user name and the password are encrypted by GLPI and "
+"never shown again."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Sangfor SCP platforms"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid ""
+"Sangfor does not bill by use: give your internal prices to turn allocations "
+"into costs, or leave 0 for an inventory without cost. vCPU and memory count "
+"only when the machine is not powered off; the disk always counts."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Self-signed certificate accepted"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Shown in the import journal, for example the site or the cluster."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "The cost lines and virtual machines read belong to this entity."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid ""
+"The only address called by the plugin: https:// followed by the name or IP "
+"address of SCP, and a port if needed. No redirect is followed."
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "User name"
+msgstr ""
+
+#: templates/_sangfor_accounts.html.twig
+msgid "Which account?"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+#, php-format
+msgid "%s machines: see the inventory"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid "Manage the Sangfor SCP platforms"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid "No Sangfor SCP platform yet."
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid "Not read yet"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid "Read from Sangfor SCP"
+msgstr ""
+
+#: templates/_sangfor_read.html.twig
+msgid ""
+"Reads the nodes and the virtual machines with their allocations, in read-"
+"only mode, and adds the cost of the month from the price grid. A failed read "
+"writes nothing: the inventory and the costs already read stay as they are."
+msgstr ""
+
+#: templates/_sangfor_read.html.twig templates/sangfor_inventory.html.twig
+msgid "Virtual machines"
 msgstr ""
 
 #: templates/config.html.twig
@@ -762,7 +1002,7 @@ msgstr ""
 msgid "Last seen"
 msgstr ""
 
-#: templates/resources.html.twig
+#: templates/resources.html.twig templates/sangfor_inventory.html.twig
 msgid "Link"
 msgstr ""
 
@@ -780,7 +1020,7 @@ msgstr ""
 msgid "No resource to show"
 msgstr ""
 
-#: templates/resources.html.twig
+#: templates/resources.html.twig templates/sangfor_inventory.html.twig
 msgid "Not linked"
 msgstr ""
 
@@ -802,4 +1042,123 @@ msgstr ""
 
 #: templates/resources.html.twig
 msgid "Search"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%1$s of %2$s linked to an asset"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s GB of disk allocated"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s GB of memory allocated"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s nodes"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s vCPU allocated"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "%s virtual machines"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Asset in GLPI"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid ""
+"Check the allocations, then confirm the proposed links one by one. Nothing "
+"is linked without your click."
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Choose an asset"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Cores"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+#, php-format
+msgid "Cost of the month: %s"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Cost per month"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Disk (GB)"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "IP address"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Memory (GB)"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "No virtual machine read yet: click Read now."
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Node"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Nodes"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Power"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Powered off"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Powered on"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid ""
+"See what a Sangfor HCI platform runs and what it costs, and link each "
+"virtual machine to its computer in GLPI."
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Storage (GB)"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "Unknown"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "same UUID"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "same name"
+msgstr ""
+
+#: templates/sangfor_inventory.html.twig
+msgid "vCPU"
 msgstr ""

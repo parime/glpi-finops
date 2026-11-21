@@ -557,3 +557,246 @@ msgstr "Nunca lido"
 
 msgid "OVHcloud accounts"
 msgstr "Contas OVHcloud"
+
+msgid "Sangfor SCP platform saved."
+msgstr "Plataforma Sangfor SCP salva."
+
+msgid "Sangfor SCP platform deleted; the costs already read are kept."
+msgstr "Plataforma Sangfor SCP excluída; os custos já lidos são mantidos."
+
+#, php-format
+msgid "Sangfor SCP read: %1$d virtual machines, %2$d new cost lines, %3$d already known."
+msgstr "Leitura do Sangfor SCP: %1$d máquinas virtuais, %2$d novas linhas de custo, %3$d já conhecidas."
+
+#, php-format
+msgid "Sangfor SCP read failed, the inventory and the costs already read are kept: %s"
+msgstr "Leitura do Sangfor SCP com falha, o inventário e os custos já lidos são mantidos: %s"
+
+msgid "Sangfor SCP cannot be reached (address, network, proxy or firewall)."
+msgstr "O Sangfor SCP está inacessível (endereço, rede, proxy ou firewall)."
+
+msgid "The certificate of Sangfor SCP is not trusted: install its authority on the GLPI server, or allow self-signed certificates for this platform."
+msgstr "O certificado do Sangfor SCP não é confiável: instale sua autoridade no servidor GLPI ou permita certificados autoassinados para esta plataforma."
+
+msgid "Sangfor SCP refused the login: check the user name, the password and the rights of the account."
+msgstr "O Sangfor SCP recusou o login: verifique o usuário, a senha e os direitos da conta."
+
+msgid "This address does not answer like Sangfor SCP 6.3.0 or later (OpenAPI not found)."
+msgstr "Este endereço não responde como Sangfor SCP 6.3.0 ou posterior (OpenAPI não encontrada)."
+
+msgid "Sangfor SCP limits the number of calls: try again in a few minutes."
+msgstr "O Sangfor SCP limita o número de chamadas: tente novamente em alguns minutos."
+
+msgid "Sangfor SCP is unavailable: try again later."
+msgstr "O Sangfor SCP está indisponível: tente novamente mais tarde."
+
+msgid "Too many virtual machines to read at once."
+msgstr "Máquinas virtuais demais para ler de uma vez."
+
+msgid "The address or the login of this platform is incomplete."
+msgstr "O endereço ou o login desta plataforma está incompleto."
+
+msgid "The password cannot be encrypted for Sangfor SCP (OpenSSL extension of PHP missing or public key not recognized)."
+msgstr "A senha não pode ser criptografada para o Sangfor SCP (extensão OpenSSL do PHP ausente ou chave pública não reconhecida)."
+
+msgid "Sangfor SCP sent an unexpected answer."
+msgstr "O Sangfor SCP enviou uma resposta inesperada."
+
+msgid "Sangfor SCP platform"
+msgid_plural "Sangfor SCP platforms"
+msgstr[0] "Plataforma Sangfor SCP"
+msgstr[1] "Plataformas Sangfor SCP"
+
+msgid "Give the platform a name."
+msgstr "Dê um nome à plataforma."
+
+msgid "The address of Sangfor SCP is https:// followed by its name or IP address, and an optional port, without path."
+msgstr "O endereço do Sangfor SCP é https:// seguido do nome ou endereço IP e de uma porta opcional, sem caminho."
+
+msgid "Each price is a positive number, or 0."
+msgstr "Cada preço é um número positivo, ou 0."
+
+msgid "The user name and the password are required."
+msgstr "O usuário e a senha são obrigatórios."
+
+msgid "The user name or the password is too long or not printable."
+msgstr "O usuário ou a senha é longo demais ou não imprimível."
+
+msgid "Sangfor HCI (SCP)"
+msgstr "Sangfor HCI (SCP)"
+
+msgid "Virtual machines, nodes and allocations read on request from the Sangfor Cloud Platform OpenAPI, with a monthly cost from your own price grid."
+msgstr "Máquinas virtuais, nós e alocações lidos sob demanda na OpenAPI da Sangfor Cloud Platform, com um custo mensal pela sua própria tabela de preços."
+
+msgid "Accept a self-signed certificate"
+msgstr "Aceitar um certificado autoassinado"
+
+msgid "Add a Sangfor SCP platform"
+msgstr "Adicionar uma plataforma Sangfor SCP"
+
+msgid "Address of Sangfor SCP"
+msgstr "Endereço do Sangfor SCP"
+
+msgid "Currency"
+msgstr "Moeda"
+
+msgid "Delete this Sangfor SCP platform? The costs already read are kept."
+msgstr "Excluir esta plataforma Sangfor SCP? Os custos já lidos são mantidos."
+
+msgid "ISO 4217 code of the prices (EUR, USD...)."
+msgstr "Código ISO 4217 dos preços (EUR, USD...)."
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Off by default. Turn it on only if SCP keeps its factory certificate: the connection stays encrypted but the identity of the server is no longer checked. Installing the authority of the certificate on the GLPI server is safer."
+msgstr "Desativada por padrão. Ative apenas se o SCP mantiver o certificado de fábrica: a conexão continua criptografada, mas a identidade do servidor não é mais verificada. Instalar a autoridade do certificado no servidor GLPI é mais seguro."
+
+msgid "Price grid (per month)"
+msgstr "Tabela de preços (por mês)"
+
+msgid "Price of 1 GB of disk"
+msgstr "Preço de 1 GB de disco"
+
+msgid "Price of 1 GB of memory"
+msgstr "Preço de 1 GB de memória"
+
+msgid "Price of one vCPU"
+msgstr "Preço de uma vCPU"
+
+msgid "Sangfor Cloud Platform (SCP) 6.3.0 or later, which sees all the nodes. Create on SCP an operator account with read-only rights on the virtual machines and the hosts. The plugin only reads: it never starts, stops or changes a machine. The user name and the password are encrypted by GLPI and never shown again."
+msgstr "Sangfor Cloud Platform (SCP) 6.3.0 ou posterior, que vê todos os nós. Crie no SCP uma conta de operador com direitos somente leitura nas máquinas virtuais e nos hosts. O plugin apenas lê: nunca inicia, para ou altera uma máquina. O usuário e a senha são criptografados pelo GLPI e nunca mais exibidos."
+
+msgid "Sangfor SCP platforms"
+msgstr "Plataformas Sangfor SCP"
+
+msgid "Sangfor does not bill by use: give your internal prices to turn allocations into costs, or leave 0 for an inventory without cost. vCPU and memory count only when the machine is not powered off; the disk always counts."
+msgstr "A Sangfor não cobra por uso: informe seus preços internos para converter alocações em custos, ou deixe 0 para um inventário sem custo. vCPU e memória só contam se a máquina não estiver desligada; o disco conta sempre."
+
+msgid "Self-signed certificate accepted"
+msgstr "Certificado autoassinado aceito"
+
+msgid "Shown in the import journal, for example the site or the cluster."
+msgstr "Exibido no registro de importações, por exemplo o site ou o cluster."
+
+msgid "The cost lines and virtual machines read belong to this entity."
+msgstr "As linhas de custo e as máquinas virtuais lidas pertencem a esta entidade."
+
+msgid "The only address called by the plugin: https:// followed by the name or IP address of SCP, and a port if needed. No redirect is followed."
+msgstr "O único endereço chamado pelo plugin: https:// seguido do nome ou endereço IP do SCP e de uma porta se necessário. Nenhum redirecionamento é seguido."
+
+msgid "User name"
+msgstr "Usuário"
+
+msgid "Which account?"
+msgstr "Qual conta?"
+
+#, php-format
+msgid "%s machines: see the inventory"
+msgstr "%s máquinas: ver o inventário"
+
+msgid "Manage the Sangfor SCP platforms"
+msgstr "Gerenciar as plataformas Sangfor SCP"
+
+msgid "No Sangfor SCP platform yet."
+msgstr "Ainda não há nenhuma plataforma Sangfor SCP."
+
+msgid "Not read yet"
+msgstr "Ainda não lida"
+
+msgid "Read from Sangfor SCP"
+msgstr "Ler do Sangfor SCP"
+
+msgid "Reads the nodes and the virtual machines with their allocations, in read-only mode, and adds the cost of the month from the price grid. A failed read writes nothing: the inventory and the costs already read stay as they are."
+msgstr "Lê os nós e as máquinas virtuais com suas alocações, somente leitura, e adiciona o custo do mês pela tabela de preços. Uma leitura com falha não grava nada: o inventário e os custos já lidos permanecem como estão."
+
+msgid "Virtual machines"
+msgstr "Máquinas virtuais"
+
+#, php-format
+msgid "%1$s of %2$s linked to an asset"
+msgstr "%1$s de %2$s vinculadas a um ativo"
+
+#, php-format
+msgid "%s GB of disk allocated"
+msgstr "%s GB de disco alocados"
+
+#, php-format
+msgid "%s GB of memory allocated"
+msgstr "%s GB de memória alocados"
+
+#, php-format
+msgid "%s nodes"
+msgstr "%s nós"
+
+#, php-format
+msgid "%s vCPU allocated"
+msgstr "%s vCPU alocadas"
+
+#, php-format
+msgid "%s virtual machines"
+msgstr "%s máquinas virtuais"
+
+msgid "Asset in GLPI"
+msgstr "Ativo no GLPI"
+
+msgid "Check the allocations, then confirm the proposed links one by one. Nothing is linked without your click."
+msgstr "Verifique as alocações e confirme um a um os vínculos propostos. Nada é vinculado sem o seu clique."
+
+msgid "Choose an asset"
+msgstr "Escolher um ativo"
+
+msgid "Cores"
+msgstr "Núcleos"
+
+#, php-format
+msgid "Cost of the month: %s"
+msgstr "Custo do mês: %s"
+
+msgid "Cost per month"
+msgstr "Custo por mês"
+
+msgid "Disk (GB)"
+msgstr "Disco (GB)"
+
+msgid "IP address"
+msgstr "Endereço IP"
+
+msgid "Memory (GB)"
+msgstr "Memória (GB)"
+
+msgid "No virtual machine read yet: click Read now."
+msgstr "Nenhuma máquina virtual lida ainda: clique em Ler agora."
+
+msgid "Node"
+msgstr "Nó"
+
+msgid "Nodes"
+msgstr "Nós"
+
+msgid "Power"
+msgstr "Energia"
+
+msgid "Powered off"
+msgstr "Desligada"
+
+msgid "Powered on"
+msgstr "Ligada"
+
+msgid "See what a Sangfor HCI platform runs and what it costs, and link each virtual machine to its computer in GLPI."
+msgstr "Ver o que uma plataforma Sangfor HCI executa e quanto custa, e vincular cada máquina virtual ao seu computador no GLPI."
+
+msgid "Storage (GB)"
+msgstr "Armazenamento (GB)"
+
+msgid "Unknown"
+msgstr "Desconhecido"
+
+msgid "same UUID"
+msgstr "mesmo UUID"
+
+msgid "same name"
+msgstr "mesmo nome"
+
+msgid "vCPU"
+msgstr "vCPU"
