@@ -1,0 +1,78 @@
+{#
+ # -------------------------------------------------------------------------
+ # FinOps plugin for GLPI
+ # Copyright (C) 2026 Vincent GUILLOTTE
+ # https://github.com/parime/glpi-finops
+ # -------------------------------------------------------------------------
+ # LICENSE
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version. See LICENSE for the full text.
+ # -------------------------------------------------------------------------
+ #}
+
+{# Lecture des plateformes Sangfor SCP sur clic (issue #11), page d'import. #}
+<div class="card mb-3" style="max-width: 1100px;">
+   <div class="card-header">
+      <h3 class="card-title"><i class="ti ti-server-2 me-2"></i>{{ __('Read from Sangfor SCP', 'finops') }}</h3>
+   </div>
+   <div class="card-body">
+      <p class="text-muted">
+         {{ __('Reads the nodes and the virtual machines with their allocations, in read-only mode, and adds the cost of the month from the price grid. A failed read writes nothing: the inventory and the costs already read stay as they are.', 'finops') }}
+      </p>
+      {% if sangfor_accounts is empty %}
+         <p class="mb-0">
+            <i class="ti ti-info-circle me-1"></i>{{ __('No Sangfor SCP platform yet.', 'finops') }}
+            {% if sangfor_config %}
+               <a href="{{ sangfor_config }}"><i class="ti ti-arrow-right me-1"></i>{{ __('Add one in the settings (Cost sources tab)', 'finops') }}</a>
+            {% else %}
+               {{ __('An administrator adds them in the settings of the plugin.', 'finops') }}
+            {% endif %}
+         </p>
+      {% else %}
+         <div class="table-responsive">
+            <table class="table table-vcenter card-table">
+               <thead>
+                  <tr>
+                     <th>{{ __('Name') }}</th>
+                     <th>{{ __('Entity') }}</th>
+                     <th>{{ __('Virtual machines', 'finops') }}</th>
+                     <th>{{ __('Last read', 'finops') }}</th>
+                     <th></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for account in sangfor_accounts %}
+                     <tr>
+                        <td><strong>{{ account.name }}</strong></td>
+                        <td>{{ account.entity }}</td>
+                        <td>
+                           {% if account.last_success %}
+                              <a href="{{ sangfor_url }}?id={{ account.id }}"><i class="ti ti-list-details me-1"></i>{{ __('%s machines: see the inventory', 'finops')|format(account.vm_count) }}</a>
+                           {% else %}
+                              <span class="text-muted">{{ __('Not read yet', 'finops') }}</span>
+                           {% endif %}
+                        </td>
+                        <td>{% include '@finops/_ovh_status.html.twig' with {account: account} %}</td>
+                        <td class="text-end">
+                           <form method="post" action="{{ sangfor_url }}">
+                              <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                              <input type="hidden" name="id" value="{{ account.id }}" />
+                              <button type="submit" name="read" value="1" class="btn btn-sm btn-primary" {{ account.keys_set ? '' : 'disabled' }}>
+                                 <i class="ti ti-refresh me-1"></i>{{ __('Read now', 'finops') }}
+                              </button>
+                           </form>
+                        </td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+         {% if sangfor_config %}
+            <p class="small mt-2 mb-0"><a href="{{ sangfor_config }}"><i class="ti ti-settings me-1"></i>{{ __('Manage the Sangfor SCP platforms', 'finops') }}</a></p>
+         {% endif %}
+      {% endif %}
+   </div>
+</div>

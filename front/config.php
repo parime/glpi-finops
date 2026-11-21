@@ -20,6 +20,7 @@ use GlpiPlugin\Finops\Config;
 use GlpiPlugin\Finops\ConfigPage;
 use GlpiPlugin\Finops\Menu;
 use GlpiPlugin\Finops\OvhAccount;
+use GlpiPlugin\Finops\SangforAccount;
 use GlpiPlugin\Finops\Source\SourceRegistry;
 
 // Page de configuration du plugin (Configuration > Plugins > FinOps) : le seul endroit où le plugin
@@ -50,5 +51,9 @@ TemplateRenderer::getInstance()->display('@finops/config.html.twig', [
     'regions'      => OvhAccount::regions(),
     'max_projects' => OvhAccount::MAX_PROJECTS,
     'entity'       => (int) Session::getActiveEntity(),
+    // Plateformes Sangfor SCP (issue #11), sans identifiant ni mot de passe.
+    'sangfor_accounts' => $tab === ConfigPage::TAB_SOURCES ? SangforAccount::listing() : [],
+    'sangfor_url'      => Menu::url('sangfor'),
+    'currency'         => Config::defaultCurrency(),
 ]);
 Html::footer();
