@@ -27,19 +27,22 @@ Session::checkLoginUser();
 
 $account = new OvhAccount();
 $id = (int) ($_POST['id'] ?? 0);
+// Saisie sans les clés « add » et « update » : GLPI garderait sinon le formulaire, clés d'API en
+// clair comprises, dans la session (saveInput).
+$input = array_diff_key($_POST, ['add' => true, 'update' => true]);
 $configUrl = ConfigPage::url(ConfigPage::TAB_SOURCES);
 
 if (isset($_POST['add'])) {
     Session::checkRight('config', UPDATE);
-    $account->check(-1, CREATE, $_POST);
-    if ($account->add($_POST) !== false) {
+    $account->check(-1, CREATE, $input);
+    if ($account->add($input) !== false) {
         Session::addMessageAfterRedirect(htmlescape(__('OVHcloud account saved.', 'finops')), false, INFO);
     }
     Html::redirect($configUrl);
 } elseif (isset($_POST['update'])) {
     Session::checkRight('config', UPDATE);
     $account->check($id, UPDATE);
-    $input = ['id' => $id] + $_POST;
+    $input = ['id' => $id] + $input;
     if (isset($input['entities_id']) && !Session::haveAccessToEntity((int) $input['entities_id'])) {
         unset($input['entities_id']);
     }

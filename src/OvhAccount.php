@@ -88,7 +88,7 @@ class OvhAccount extends RecordBase
     /** Lancer une lecture : droit d'import du plugin. */
     public static function canLaunchRead(): bool
     {
-        return (bool) Session::haveRight(self::RIGHTNAME, CREATE);
+        return (bool) Session::haveRight(Menu::RIGHTNAME, CREATE);
     }
 
     public function prepareInputForAdd($input)
