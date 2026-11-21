@@ -85,6 +85,11 @@ final class SangforAccountTest extends TestCase
         return count($DB->request(['FROM' => $table, 'WHERE' => $where]));
     }
 
+    private function vms(SangforAccount $account): int
+    {
+        return $this->rows(SangforTables::VMS, ['plugin_finops_sangforaccounts_id' => $account->getID()]);
+    }
+
     public function testLoginIsEncryptedAndSafeDefaultsApply(): void
     {
         $account = $this->account();
@@ -116,7 +121,7 @@ final class SangforAccountTest extends TestCase
         $this->assertTrue($result['ok'], $result['message']);
         $this->assertSame(3, $result['vms']);
         $this->assertSame(3, $result['created']);
-        $this->assertSame(3, $this->rows(SangforTables::VMS, ['plugin_finops_sangforaccounts_id' => $account->getID()]));
+        $this->assertSame(3, $this->vms($account));
         $this->assertSame(3, $this->rows(CostTables::RESOURCES, ['provider' => 'sangfor', 'account' => self::NAME]));
 
         $inventory = $account->inventory();
@@ -139,7 +144,7 @@ final class SangforAccountTest extends TestCase
         $fake->failures['/janus/20180725/servers'] = 503;
         $result = $account->readInventory($fake);
         $this->assertFalse($result['ok']);
-        $this->assertSame(3, $this->rows(SangforTables::VMS, ['plugin_finops_sangforaccounts_id' => $account->getID()]));
+        $this->assertSame(3, $this->vms($account));
         $this->assertSame('error', $account->fields['last_status']);
         $this->assertNotEmpty($account->fields['last_success']);
         $this->assertStringNotContainsString('fake failure', $result['message']);

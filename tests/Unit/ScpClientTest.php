@@ -111,7 +111,10 @@ final class ScpClientTest extends TestCase
     {
         $fake = new FakeScp();
         $fake->failures['/janus/20180725/hosts'] = 200;
-        $this->assertSame(ScpException::R_RESPONSE, $this->reason(fn () => $this->client($fake)->get('/janus/20180725/hosts')));
+        $this->assertSame(
+            ScpException::R_RESPONSE,
+            $this->reason(fn () => $this->client($fake)->get('/janus/20180725/hosts'))
+        );
     }
 
     public function testPagesAreFollowedAndOnlyTheConfiguredAddressIsCalled(): void

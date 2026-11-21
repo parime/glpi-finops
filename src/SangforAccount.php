@@ -383,7 +383,8 @@ class SangforAccount extends RecordBase
         $totals = ['vcpu' => 0, 'memory_mb' => 0, 'disk_mb' => 0, 'cost' => 0.0, 'linked' => 0];
         foreach ($vms as $vm) {
             $resource = $resources[(string) $vm['vm_id']] ?? null;
-            $linked = $resource !== null && (string) ($resource['itemtype'] ?? '') !== '' && (int) $resource['items_id'] > 0;
+            $linked = $resource !== null && (string) ($resource['itemtype'] ?? '') !== ''
+                && (int) $resource['items_id'] > 0;
             $suggestion = null;
             if (!$linked) {
                 $uuid = $suggestions['uuid'][strtolower((string) $vm['vm_id'])] ?? null;
@@ -446,7 +447,10 @@ class SangforAccount extends RecordBase
                 array_map(static fn (array $vm): string => strtolower((string) $vm['vm_id']), $chunk),
                 array_map(static fn (array $vm): string => strtoupper((string) $vm['vm_id']), $chunk)
             )));
-            $names = array_values(array_unique(array_map(static fn (array $vm): string => (string) $vm['name'], $chunk)));
+            $names = array_values(array_unique(array_map(
+                static fn (array $vm): string => (string) $vm['name'],
+                $chunk
+            )));
             $iterator = $DB->request([
                 'SELECT' => ['id', 'name', 'uuid'],
                 'FROM'   => 'glpi_computers',

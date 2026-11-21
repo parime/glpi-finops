@@ -85,7 +85,7 @@ final class FakeScp implements ScpTransport
             return [200, (string) json_encode(['public_key' => self::modulus() . '\n'])];
         }
         if ($method === 'GET' && $path === '/janus/public-key' && $this->legacyKey) {
-            return [200, (string) json_encode(['code' => 0, 'message' => '', 'data' => ['public_key' => self::modulus()]])];
+            return [200, $this->envelope(['public_key' => self::modulus()])];
         }
         if ($method === 'POST' && $path === '/janus/authenticate') {
             return $this->authenticate($body);
