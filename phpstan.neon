@@ -18,6 +18,10 @@ parameters:
         # déclarée face au cœur GLPI 11 qui sert à l'analyse. Toujours scannées, plus analysées.
         analyse:
             - src/Compat/Base/*
+            # Fragments des tests de bout en bout : inclus par tests/security/setup.php, dont ils
+            # utilisent les variables ($DB, $ids, $canary...).
+            - tests/security/setup.d/*
+            - tests/security/setup-xss.d/*
     ignoreErrors:
         -
             # GLPI_VERSION est figée à la version du cœur qui sert à l'analyse : la branche de

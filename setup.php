@@ -16,8 +16,11 @@
  */
 
 use Glpi\Plugin\Hooks;
+use GlpiPlugin\Finops\CostImport;
+use GlpiPlugin\Finops\CostLine;
 use GlpiPlugin\Finops\Menu;
 use GlpiPlugin\Finops\Profile;
+use GlpiPlugin\Finops\Resource;
 
 define('PLUGIN_FINOPS_VERSION', '0.1.0');
 define('PLUGIN_FINOPS_MIN_GLPI', '11.0.0');
@@ -39,8 +42,11 @@ function plugin_init_finops(): void
         return;
     }
 
-    // Onglet « FinOps » des profils : droits du plugin.
+    // Onglet « FinOps » des profils (droits du plugin) et des actifs rattachés à une ressource.
     Plugin::registerClass(Profile::class, ['addtabon' => ['Profile']]);
+    Plugin::registerClass(Resource::class, ['addtabon' => Resource::ASSET_TYPES]);
+    Plugin::registerClass(CostLine::class);
+    Plugin::registerClass(CostImport::class);
 
     // Charte commune, section 9 : une seule entrée de menu d'usage (Gestion > FinOps, écrans en
     // onglets) et tous les réglages dans la page de configuration du plugin (Configuration > Plugins).

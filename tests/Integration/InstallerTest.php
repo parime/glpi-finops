@@ -46,6 +46,7 @@ final class InstallerTest extends TestCase
     {
         global $DB;
 
+        $this->assertContainsOnly('string', FeatureTablesRegistry::classes());
         foreach (FeatureTablesRegistry::classes() as $class) {
             $this->assertTrue(is_subclass_of($class, FeatureTables::class));
             foreach ($class::pluginClasses() as $itemtype) {
