@@ -26,5 +26,5 @@ $out['sangfor'] = $insert('sangforaccounts', [
 ]);
 $insert('sangforvms', [
     'plugin_finops_sangforaccounts_id' => $out['sangfor'], 'entities_id' => $ids['a'], 'vm_id' => $canary,
-    'name' => $canary, 'power' => $canary, 'node' => $canary, 'pool' => $canary, 'os' => $canary,
+    'name' => $canary, 'power' => 'on', 'node' => $canary, 'pool' => $canary, 'os' => $canary,
 ]);
