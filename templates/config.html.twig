@@ -79,9 +79,9 @@
                            </td>
                            <td>
                               {% if source.kind == 'file' %}
-                                 <span class="badge bg-blue-lt"><i class="ti ti-file-upload me-1"></i>{{ __('File upload', 'finops') }}</span>
+                                 <span class="badge bg-info-subtle text-info-emphasis"><i class="ti ti-file-upload me-1"></i>{{ __('File upload', 'finops') }}</span>
                               {% else %}
-                                 <span class="badge bg-blue-lt"><i class="ti ti-api me-1"></i>{{ __('Read-only API', 'finops') }}</span>
+                                 <span class="badge bg-info-subtle text-info-emphasis"><i class="ti ti-api me-1"></i>{{ __('Read-only API', 'finops') }}</span>
                               {% endif %}
                            </td>
                            <td>
@@ -112,7 +112,7 @@
             <p><strong>{{ __('Version', 'finops') }}</strong> {{ version }}</p>
             <p><strong>{{ __('License', 'finops') }}</strong> GPL-3.0-or-later</p>
             <p class="mb-0">
-               <a href="{{ usage_url }}"><i class="ti ti-arrow-right me-1"></i>{{ __('Open the costs (Management > FinOps)', 'finops') }}</a>
+               <i class="ti ti-map-pin me-1"></i>{{ __('Daily use (costs, resources, import): menu Management > FinOps.', 'finops') }}
             </p>
          </div>
       </div>

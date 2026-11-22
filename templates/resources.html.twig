@@ -43,7 +43,7 @@
                <strong>{{ __('Linked asset', 'finops') }}</strong>
                {% if selected.asset %}
                   {% include '@finops/_badge.html.twig' with {kind: 'ok', label: selected.asset.type ~ ' : ' ~ selected.asset.name} %}
-                  {% if selected.asset.url %}<a href="{{ selected.asset.url }}" class="ms-1">{{ __('Open', 'finops') }}</a>{% endif %}
+                  {% if selected.asset.url %}<a href="{{ selected.asset.url }}" class="btn btn-sm btn-outline-primary ms-1"><i class="ti ti-external-link me-1"></i>{{ __('Open', 'finops') }}</a>{% endif %}
                {% else %}
                   {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Not linked', 'finops')} %}
                {% endif %}
@@ -76,7 +76,7 @@
 
    <div class="card">
       <div class="card-header">
-         <h3 class="card-title"><i class="ti ti-server-2 me-2"></i>{{ __('Resources', 'finops') }} <span class="badge bg-secondary-lt ms-1">{{ total }}</span></h3>
+         <h3 class="card-title"><i class="ti ti-server-2 me-2"></i>{{ __('Resources', 'finops') }} <span class="badge bg-secondary-subtle text-secondary-emphasis ms-1">{{ total }}</span></h3>
          <div class="card-actions">
             <form method="get" action="{{ page_url }}" class="d-flex gap-2 align-items-center">
                <input type="search" name="search" value="{{ search }}" class="form-control form-control-sm"

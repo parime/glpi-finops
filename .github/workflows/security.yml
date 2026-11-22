@@ -21,8 +21,3 @@ jobs:
       plugin-key: finops
       seed-command: php plugins/finops/tests/security/setup.php
       charter-mode: error
-      # Contrôle d'ergonomie (réglages, menus, en-têtes) et parcours de toutes les pages en
-      # avertissement, le temps de l'issue de navigation #37 ; la PR qui la ferme retire ces deux
-      # lignes.
-      navigation-mode: warning
-      pages-mode: warning

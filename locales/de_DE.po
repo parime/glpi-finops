@@ -169,8 +169,8 @@ msgstr "Größte Kostendatei (MB)"
 msgid "License"
 msgstr "Lizenz"
 
-msgid "Open the costs (Management > FinOps)"
-msgstr "Kosten öffnen (Verwaltung > FinOps)"
+msgid "Daily use (costs, resources, import): menu Management > FinOps."
+msgstr "Tägliche Nutzung (Kosten, Ressourcen, Import): Menü Verwaltung > FinOps."
 
 msgid "Planned"
 msgstr "Geplant"
