@@ -56,6 +56,7 @@ final class Installer
     {
         ProfileRight::deleteProfileRights([Menu::RIGHTNAME]);
         Config::uninstall();
+        PluginVersion::uninstall('finops');
         $this->deleteCoreRowsOfPluginItemtypes();
         FeatureTablesRegistry::uninstall($migration);
         $migration->executeMigration();
