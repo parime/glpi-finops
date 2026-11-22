@@ -1,6 +1,7 @@
 # Contrôles de sécurité communs à tous les plugins GLPI (parime/glpi-plugin-security) : règles
 # Semgrep, onglets sans droit, droits attribuables, traductions, archive, charte, restes après
-# désinstallation. À rendre obligatoire dans la protection des branches main et dev.
+# désinstallation, secrets (Gitleaks), dépendances (Trivy, Dependency Review), CodeQL, mise à jour
+# depuis la version publiée, tests d'intégration en français et parcours de toutes les pages. À rendre obligatoire dans la protection des branches main et dev.
 name: Sécurité commune
 
 on:
@@ -15,8 +16,12 @@ permissions:
 
 jobs:
   security:
-    uses: parime/glpi-plugin-security/.github/workflows/plugin-security.yml@v1.9.1
+    uses: parime/glpi-plugin-security/.github/workflows/plugin-security.yml@v1.10.1
     with:
       plugin-key: finops
       seed-command: php plugins/finops/tests/security/setup.php
       charter-mode: error
+      # Parcours de toutes les pages en avertissement, le temps de l'issue de navigation #37.
+      # (navigation-mode: warning sera à ajouter quand le workflow commun aura de nouveau son job
+      # « navigation » : il manque depuis v1.10.0, parime/glpi-plugin-security#37.)
+      pages-mode: warning
