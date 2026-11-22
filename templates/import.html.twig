@@ -151,7 +151,7 @@
                      {% for column, aliases in columns %}
                         <li>
                            <code>{{ column }}</code>
-                           {% if column in required %}<span class="badge bg-red-lt ms-1">{{ __('required', 'finops') }}</span>{% endif %}
+                           {% if column in required %}<span class="badge bg-danger-subtle text-danger-emphasis ms-1">{{ __('required', 'finops') }}</span>{% endif %}
                            <span class="text-muted">{{ aliases|join(', ') }}</span>
                         </li>
                      {% endfor %}

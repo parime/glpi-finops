@@ -720,7 +720,7 @@ msgid "License"
 msgstr ""
 
 #: templates/config.html.twig
-msgid "Open the costs (Management > FinOps)"
+msgid "Daily use (costs, resources, import): menu Management > FinOps."
 msgstr ""
 
 #: templates/config.html.twig

@@ -16,10 +16,10 @@
 {# Comptes OVHcloud (issue #26), onglet « Sources de coûts » de la configuration : liste, ajout,
    modification, suppression. Les clés ne sont jamais réaffichées : un champ vide garde la clé. #}
 
-{% macro account_form(account, ovh_url, entity, regions, max_projects) %}
+{% macro account_form(account, ovh_action, entity, regions, max_projects) %}
    {% import 'components/form/fields_macros.html.twig' as fields %}
    {% set creation = account is null %}
-   <form method="post" action="{{ ovh_url }}" autocomplete="off">
+   <form method="post" action="{{ ovh_action }}" autocomplete="off">
       <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
       {% if not creation %}<input type="hidden" name="id" value="{{ account.id }}" />{% endif %}
       {{ fields.textField('name', creation ? '' : account.name, __('Name'), {
@@ -106,7 +106,7 @@
                         </td>
                         <td>{% include '@finops/_ovh_status.html.twig' with {account: account} %}</td>
                         <td class="text-end">
-                           <form method="post" action="{{ ovh_url }}" class="d-inline"
+                           <form method="post" action="{{ ovh_action }}" class="d-inline"
                                  onsubmit="return confirm('{{ __('Delete this OVHcloud account? The costs already read are kept.', 'finops')|e('js') }}');">
                               <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
                               <input type="hidden" name="id" value="{{ account.id }}" />
@@ -120,7 +120,7 @@
                         <td colspan="6" class="border-top-0 pt-0">
                            <details>
                               <summary class="small"><i class="ti ti-pencil me-1"></i>{{ __('Edit') }}</summary>
-                              <div class="mt-2">{{ _self.account_form(account, ovh_url, entity, regions, max_projects) }}</div>
+                              <div class="mt-2">{{ _self.account_form(account, ovh_action, entity, regions, max_projects) }}</div>
                            </details>
                         </td>
                      </tr>
@@ -131,7 +131,7 @@
       {% endif %}
       <details {{ ovh_accounts is empty ? 'open' : '' }}>
          <summary><i class="ti ti-plus me-1"></i>{{ __('Add an OVHcloud account', 'finops') }}</summary>
-         <div class="mt-2">{{ _self.account_form(null, ovh_url, entity, regions, max_projects) }}</div>
+         <div class="mt-2">{{ _self.account_form(null, ovh_action, entity, regions, max_projects) }}</div>
       </details>
    </div>
 </div>

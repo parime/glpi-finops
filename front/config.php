@@ -44,16 +44,15 @@ TemplateRenderer::getInstance()->display('@finops/config.html.twig', [
     'max_mb'    => Config::MAX_UPLOAD_MB,
     'sources'   => SourceRegistry::describe(),
     'version'   => PLUGIN_FINOPS_VERSION,
-    'usage_url' => Menu::url(Menu::TAB_OVERVIEW),
     // Comptes OVHcloud (issue #26), sans leurs clés.
     'ovh_accounts' => $tab === ConfigPage::TAB_SOURCES ? OvhAccount::listing() : [],
-    'ovh_url'      => Menu::url('ovh'),
+    'ovh_action'   => Menu::url('ovh'),
     'regions'      => OvhAccount::regions(),
     'max_projects' => OvhAccount::MAX_PROJECTS,
     'entity'       => (int) Session::getActiveEntity(),
     // Plateformes Sangfor SCP (issue #11), sans identifiant ni mot de passe.
     'sangfor_accounts' => $tab === ConfigPage::TAB_SOURCES ? SangforAccount::listing() : [],
-    'sangfor_url'      => Menu::url('sangfor'),
+    'sangfor_action'   => Menu::url('sangfor'),
     'currency'         => Config::defaultCurrency(),
 ]);
 Html::footer();

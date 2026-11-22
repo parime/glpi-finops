@@ -55,6 +55,20 @@ class Resource extends RecordBase
         return 'ti ti-server-2';
     }
 
+    /**
+     * Les liens de GLPI vers cet objet (getLinkURL, historique, recherche) ouvrent la page Ressources,
+     * qui ouvre la ressource demandée (?id=), et non le formulaire générique de GLPI, sans contenu
+     * utile pour le plugin (issue #37).
+     *
+     * @param bool $full
+     *
+     * @return string
+     */
+    public static function getFormURL($full = true)
+    {
+        return Menu::url(Menu::TAB_RESOURCES, [], (bool) $full);
+    }
+
     public static function canCreate(): bool
     {
         return false;
