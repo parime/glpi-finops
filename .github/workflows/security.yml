@@ -16,12 +16,13 @@ permissions:
 
 jobs:
   security:
-    uses: parime/glpi-plugin-security/.github/workflows/plugin-security.yml@v1.10.1
+    uses: parime/glpi-plugin-security/.github/workflows/plugin-security.yml@v1.10.2
     with:
       plugin-key: finops
       seed-command: php plugins/finops/tests/security/setup.php
       charter-mode: error
-      # Parcours de toutes les pages en avertissement, le temps de l'issue de navigation #37.
-      # (navigation-mode: warning sera à ajouter quand le workflow commun aura de nouveau son job
-      # « navigation » : il manque depuis v1.10.0, parime/glpi-plugin-security#37.)
+      # Contrôle d'ergonomie (réglages, menus, en-têtes) et parcours de toutes les pages en
+      # avertissement, le temps de l'issue de navigation #37 ; la PR qui la ferme retire ces deux
+      # lignes.
+      navigation-mode: warning
       pages-mode: warning
