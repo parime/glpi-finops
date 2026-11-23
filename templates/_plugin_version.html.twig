@@ -80,7 +80,7 @@
                   {% endif %}
                {% endif %}
                {% if pv.reason != 'disabled' %}
-                  <a href="{{ pv.release_url }}" target="_blank" rel="noopener noreferrer">{{ __('See the releases on GitHub', 'finops') }}</a>
+                  <a href="{{ pv.release_url }}" target="_blank" rel="noopener noreferrer" class="text-decoration-underline">{{ __('See the releases on GitHub', 'finops') }}</a>
                {% endif %}
             </div>
          {% elseif pv.checked_at %}

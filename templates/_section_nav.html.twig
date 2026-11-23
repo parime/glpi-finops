@@ -19,7 +19,7 @@
 <ul class="nav nav-tabs mb-3" role="tablist">
    {% for tab in tabs %}
       <li class="nav-item" role="presentation">
-         <a class="nav-link{{ tab.active ? ' active' : '' }}" href="{{ tab.url }}" role="tab"
+         <a class="nav-link text-body{{ tab.active ? ' active' : '' }}" href="{{ tab.url }}" role="tab"
             aria-selected="{{ tab.active ? 'true' : 'false' }}"{% if tab.active %} aria-current="page"{% endif %}>
             {% if tab.icon %}<i class="{{ tab.icon }} me-1" aria-hidden="true"></i>{% endif %}{{ tab.label }}
          </a>
