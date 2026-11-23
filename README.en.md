@@ -47,7 +47,8 @@ The plugin follows the [common charter of the plugins](https://github.com/parime
 
 ## Usage
 
-- **Setup > Plugins > FinOps**: default currency, largest file accepted, available cost sources.
+- **Setup > Plugins > FinOps**: installed version and latest release on GitHub, default currency,
+  largest file accepted, available cost sources.
 - **Management > FinOps**: costs by provider and by month, resources, import.
 
 The step-by-step tutorial is assembled in `docs/TUTORIAL.md` at each release, from `docs/tutorial/`.

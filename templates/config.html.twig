@@ -34,6 +34,7 @@
                <h3 class="card-title"><i class="ti ti-settings me-2"></i>{{ __('General', 'finops') }}</h3>
             </div>
             <div class="card-body">
+               {% include '@finops/_plugin_version.html.twig' with {plugin_version: plugin_version} %}
                {{ fields.textField('default_currency', values.default_currency, __('Default currency', 'finops'), {
                   'maxlength': 3,
                   'add_field_html': '<div class="form-hint">' ~ __('ISO 4217 code (EUR, USD, GBP...), used when a cost line gives no currency.', 'finops')|e ~ '</div>',
@@ -43,6 +44,9 @@
                   'max': max_mb,
                   'step': 1,
                   'add_field_html': '<div class="form-hint">' ~ __('Larger files are refused before being read. Between %1$s and %2$s MB.', 'finops')|format(min_mb, max_mb)|e ~ '</div>',
+               }) }}
+               {{ fields.sliderField('version_check', values.version_check, __('Check for new versions on GitHub', 'finops'), {
+                  'add_field_html': '<div class="form-hint">' ~ __('Reads the latest release published on GitHub at most every 12 hours, without sending any information about this GLPI. Turn it off on a server without Internet access.', 'finops')|e ~ '</div>',
                }) }}
             </div>
             <div class="card-footer">

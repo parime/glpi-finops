@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 18:36+0000\n"
+"POT-Creation-Date: 2026-11-22 13:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: front/config.php:33
+#: front/config.php:34
 msgid "Settings saved."
 msgstr ""
 
@@ -543,6 +543,100 @@ msgstr ""
 msgid "What is this page for?"
 msgstr ""
 
+#: templates/_plugin_version.html.twig
+msgid "Download the archive"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid ""
+"GitHub cannot be reached from the GLPI server (no Internet access, proxy or "
+"firewall)"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "GitHub did not answer within 3 seconds"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "Installed version"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+#, php-format
+msgid "Last check failed: %s."
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+#, php-format
+msgid "Last checked: %s (checked again every 12 hours)."
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+#, php-format
+msgid "Last successful check: %s."
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "Latest release on GitHub"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "Latest version unknown"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "No successful check yet."
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "Plugin version"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+#, php-format
+msgid "Reason: %s."
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "Release notes"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+#, php-format
+msgid "Result of the last successful check (%s) shown."
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "See the releases on GitHub"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "Up to date"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+#, php-format
+msgid "Update available: %s"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "no release is published on GitHub yet"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid ""
+"the GitHub request limit is reached, a new attempt will be made within an "
+"hour"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "the answer from GitHub could not be read"
+msgstr ""
+
+#: templates/_plugin_version.html.twig
+msgid "the check is turned off in the settings below"
+msgstr ""
+
 #: templates/_sangfor_accounts.html.twig
 msgid "Accept a self-signed certificate"
 msgstr ""
@@ -688,6 +782,10 @@ msgid "Available"
 msgstr ""
 
 #: templates/config.html.twig
+msgid "Check for new versions on GitHub"
+msgstr ""
+
+#: templates/config.html.twig
 msgid ""
 "Choose the default currency and the largest file accepted, then check which "
 "cost sources are available."
@@ -729,6 +827,13 @@ msgstr ""
 
 #: templates/config.html.twig
 msgid "Read-only API"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"Reads the latest release published on GitHub at most every 12 hours, without "
+"sending any information about this GLPI. Turn it off on a server without "
+"Internet access."
 msgstr ""
 
 #: templates/config.html.twig

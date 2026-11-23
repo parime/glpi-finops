@@ -59,13 +59,19 @@ final class InstallerTest extends TestCase
     {
         $before = Config::load();
         try {
-            $saved = Config::save(['default_currency' => 'usd', 'max_upload_mb' => '999']);
-            $this->assertSame(['default_currency' => 'USD', 'max_upload_mb' => (string) Config::MAX_UPLOAD_MB], $saved);
+            $saved = Config::save(['default_currency' => 'usd', 'max_upload_mb' => '999', 'version_check' => '1']);
+            $this->assertSame([
+                'default_currency' => 'USD',
+                'max_upload_mb'    => (string) Config::MAX_UPLOAD_MB,
+                'version_check'    => '1',
+            ], $saved);
             $this->assertSame(Config::MAX_UPLOAD_MB * 1024 * 1024, Config::maxUploadBytes());
 
             $saved = Config::save(['default_currency' => '<b>', 'max_upload_mb' => '-3']);
             $this->assertSame('EUR', $saved['default_currency']);
             $this->assertSame((string) Config::MIN_UPLOAD_MB, $saved['max_upload_mb']);
+            // Case décochée : le formulaire n'envoie rien, la vérification des versions est coupée.
+            $this->assertSame('0', $saved['version_check']);
         } finally {
             Config::save($before);
         }

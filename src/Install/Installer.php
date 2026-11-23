@@ -22,6 +22,7 @@ namespace GlpiPlugin\Finops\Install;
 use DBConnection;
 use GlpiPlugin\Finops\Config;
 use GlpiPlugin\Finops\Menu;
+use GlpiPlugin\Finops\PluginVersion;
 use Migration;
 use ProfileRight;
 
@@ -56,6 +57,7 @@ final class Installer
     {
         ProfileRight::deleteProfileRights([Menu::RIGHTNAME]);
         Config::uninstall();
+        PluginVersion::uninstall('finops');
         $this->deleteCoreRowsOfPluginItemtypes();
         FeatureTablesRegistry::uninstall($migration);
         $migration->executeMigration();

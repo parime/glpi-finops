@@ -34,6 +34,9 @@ final class Config
     public const DEFAULTS = [
         'default_currency' => 'EUR',
         'max_upload_mb'    => '5',
+        // Composant « Version du plugin » (charte section 9 bis) : désactivable pour une instance
+        // sans accès à Internet.
+        'version_check'    => '1',
     ];
 
     /**
@@ -47,7 +50,8 @@ final class Config
     }
 
     /**
-     * Valeurs validées : devise ISO 4217 (trois lettres), taille maximale bornée.
+     * Valeurs validées : devise ISO 4217 (trois lettres), taille maximale bornée, vérification des
+     * nouvelles versions activée ou non.
      *
      * @param array<string, mixed> $input
      * @return array<string, string> Valeurs enregistrées.
@@ -59,7 +63,11 @@ final class Config
             $currency = self::DEFAULTS['default_currency'];
         }
         $size = max(self::MIN_UPLOAD_MB, min(self::MAX_UPLOAD_MB, (int) ($input['max_upload_mb'] ?? 0)));
-        $values = ['default_currency' => $currency, 'max_upload_mb' => (string) $size];
+        $values = [
+            'default_currency' => $currency,
+            'max_upload_mb'    => (string) $size,
+            'version_check'    => empty($input['version_check']) ? '0' : '1',
+        ];
         \Config::setConfigurationValues(self::CONTEXT, $values);
 
         return $values;

@@ -48,8 +48,8 @@ Le plugin suit la [charte commune des plugins](https://github.com/parime/glpi-pl
 
 ## Utilisation
 
-- **Configuration > Plugins > FinOps** : devise par défaut, taille maximale d'un fichier, sources de
-  coûts disponibles.
+- **Configuration > Plugins > FinOps** : version installée et dernière version publiée sur GitHub,
+  devise par défaut, taille maximale d'un fichier, sources de coûts disponibles.
 - **Gestion > FinOps** : coûts par fournisseur et par mois, ressources, import.
 
 Le tutoriel pas à pas est assemblé dans `docs/TUTORIAL.md` à chaque version, à partir de
