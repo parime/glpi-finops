@@ -27,6 +27,10 @@
    {% include '@finops/_section_nav.html.twig' with {tabs: tabs} %}
 
    {% if tab == 'general' %}
+      {# Premier bloc de la page, en tête du premier onglet (charte du modèle, section 9 bis). #}
+      <div style="max-width: 1100px;">
+         {% include '@finops/_plugin_version.html.twig' with {plugin_version: plugin_version} %}
+      </div>
       <form method="post" action="">
          <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
          <div class="card" style="max-width: 1100px;">
@@ -34,7 +38,6 @@
                <h3 class="card-title"><i class="ti ti-settings me-2"></i>{{ __('General', 'finops') }}</h3>
             </div>
             <div class="card-body">
-               {% include '@finops/_plugin_version.html.twig' with {plugin_version: plugin_version} %}
                {{ fields.textField('default_currency', values.default_currency, __('Default currency', 'finops'), {
                   'maxlength': 3,
                   'add_field_html': '<div class="form-hint">' ~ __('ISO 4217 code (EUR, USD, GBP...), used when a cost line gives no currency.', 'finops')|e ~ '</div>',
