@@ -40,7 +40,8 @@ $values = Config::load();
 // Encadré « Version du plugin » (charte section 9 bis), onglet Général seulement : pas d'appel à
 // GitHub depuis les autres onglets.
 $pluginVersion = $tab === ConfigPage::TAB_GENERAL
-    ? (new PluginVersion('finops', 'parime/glpi-finops', PLUGIN_FINOPS_VERSION))->status($values['version_check'] === '1')
+    ? (new PluginVersion('finops', 'parime/glpi-finops', PLUGIN_FINOPS_VERSION))
+        ->status($values['version_check'] === '1')
     : null;
 Html::header(Menu::getTypeName(), '', 'config', 'plugin');
 TemplateRenderer::getInstance()->display('@finops/config.html.twig', [
