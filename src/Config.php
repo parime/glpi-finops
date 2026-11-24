@@ -71,9 +71,15 @@ final class Config
             'default_currency' => $currency,
             'max_upload_mb'    => (string) $size,
             'version_check'    => empty($input['version_check']) ? '0' : '1',
-            'mandatory_tags'   => implode(', ', TagPolicy::parseList((string) ($input['mandatory_tags'] ?? ''))),
-            'owner_tag'        => TagPolicy::parseList((string) ($input['owner_tag'] ?? ''))[0] ?? '',
         ];
+        // Étiquettes (issue #19) : un champ absent du formulaire garde sa valeur.
+        $current = self::load();
+        $values['mandatory_tags'] = array_key_exists('mandatory_tags', $input)
+            ? implode(', ', TagPolicy::parseList((string) $input['mandatory_tags']))
+            : $current['mandatory_tags'];
+        $values['owner_tag'] = array_key_exists('owner_tag', $input)
+            ? (TagPolicy::parseList((string) $input['owner_tag'])[0] ?? '')
+            : $current['owner_tag'];
         \Config::setConfigurationValues(self::CONTEXT, $values);
 
         return $values;
