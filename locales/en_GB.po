@@ -869,3 +869,78 @@ msgstr "Last checked: %s (checked again every 12 hours)."
 
 msgid "Up to date"
 msgstr "Up to date"
+
+msgid "Mandatory tags"
+msgstr "Mandatory tags"
+
+msgid "Owner tag"
+msgstr "Owner tag"
+
+msgid "Tag keys every resource should carry, separated by commas (for example owner, cost-center, env). Letter case is ignored. Leave empty to turn the check off."
+msgstr "Tag keys every resource should carry, separated by commas (for example owner, cost-center, env). Letter case is ignored. Leave empty to turn the check off."
+
+msgid "Tag whose value names the owner of the resource: a GLPI login or email address. Without a matching user, the owner is shown in orange. Leave empty to skip the owner check."
+msgstr "Tag whose value names the owner of the resource: a GLPI login or email address. Without a matching user, the owner is shown in orange. Leave empty to skip the owner check."
+
+msgid "%1$s of %2$s resources have all the mandatory tags."
+msgstr "%1$s of %2$s resources have all the mandatory tags."
+
+msgid "Complete"
+msgstr "Complete"
+
+msgid "Compliance rate"
+msgstr "Compliance rate"
+
+msgid "Compliance rate: %s"
+msgstr "Compliance rate: %s"
+
+msgid "Compliant"
+msgstr "Compliant"
+
+msgid "Expected tags:"
+msgstr "Expected tags:"
+
+msgid "Missing: %s"
+msgstr "Missing: %s"
+
+msgid "No mandatory tag is set. An administrator chooses them in Setup > Plugins > FinOps, General tab."
+msgstr "No mandatory tag is set. An administrator chooses them in Setup > Plugins > FinOps, General tab."
+
+msgid "No owner"
+msgstr "No owner"
+
+msgid "No resource yet: the rate appears after the first import."
+msgstr "No resource yet: the rate appears after the first import."
+
+msgid "None"
+msgstr "None"
+
+msgid "Owner"
+msgstr "Owner"
+
+msgid "Owner to fix"
+msgstr "Owner to fix"
+
+msgid "Owner unknown in GLPI: %s"
+msgstr "Owner unknown in GLPI: %s"
+
+msgid "Show the resources to fix"
+msgstr "Show the resources to fix"
+
+msgid "Tagging to fix only"
+msgstr "Tagging to fix only"
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "Tags are read from the provider: add them on the provider side, they appear here at the next import."
+msgstr "Tags are read from the provider: add them on the provider side, they appear here at the next import."
+
+msgid "The owner is read from the tag %s and matched with a GLPI user by login or email."
+msgstr "The owner is read from the tag %s and matched with a GLPI user by login or email."
+
+msgid "Unknown owner: %s"
+msgstr "Unknown owner: %s"
+
+msgid "Without owner: %s"
+msgstr "Without owner: %s"

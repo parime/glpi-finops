@@ -869,3 +869,78 @@ msgstr "Dernière vérification : %s (nouvelle vérification toutes les 12 heure
 
 msgid "Up to date"
 msgstr "À jour"
+
+msgid "Mandatory tags"
+msgstr "Étiquettes obligatoires"
+
+msgid "Owner tag"
+msgstr "Étiquette du propriétaire"
+
+msgid "Tag keys every resource should carry, separated by commas (for example owner, cost-center, env). Letter case is ignored. Leave empty to turn the check off."
+msgstr "Clés d'étiquette que chaque ressource doit porter, séparées par des virgules (par exemple owner, cost-center, env). La casse est ignorée. Laisser vide pour désactiver le contrôle."
+
+msgid "Tag whose value names the owner of the resource: a GLPI login or email address. Without a matching user, the owner is shown in orange. Leave empty to skip the owner check."
+msgstr "Étiquette dont la valeur désigne le propriétaire de la ressource : un identifiant de connexion GLPI ou une adresse de courriel. Sans utilisateur correspondant, le propriétaire s'affiche en orange. Laisser vide pour ne pas contrôler le propriétaire."
+
+msgid "%1$s of %2$s resources have all the mandatory tags."
+msgstr "%1$s ressources sur %2$s ont toutes les étiquettes obligatoires."
+
+msgid "Complete"
+msgstr "Complet"
+
+msgid "Compliance rate"
+msgstr "Taux de conformité"
+
+msgid "Compliance rate: %s"
+msgstr "Taux de conformité : %s"
+
+msgid "Compliant"
+msgstr "Conformes"
+
+msgid "Expected tags:"
+msgstr "Étiquettes attendues :"
+
+msgid "Missing: %s"
+msgstr "Manquante : %s"
+
+msgid "No mandatory tag is set. An administrator chooses them in Setup > Plugins > FinOps, General tab."
+msgstr "Aucune étiquette obligatoire n'est définie. Un administrateur les choisit dans Configuration > Plugins > FinOps, onglet Général."
+
+msgid "No owner"
+msgstr "Sans propriétaire"
+
+msgid "No resource yet: the rate appears after the first import."
+msgstr "Aucune ressource pour l'instant : le taux apparaît après le premier import."
+
+msgid "None"
+msgstr "Aucune"
+
+msgid "Owner"
+msgstr "Propriétaire"
+
+msgid "Owner to fix"
+msgstr "Propriétaire à corriger"
+
+msgid "Owner unknown in GLPI: %s"
+msgstr "Propriétaire inconnu dans GLPI : %s"
+
+msgid "Show the resources to fix"
+msgstr "Afficher les ressources à corriger"
+
+msgid "Tagging to fix only"
+msgstr "Étiquetage à corriger seulement"
+
+msgid "Tags"
+msgstr "Étiquettes"
+
+msgid "Tags are read from the provider: add them on the provider side, they appear here at the next import."
+msgstr "Les étiquettes sont lues chez le fournisseur : ajoutez-les de son côté, elles apparaîtront ici au prochain import."
+
+msgid "The owner is read from the tag %s and matched with a GLPI user by login or email."
+msgstr "Le propriétaire est lu dans l'étiquette %s et rapproché d'un utilisateur GLPI par identifiant ou courriel."
+
+msgid "Unknown owner: %s"
+msgstr "Propriétaire inconnu : %s"
+
+msgid "Without owner: %s"
+msgstr "Sans propriétaire : %s"

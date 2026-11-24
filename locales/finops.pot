@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-22 13:33+0000\n"
+"POT-Creation-Date: 2026-11-24 00:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "No valid cost line in the file."
 msgstr ""
 
-#: front/import.php:67 src/Import/CostImporter.php:237
+#: front/import.php:67 src/Import/CostImporter.php:241
 msgid "The file cannot be read."
 msgstr ""
 
@@ -73,15 +73,15 @@ msgstr ""
 msgid "OVHcloud read failed, the costs already read are kept: %s"
 msgstr ""
 
-#: front/resource.php:37
+#: front/resource.php:38
 msgid "Link removed."
 msgstr ""
 
-#: front/resource.php:37 front/sangfor.php:89
+#: front/resource.php:38 front/sangfor.php:89
 msgid "Resource linked to the asset."
 msgstr ""
 
-#: front/resource.php:40 front/sangfor.php:91
+#: front/resource.php:41 front/sangfor.php:91
 msgid "Choose an asset you can see."
 msgstr ""
 
@@ -131,52 +131,52 @@ msgid_plural "Cost lines"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Import/CostImporter.php:220
+#: src/Import/CostImporter.php:224
 msgid "The file is larger than the size allowed in the settings."
 msgstr ""
 
-#: src/Import/CostImporter.php:223
+#: src/Import/CostImporter.php:227
 msgid "The file is empty."
 msgstr ""
 
-#: src/Import/CostImporter.php:224
+#: src/Import/CostImporter.php:228
 msgid "The file is not a text file."
 msgstr ""
 
-#: src/Import/CostImporter.php:225
+#: src/Import/CostImporter.php:229
 msgid "The file contains program code and was refused."
 msgstr ""
 
-#: src/Import/CostImporter.php:227
+#: src/Import/CostImporter.php:231
 #, php-format
 msgid "Required columns missing: %s."
 msgstr ""
 
-#: src/Import/CostImporter.php:230
+#: src/Import/CostImporter.php:234
 msgid "The file has too many columns."
 msgstr ""
 
-#: src/Import/CostImporter.php:231
+#: src/Import/CostImporter.php:235
 msgid "The file has too many lines."
 msgstr ""
 
-#: src/Import/CostImporter.php:232
+#: src/Import/CostImporter.php:236
 msgid "Invalid date (expected YYYY-MM-DD or DD/MM/YYYY)."
 msgstr ""
 
-#: src/Import/CostImporter.php:233
+#: src/Import/CostImporter.php:237
 msgid "Missing or invalid provider."
 msgstr ""
 
-#: src/Import/CostImporter.php:234
+#: src/Import/CostImporter.php:238
 msgid "Invalid cost (expected a number)."
 msgstr ""
 
-#: src/Import/CostImporter.php:235
+#: src/Import/CostImporter.php:239
 msgid "Invalid currency (expected a three-letter code)."
 msgstr ""
 
-#: src/Import/CostImporter.php:236
+#: src/Import/CostImporter.php:240
 msgid "Too many cells on the line."
 msgstr ""
 
@@ -792,6 +792,10 @@ msgid ""
 msgstr ""
 
 #: templates/config.html.twig
+msgid "Daily use (costs, resources, import): menu Management > FinOps."
+msgstr ""
+
+#: templates/config.html.twig
 msgid "Default currency"
 msgstr ""
 
@@ -817,8 +821,12 @@ msgstr ""
 msgid "License"
 msgstr ""
 
+#: templates/config.html.twig templates/resources.html.twig
+msgid "Mandatory tags"
+msgstr ""
+
 #: templates/config.html.twig
-msgid "Daily use (costs, resources, import): menu Management > FinOps."
+msgid "Owner tag"
 msgstr ""
 
 #: templates/config.html.twig
@@ -842,6 +850,20 @@ msgstr ""
 
 #: templates/config.html.twig
 msgid "Status"
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"Tag keys every resource should carry, separated by commas (for example "
+"owner, cost-center, env). Letter case is ignored. Leave empty to turn the "
+"check off."
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"Tag whose value names the owner of the resource: a GLPI login or email "
+"address. Without a matching user, the owner is shown in orange. Leave empty "
+"to skip the owner check."
 msgstr ""
 
 #: templates/config.html.twig
@@ -1085,11 +1107,33 @@ msgstr ""
 
 #: templates/resources.html.twig
 #, php-format
+msgid "%1$s of %2$s resources have all the mandatory tags."
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
 msgid "%1$s to %2$s of %3$s"
 msgstr ""
 
 #: templates/resources.html.twig
 msgid "Asset"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Complete"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Compliance rate"
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
+msgid "Compliance rate: %s"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Compliant"
 msgstr ""
 
 #: templates/resources.html.twig
@@ -1101,6 +1145,10 @@ msgstr ""
 msgid ""
 "Each resource billed by a provider (instance, VM, database, disk...) and the "
 "GLPI asset it belongs to."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Expected tags:"
 msgstr ""
 
 #: templates/resources.html.twig
@@ -1122,7 +1170,30 @@ msgid "Linked asset"
 msgstr ""
 
 #: templates/resources.html.twig
+#, php-format
+msgid "Missing: %s"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid ""
+"No mandatory tag is set. An administrator chooses them in Setup > Plugins > "
+"FinOps, General tab."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "No owner"
+msgstr ""
+
+#: templates/resources.html.twig
 msgid "No resource to show"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "No resource yet: the rate appears after the first import."
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "None"
 msgstr ""
 
 #: templates/resources.html.twig templates/sangfor_inventory.html.twig
@@ -1138,6 +1209,19 @@ msgid "Open"
 msgstr ""
 
 #: templates/resources.html.twig
+msgid "Owner"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Owner to fix"
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
+msgid "Owner unknown in GLPI: %s"
+msgstr ""
+
+#: templates/resources.html.twig
 msgid "Remove the link"
 msgstr ""
 
@@ -1147,6 +1231,41 @@ msgstr ""
 
 #: templates/resources.html.twig
 msgid "Search"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Show the resources to fix"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Tagging to fix only"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Tags"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid ""
+"Tags are read from the provider: add them on the provider side, they appear "
+"here at the next import."
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
+msgid ""
+"The owner is read from the tag %s and matched with a GLPI user by login or "
+"email."
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
+msgid "Unknown owner: %s"
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
+msgid "Without owner: %s"
 msgstr ""
 
 #: templates/sangfor_inventory.html.twig
