@@ -15,6 +15,36 @@
 
 {# Ressources vues dans les coûts, filtrables, et formulaire de rattachement à un actif de GLPI. #}
 {% import 'components/form/fields_macros.html.twig' as fields %}
+{% import _self as tag_ui %}
+
+{# Propriétaire d'une ressource (issue #19) : utilisateur de GLPI retrouvé (vert), valeur sans
+   utilisateur correspondant (orange), étiquette absente (rouge). #}
+{% macro owner(owner) %}
+   {% if owner.status == 'ok' %}
+      {% if owner.url %}<a href="{{ owner.url }}">{% endif %}
+      {% include '@finops/_badge.html.twig' with {kind: 'ok', label: owner.name ?: owner.value} %}
+      {% if owner.url %}</a>{% endif %}
+   {% elseif owner.status == 'unknown' %}
+      {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Unknown owner: %s', 'finops')|format(owner.value)} %}
+   {% elseif owner.status == 'missing' %}
+      {% include '@finops/_badge.html.twig' with {kind: 'danger', label: __('No owner', 'finops')} %}
+   {% else %}
+      <span class="text-muted">-</span>
+   {% endif %}
+{% endmacro %}
+
+{# Étiquettes obligatoires manquantes (rouge) ou étiquetage complet (vert). #}
+{% macro tagging(missing, required) %}
+   {% if required is empty %}
+      <span class="text-muted">-</span>
+   {% elseif missing is empty %}
+      {% include '@finops/_badge.html.twig' with {kind: 'ok', label: __('Complete', 'finops')} %}
+   {% else %}
+      {% for key in missing %}
+         {% include '@finops/_badge.html.twig' with {kind: 'danger', label: __('Missing: %s', 'finops')|format(key)} %}
+      {% endfor %}
+   {% endif %}
+{% endmacro %}
 
 <div class="container-fluid mt-2">
    {% include '@finops/_page_help.html.twig' with {
@@ -24,6 +54,87 @@
    } %}
 
    {% include '@finops/_section_nav.html.twig' with {tabs: tabs} %}
+
+   {# Étiquetage obligatoire (issue #19) : taux de conformité, par fournisseur et par compte. #}
+   <div class="card mb-3">
+      <div class="card-header">
+         <h3 class="card-title"><i class="ti ti-tags me-2"></i>{{ __('Mandatory tags', 'finops') }}</h3>
+         {% if compliance.required is not empty and compliance.rate is not null %}
+            <div class="card-actions">
+               {% set rate_kind = compliance.rate == 100 ? 'ok' : (compliance.rate >= 80 ? 'warning' : 'danger') %}
+               {% include '@finops/_badge.html.twig' with {kind: rate_kind, label: __('Compliance rate: %s', 'finops')|format(compliance.rate ~ ' %')} %}
+            </div>
+         {% endif %}
+      </div>
+      <div class="card-body">
+         {% if compliance.required is empty %}
+            <p class="text-muted mb-0">
+               <i class="ti ti-info-circle me-1"></i>{{ __('No mandatory tag is set. An administrator chooses them in Setup > Plugins > FinOps, General tab.', 'finops') }}
+            </p>
+         {% else %}
+            <p class="mb-2">
+               {{ __('Expected tags:', 'finops') }}
+               {% for key in compliance.required %}
+                  <span class="badge bg-secondary-subtle text-secondary-emphasis"><i class="ti ti-tag me-1"></i>{{ key }}</span>
+               {% endfor %}
+               {% if compliance.owner_tag %}
+                  <span class="ms-2 text-muted small">{{ __('The owner is read from the tag %s and matched with a GLPI user by login or email.', 'finops')|format(compliance.owner_tag) }}</span>
+               {% endif %}
+            </p>
+            {% if compliance.total == 0 %}
+               <p class="text-muted mb-0">{{ __('No resource yet: the rate appears after the first import.', 'finops') }}</p>
+            {% else %}
+               <p class="mb-2">
+                  {{ __('%1$s of %2$s resources have all the mandatory tags.', 'finops')|format(compliance.compliant, compliance.total) }}
+                  {% if compliance.owner_tag %}
+                     {% if compliance.owner_missing > 0 %}
+                        {% include '@finops/_badge.html.twig' with {kind: 'danger', label: __('Without owner: %s', 'finops')|format(compliance.owner_missing)} %}
+                     {% endif %}
+                     {% if compliance.owner_unknown > 0 %}
+                        {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Owner unknown in GLPI: %s', 'finops')|format(compliance.owner_unknown)} %}
+                     {% endif %}
+                  {% endif %}
+                  {% if not tofix %}
+                     <a href="{{ page_url }}?tofix=1" class="btn btn-sm btn-outline-secondary ms-2"><i class="ti ti-filter me-1"></i>{{ __('Show the resources to fix', 'finops') }}</a>
+                  {% endif %}
+               </p>
+               <div class="table-responsive">
+                  <table class="table table-sm table-vcenter mb-0">
+                     <thead>
+                        <tr>
+                           <th>{{ __('Provider', 'finops') }}</th>
+                           <th>{{ __('Account', 'finops') }}</th>
+                           <th class="text-end">{{ __('Resources', 'finops') }}</th>
+                           <th class="text-end">{{ __('Compliant', 'finops') }}</th>
+                           {% if compliance.owner_tag %}
+                              <th class="text-end">{{ __('Owner to fix', 'finops') }}</th>
+                           {% endif %}
+                           <th>{{ __('Compliance rate', 'finops') }}</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for group in compliance.groups %}
+                           <tr>
+                              <td><i class="ti ti-cloud me-1 text-muted"></i>{{ group.provider }}</td>
+                              <td>{{ group.account ?: '-' }}</td>
+                              <td class="text-end">{{ group.total }}</td>
+                              <td class="text-end">{{ group.compliant }}</td>
+                              {% if compliance.owner_tag %}
+                                 <td class="text-end">{{ group.owner_missing + group.owner_unknown }}</td>
+                              {% endif %}
+                              <td>
+                                 {% set group_kind = group.rate == 100 ? 'ok' : (group.rate >= 80 ? 'warning' : 'danger') %}
+                                 {% include '@finops/_badge.html.twig' with {kind: group_kind, label: group.rate ~ ' %'} %}
+                              </td>
+                           </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            {% endif %}
+         {% endif %}
+      </div>
+   </div>
 
    {% if selected %}
       <div class="card mb-3" style="max-width: 1100px;">
@@ -39,6 +150,25 @@
                <strong>{{ __('Account', 'finops') }}</strong> {{ selected.account ?: '-' }}
                <strong class="ms-3">{{ __('Service', 'finops') }}</strong> {{ selected.service ?: '-' }}
             </p>
+            <p class="mb-2">
+               <strong>{{ __('Tags', 'finops') }}</strong>
+               {% for key, value in selected.tags %}
+                  <span class="badge bg-secondary-subtle text-secondary-emphasis text-break"><i class="ti ti-tag me-1"></i>{{ key }}={{ value }}</span>
+               {% else %}
+                  <span class="text-muted">{{ __('None', 'finops') }}</span>
+               {% endfor %}
+            </p>
+            <p class="mb-2">
+               <strong>{{ __('Mandatory tags', 'finops') }}</strong> {{ tag_ui.tagging(selected.missing_tags, compliance.required) }}
+               {% if compliance.owner_tag %}
+                  <strong class="ms-3">{{ __('Owner', 'finops') }}</strong> {{ tag_ui.owner(selected.owner) }}
+               {% endif %}
+            </p>
+            {% if selected.missing_tags is not empty or selected.owner.status in ['missing', 'unknown'] %}
+               <p class="small text-muted mb-3">
+                  <i class="ti ti-bulb me-1"></i>{{ __('Tags are read from the provider: add them on the provider side, they appear here at the next import.', 'finops') }}
+               </p>
+            {% endif %}
             <p class="mb-3">
                <strong>{{ __('Linked asset', 'finops') }}</strong>
                {% if selected.asset %}
@@ -85,6 +215,10 @@
                   <input class="form-check-input" type="checkbox" name="unlinked" value="1"{{ unlinked ? ' checked' : '' }} onchange="this.form.submit()" />
                   <span class="form-check-label">{{ __('Not linked only', 'finops') }}</span>
                </label>
+               <label class="form-check form-switch mb-0 text-nowrap">
+                  <input class="form-check-input" type="checkbox" name="tofix" value="1"{{ tofix ? ' checked' : '' }} onchange="this.form.submit()" />
+                  <span class="form-check-label">{{ __('Tagging to fix only', 'finops') }}</span>
+               </label>
                <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="ti ti-filter"></i></button>
             </form>
          </div>
@@ -113,6 +247,8 @@
                      <th>{{ __('Service', 'finops') }}</th>
                      <th>{{ __('Last seen', 'finops') }}</th>
                      <th class="text-end">{{ __('Total cost', 'finops') }}</th>
+                     <th>{{ __('Mandatory tags', 'finops') }}</th>
+                     {% if compliance.owner_tag %}<th>{{ __('Owner', 'finops') }}</th>{% endif %}
                      <th>{{ __('Linked asset', 'finops') }}</th>
                   </tr>
                </thead>
@@ -129,6 +265,8 @@
                               <div>{{ cost|number_format(2, '.', ' ') }} {{ currency }}</div>
                            {% endfor %}
                         </td>
+                        <td>{{ tag_ui.tagging(row.missing_tags, compliance.required) }}</td>
+                        {% if compliance.owner_tag %}<td>{{ tag_ui.owner(row.owner) }}</td>{% endif %}
                         <td>
                            {% if row.asset %}
                               {% include '@finops/_badge.html.twig' with {kind: 'ok', label: row.asset.name} %}
@@ -148,12 +286,12 @@
                <span class="text-muted small">{{ __('%1$s to %2$s of %3$s', 'finops')|format(start + 1, min(start + page_size, total), total) }}</span>
                <div class="btn-group">
                   {% if start > 0 %}
-                     <a class="btn btn-sm btn-outline-secondary" href="{{ page_url }}?{{ {start: max(0, start - page_size), search: search, unlinked: unlinked ? 1 : 0}|url_encode }}">
+                     <a class="btn btn-sm btn-outline-secondary" href="{{ page_url }}?{{ {start: max(0, start - page_size), search: search, unlinked: unlinked ? 1 : 0, tofix: tofix ? 1 : 0}|url_encode }}">
                         <i class="ti ti-chevron-left"></i>
                      </a>
                   {% endif %}
                   {% if start + page_size < total %}
-                     <a class="btn btn-sm btn-outline-secondary" href="{{ page_url }}?{{ {start: start + page_size, search: search, unlinked: unlinked ? 1 : 0}|url_encode }}">
+                     <a class="btn btn-sm btn-outline-secondary" href="{{ page_url }}?{{ {start: start + page_size, search: search, unlinked: unlinked ? 1 : 0, tofix: tofix ? 1 : 0}|url_encode }}">
                         <i class="ti ti-chevron-right"></i>
                      </a>
                   {% endif %}

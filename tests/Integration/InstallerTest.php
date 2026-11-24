@@ -64,6 +64,9 @@ final class InstallerTest extends TestCase
                 'default_currency' => 'USD',
                 'max_upload_mb'    => (string) Config::MAX_UPLOAD_MB,
                 'version_check'    => '1',
+                // Champs absents : valeurs gardées.
+                'mandatory_tags'   => $before['mandatory_tags'],
+                'owner_tag'        => $before['owner_tag'],
             ], $saved);
             $this->assertSame(Config::MAX_UPLOAD_MB * 1024 * 1024, Config::maxUploadBytes());
 
@@ -72,6 +75,12 @@ final class InstallerTest extends TestCase
             $this->assertSame((string) Config::MIN_UPLOAD_MB, $saved['max_upload_mb']);
             // Case décochée : le formulaire n'envoie rien, la vérification des versions est coupée.
             $this->assertSame('0', $saved['version_check']);
+
+            // Étiquettes (issue #19) : liste nettoyée, une seule étiquette de propriétaire.
+            $saved = Config::save(['mandatory_tags' => " env;Env, team
+", 'owner_tag' => 'owner, team']);
+            $this->assertSame('env, team', $saved['mandatory_tags']);
+            $this->assertSame('owner', $saved['owner_tag']);
         } finally {
             Config::save($before);
         }
