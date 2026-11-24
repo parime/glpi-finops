@@ -89,6 +89,7 @@ final class CostTables implements FeatureTables
                 `date_link` timestamp NULL DEFAULT NULL,
                 `first_seen` date DEFAULT NULL,
                 `last_seen` date DEFAULT NULL,
+                `tags` text,
                 `date_creation` timestamp NULL DEFAULT NULL,
                 `date_mod` timestamp NULL DEFAULT NULL,
                 PRIMARY KEY (`id`),
@@ -105,6 +106,44 @@ final class CostTables implements FeatureTables
 
     public static function migrate(Migration $migration): void
     {
+        global $DB;
+
+        // Issue #19 : étiquettes de la ressource (celles de sa ligne de coût la plus récente), pour
+        // l'étiquetage obligatoire. Recopiées une fois depuis les lignes déjà importées.
+        if (!$DB->fieldExists(self::RESOURCES, 'tags')) {
+            $migration->addField(self::RESOURCES, 'tags', 'text', ['after' => 'last_seen']);
+            $migration->migrationOneTable(self::RESOURCES);
+            self::copyTagsFromLines();
+        }
+    }
+
+    /**
+     * Étiquettes de la ligne de coût la plus récente de chaque ressource.
+     */
+    private static function copyTagsFromLines(): void
+    {
+        global $DB;
+
+        $resources = $DB->request([
+            'SELECT' => ['id', 'entities_id', 'provider', 'resource'],
+            'FROM'   => self::RESOURCES,
+        ]);
+        foreach ($resources as $resource) {
+            $line = $DB->request([
+                'SELECT' => ['tags'],
+                'FROM'   => self::LINES,
+                'WHERE'  => [
+                    'entities_id' => $resource['entities_id'],
+                    'provider'    => $resource['provider'],
+                    'resource'    => $resource['resource'],
+                ],
+                'ORDER'  => ['usage_date DESC', 'id DESC'],
+                'LIMIT'  => 1,
+            ])->current();
+            if ($line !== null && (string) $line['tags'] !== '') {
+                $DB->update(self::RESOURCES, ['tags' => $line['tags']], ['id' => (int) $resource['id']]);
+            }
+        }
     }
 
     public static function uninstall(Migration $migration): void

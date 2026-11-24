@@ -18,6 +18,7 @@
 use Glpi\Application\View\TemplateRenderer;
 use GlpiPlugin\Finops\Menu;
 use GlpiPlugin\Finops\Resource;
+use GlpiPlugin\Finops\TagCompliance;
 
 // Ressources vues dans les coûts (Gestion > FinOps > Ressources) et rattachement manuel à un actif.
 // Lecture : droit READ du plugin ; rattacher : droit UPDATE et lecture de l'actif (Resource::link).
@@ -53,7 +54,9 @@ if (isset($_GET['id'])) {
 $unlinked = !empty($_GET['unlinked']);
 $search = mb_substr((string) ($_GET['search'] ?? ''), 0, 100);
 $start = max(0, (int) ($_GET['start'] ?? 0));
-$page = Resource::page($unlinked, $search, $start);
+// Étiquetage obligatoire (issue #19) : ressources à corriger seulement.
+$toFix = !empty($_GET['tofix']);
+$page = Resource::page($unlinked, $search, $start, $toFix);
 
 Html::header(Menu::getTypeName(), '', 'management', Menu::class, Menu::TAB_RESOURCES);
 TemplateRenderer::getInstance()->display('@finops/resources.html.twig', [
@@ -64,6 +67,8 @@ TemplateRenderer::getInstance()->display('@finops/resources.html.twig', [
     'start'       => $start,
     'page_size'   => Resource::PAGE_SIZE,
     'unlinked'    => $unlinked,
+    'tofix'       => $toFix,
+    'compliance'  => TagCompliance::summary(),
     'search'      => $search,
     'selected'    => $selected,
     'asset_types' => Resource::ASSET_TYPES,

@@ -37,6 +37,9 @@ final class Config
         // Composant « Version du plugin » (charte section 9 bis) : désactivable pour une instance
         // sans accès à Internet.
         'version_check'    => '1',
+        // Étiquettes obligatoires des ressources et étiquette du propriétaire (issue #19).
+        'mandatory_tags'   => 'owner, cost-center, env',
+        'owner_tag'        => 'owner',
     ];
 
     /**
@@ -51,7 +54,8 @@ final class Config
 
     /**
      * Valeurs validées : devise ISO 4217 (trois lettres), taille maximale bornée, vérification des
-     * nouvelles versions activée ou non.
+     * nouvelles versions activée ou non, étiquettes obligatoires et étiquette du propriétaire
+     * nettoyées (TagPolicy::parseList ; vide : aucune).
      *
      * @param array<string, mixed> $input
      * @return array<string, string> Valeurs enregistrées.
@@ -67,6 +71,8 @@ final class Config
             'default_currency' => $currency,
             'max_upload_mb'    => (string) $size,
             'version_check'    => empty($input['version_check']) ? '0' : '1',
+            'mandatory_tags'   => implode(', ', TagPolicy::parseList((string) ($input['mandatory_tags'] ?? ''))),
+            'owner_tag'        => TagPolicy::parseList((string) ($input['owner_tag'] ?? ''))[0] ?? '',
         ];
         \Config::setConfigurationValues(self::CONTEXT, $values);
 

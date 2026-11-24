@@ -48,6 +48,14 @@
                   'step': 1,
                   'add_field_html': '<div class="form-hint">' ~ __('Larger files are refused before being read. Between %1$s and %2$s MB.', 'finops')|format(min_mb, max_mb)|e ~ '</div>',
                }) }}
+               {{ fields.textField('mandatory_tags', values.mandatory_tags, __('Mandatory tags', 'finops'), {
+                  'maxlength': 1000,
+                  'add_field_html': '<div class="form-hint">' ~ __('Tag keys every resource should carry, separated by commas (for example owner, cost-center, env). Letter case is ignored. Leave empty to turn the check off.', 'finops')|e ~ '</div>',
+               }) }}
+               {{ fields.textField('owner_tag', values.owner_tag, __('Owner tag', 'finops'), {
+                  'maxlength': 100,
+                  'add_field_html': '<div class="form-hint">' ~ __('Tag whose value names the owner of the resource: a GLPI login or email address. Without a matching user, the owner is shown in orange. Leave empty to skip the owner check.', 'finops')|e ~ '</div>',
+               }) }}
                {{ fields.sliderField('version_check', values.version_check, __('Check for new versions on GitHub', 'finops'), {
                   'add_field_html': '<div class="form-hint">' ~ __('Reads the latest release published on GitHub at most every 12 hours, without sending any information about this GLPI. Turn it off on a server without Internet access.', 'finops')|e ~ '</div>',
                }) }}

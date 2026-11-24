@@ -116,11 +116,13 @@ class Resource extends RecordBase
     }
 
     /**
-     * Ressources des entités de la session, les plus récentes d'abord, avec leur coût.
+     * Ressources des entités de la session, les plus récentes d'abord, avec leur coût, leurs
+     * étiquettes manquantes et leur propriétaire. $toFixOnly : seulement les ressources à
+     * l'étiquetage incomplet ou au propriétaire absent ou inconnu (issue #19).
      *
      * @return array{rows: list<array<string, mixed>>, total: int}
      */
-    public static function page(bool $unlinkedOnly, string $search, int $start): array
+    public static function page(bool $unlinkedOnly, string $search, int $start, bool $toFixOnly = false): array
     {
         global $DB;
 
@@ -134,20 +136,31 @@ class Resource extends RecordBase
             $like = ['LIKE', '%' . $search . '%'];
             $where[] = ['OR' => ['resource' => $like, 'provider' => $like, 'account' => $like, 'service' => $like]];
         }
-        $total = countElementsInTable($table, $where);
-        $rows = [];
-        $iterator = $DB->request([
+        $query = [
             'FROM'  => $table,
             'WHERE' => $where,
             'ORDER' => ['last_seen DESC', 'id DESC'],
             'START' => max(0, $start),
             'LIMIT' => self::PAGE_SIZE,
-        ]);
-        foreach ($iterator as $row) {
+        ];
+        if ($toFixOnly) {
+            // Conformité calculée en PHP (étiquettes en JSON, règles de la configuration).
+            $ids = TagCompliance::toFix($where);
+            $total = count($ids);
+            $page = array_slice($ids, max(0, $start), self::PAGE_SIZE);
+            if ($page === []) {
+                return ['rows' => [], 'total' => $total];
+            }
+            $query = ['FROM' => $table, 'WHERE' => ['id' => $page], 'ORDER' => ['last_seen DESC', 'id DESC']];
+        } else {
+            $total = countElementsInTable($table, $where);
+        }
+        $rows = [];
+        foreach ($DB->request($query) as $row) {
             $rows[] = self::present($row);
         }
 
-        return ['rows' => self::withCosts($rows), 'total' => $total];
+        return ['rows' => TagCompliance::annotate(self::withCosts($rows)), 'total' => $total];
     }
 
     /**
@@ -158,7 +171,7 @@ class Resource extends RecordBase
      */
     public static function presentOne(array $row): array
     {
-        return self::withCosts([self::present($row)])[0];
+        return TagCompliance::annotate(self::withCosts([self::present($row)]))[0];
     }
 
     /**
@@ -194,6 +207,8 @@ class Resource extends RecordBase
             'itemtype'   => (string) ($row['itemtype'] ?? ''),
             'items_id'   => (int) $row['items_id'],
             'asset'      => $asset,
+            // Étiquettes de la dernière ligne de coût lue (issue #19).
+            'tags'       => TagPolicy::decode(isset($row['tags']) ? (string) $row['tags'] : null),
             'costs'      => [],
         ];
     }
