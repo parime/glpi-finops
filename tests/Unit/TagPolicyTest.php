@@ -15,7 +15,6 @@
  * -------------------------------------------------------------------------
  */
 
-
 declare(strict_types=1);
 
 namespace GlpiPlugin\Finops\Tests\Unit;
@@ -37,7 +36,10 @@ final class TagPolicyTest extends TestCase
 
     public function testDecodeAcceptsOnlyAFlatObject(): void
     {
-        $this->assertSame(['env' => 'prod', 'owner' => 'a.martin'], TagPolicy::decode('{"env":"prod","owner":"a.martin"}'));
+        $this->assertSame(
+            ['env' => 'prod', 'owner' => 'a.martin'],
+            TagPolicy::decode('{"env":"prod","owner":"a.martin"}')
+        );
         $this->assertSame([], TagPolicy::decode(null));
         $this->assertSame([], TagPolicy::decode('not json'));
         $this->assertSame([], TagPolicy::decode('{"a":{"b":"c"}}'));

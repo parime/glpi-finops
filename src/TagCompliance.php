@@ -255,7 +255,12 @@ final class TagCompliance
         foreach ($rows as &$row) {
             $tags = is_array($row['tags'] ?? null) ? $row['tags'] : [];
             $verdict = self::evaluate($tags, $settings, $owners);
-            $owner = ['status' => $verdict['owner_status'], 'value' => $verdict['owner_value'], 'name' => '', 'url' => ''];
+            $owner = [
+                'status' => $verdict['owner_status'],
+                'value'  => $verdict['owner_value'],
+                'name'   => '',
+                'url'    => '',
+            ];
             $id = $verdict['owner_id'];
             if ($id > 0) {
                 if (!isset($users[$id])) {
