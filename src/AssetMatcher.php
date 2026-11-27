@@ -212,8 +212,8 @@ final class AssetMatcher
             $row = $resource->fields;
             $row['tags'] = TagPolicy::decode(isset($row['tags']) ? (string) $row['tags'] : null);
             $proposal = self::propose($row)['proposal'];
-            if ($proposal === null || $proposal['value'] !== (string) $value
-                || !Resource::link((int) $id, $proposal['itemtype'], $proposal['items_id'])) {
+            $confirmed = $proposal !== null && $proposal['value'] === (string) $value;
+            if (!$confirmed || !Resource::link((int) $id, $proposal['itemtype'], $proposal['items_id'])) {
                 $skipped++;
                 continue;
             }

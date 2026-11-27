@@ -37,8 +37,10 @@ final class AssetMatcherKeysTest extends TestCase
     public function testKeysAddTheLastSegmentOfAPath(): void
     {
         $this->assertSame(['i-0abc'], AssetMatcher::keys(' i-0abc '));
-        $this->assertSame(['projects/p1/instances/i-0abc', 'i-0abc'], AssetMatcher::keys('projects/p1/instances/i-0abc'));
-        $this->assertSame(['arn:aws:ec2:eu-west-3:1:instance/i-1', 'i-1'], AssetMatcher::keys('arn:aws:ec2:eu-west-3:1:instance/i-1'));
+        $path = 'projects/p1/instances/i-0abc';
+        $this->assertSame([$path, 'i-0abc'], AssetMatcher::keys($path));
+        $arn = 'arn:aws:ec2:eu-west-3:1:instance/i-1';
+        $this->assertSame([$arn, 'i-1'], AssetMatcher::keys($arn));
         $this->assertSame([], AssetMatcher::keys(''));
     }
 }

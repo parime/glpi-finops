@@ -52,7 +52,7 @@ if (isset($_POST['validate'])) {
     $result = AssetMatcher::validate(array_slice($proposals, 0, Resource::PAGE_SIZE, true));
     if ($result['linked'] > 0) {
         Session::addMessageAfterRedirect(htmlescape(sprintf(
-            _n('%s resource linked to the proposed asset.', '%s resources linked to the proposed assets.', $result['linked'], 'finops'),
+            __('Resources linked to the proposed assets: %s.', 'finops'),
             $result['linked']
         )), false, INFO);
     }

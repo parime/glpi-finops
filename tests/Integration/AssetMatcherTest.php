@@ -193,6 +193,7 @@ final class AssetMatcherTest extends TestCase
         $this->assertSame(0, $rows["vmuuid-$s"]['items_id'], 'non cochée : non rattachée');
 
         // Déjà rattachée : ignorée.
-        $this->assertSame(['linked' => 0, 'skipped' => 1], AssetMatcher::validate([$serial['id'] => $serial['proposal']['value']]));
+        $again = AssetMatcher::validate([$serial['id'] => $serial['proposal']['value']]);
+        $this->assertSame(['linked' => 0, 'skipped' => 1], $again);
     }
 }
