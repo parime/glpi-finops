@@ -126,8 +126,9 @@ final class OvhAccountTest extends TestCase
         $account = $this->account();
         $result = $account->readCosts(new FakeOvh());
         $this->assertTrue($result['ok']);
-        $this->assertSame(4, $result['created']);
-        $this->assertSame(4, $this->lines());
+        // Issue #41 : 4 lignes de facture et de consommation, plus 2 composants de resourcesUsage et 1 quantum.
+        $this->assertSame(7, $result['created']);
+        $this->assertSame(7, $this->lines());
         $import = $DB->request([
             'FROM'  => CostTables::IMPORTS,
             'WHERE' => ['id' => $account->fields['plugin_finops_costimports_id']],
@@ -138,13 +139,13 @@ final class OvhAccountTest extends TestCase
 
         $again = $account->readCosts(new FakeOvh());
         $this->assertSame(0, $again['created']);
-        $this->assertSame(4, $again['known']);
+        $this->assertSame(7, $again['known']);
 
         $broken = new FakeOvh();
         $broken->failures['/me/bill/FR0001/details/D1'] = 500;
         $failed = $account->readCosts($broken);
         $this->assertFalse($failed['ok']);
-        $this->assertSame(4, $this->lines());
+        $this->assertSame(7, $this->lines());
         $account->getFromDB($account->getID());
         $this->assertSame(OvhAccount::STATUS_ERROR, $account->fields['last_status']);
         $this->assertSame($success, $account->fields['last_success']);
