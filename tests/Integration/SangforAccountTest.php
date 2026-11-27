@@ -104,6 +104,25 @@ final class SangforAccountTest extends TestCase
         $this->assertStringNotContainsString(FakeScp::USER, (string) $listing);
     }
 
+    public function testFormSendsTheNameAndThePortInsteadOfAnUrl(): void
+    {
+        // Issue #48 : saisie séparée, l'URL est reconstruite côté serveur en https.
+        $account = $this->account(['url' => null, 'scp_host' => '192.0.2.10', 'scp_port' => '4430']);
+        $this->assertSame('https://192.0.2.10:4430', $account->fields['url']);
+        $row = array_values(array_filter(
+            SangforAccount::listing(),
+            fn (array $row) => $row['id'] === $account->getID()
+        ))[0];
+        $this->assertSame(['192.0.2.10', '4430'], [$row['scp_host'], $row['scp_port']]);
+        $this->assertTrue($account->update(['id' => $account->getID(), 'scp_host' => 'scp.example.test', 'scp_port' => '']));
+        $this->assertTrue($account->getFromDB($account->getID()));
+        $this->assertSame('https://scp.example.test', $account->fields['url']);
+        $this->assertFalse((new SangforAccount())->add([
+            'name' => self::NAME, 'scp_host' => 'scp.example.test/janus', 'scp_port' => '', 'username' => 'u',
+            'password' => 'p',
+        ]));
+    }
+
     public function testInvalidAddressOrPriceIsRefused(): void
     {
         $this->assertFalse((new SangforAccount())->add([
