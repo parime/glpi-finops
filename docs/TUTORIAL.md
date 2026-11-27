@@ -81,6 +81,26 @@ suivi des coûts. Toutes les données citées sont fictives.
 6. Si la lecture échoue (connexion refusée, certificat, réseau), rien n'est écrit : l'inventaire et
    les coûts déjà lus restent, la carte affiche le motif et la date de la dernière réussite.
 
+### Étape 5 : Vérifier l'étiquetage obligatoire et les propriétaires
+
+1. **Configuration > Plugins > FinOps**, onglet **Général** : saisir les **étiquettes obligatoires**
+   séparées par des virgules (par défaut `owner, cost-center, env`) et l'**étiquette du
+   propriétaire** (par défaut `owner`), puis **Sauvegarder**. Un champ vide désactive le contrôle.
+2. Importer un fichier de coûts dont la colonne `tags` porte ces étiquettes (données fictives) :
+
+   ```csv
+   date,provider,account,service,resource,cost,currency,tags
+   2026-10-01,aws,123456789012,Amazon EC2,i-0demo01,12.40,USD,owner=a.martin;cost-center=CC42;env=prod
+   2026-10-01,aws,123456789012,Amazon S3,bucket-demo,1.10,USD,env=dev
+   ```
+
+3. **Gestion > FinOps > Ressources** : la carte **Étiquettes obligatoires** donne le taux de
+   conformité, puis le détail par fournisseur et par compte. Le propriétaire apparaît en vert quand
+   sa valeur est l'identifiant de connexion ou le courriel d'un utilisateur de GLPI, en orange
+   sinon, en rouge quand l'étiquette manque.
+4. Activer **Étiquetage à corriger seulement** pour lister les ressources à reprendre. Les étiquettes
+   se corrigent chez le fournisseur : elles sont relues au prochain import.
+
 ## 🇬🇧 English
 
 This tutorial follows, step by step, an administrator discovering FinOps: installation, settings,
@@ -157,3 +177,22 @@ then cost tracking. All the data quoted is fictitious.
    **Link**. Without a proposal, **Choose an asset** opens the resources page.
 6. If the read fails (login refused, certificate, network), nothing is written: the inventory and
    the costs already read stay, the card shows the reason and the date of the last success.
+
+### Step 5: Check mandatory tags and owners
+
+1. **Setup > Plugins > FinOps**, **General** tab: enter the **mandatory tags** separated by commas
+   (by default `owner, cost-center, env`) and the **owner tag** (by default `owner`), then
+   **Save**. An empty field turns the check off.
+2. Import a cost file whose `tags` column carries these tags (fictitious data):
+
+   ```csv
+   date,provider,account,service,resource,cost,currency,tags
+   2026-10-01,aws,123456789012,Amazon EC2,i-0demo01,12.40,USD,owner=a.martin;cost-center=CC42;env=prod
+   2026-10-01,aws,123456789012,Amazon S3,bucket-demo,1.10,USD,env=dev
+   ```
+
+3. **Management > FinOps > Resources**: the **Mandatory tags** card gives the compliance rate, then
+   the detail by provider and by account. The owner is shown in green when its value is the login
+   or email of a GLPI user, in orange otherwise, in red when the tag is missing.
+4. Turn on **Tagging to fix only** to list the resources to rework. Tags are fixed on the provider
+   side: they are read again at the next import.
