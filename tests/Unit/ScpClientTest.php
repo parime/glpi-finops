@@ -137,7 +137,7 @@ final class ScpClientTest extends TestCase
     /** @return array<string, array{0: int}> */
     public static function v2Failures(): array
     {
-        return ['400' => [400], '500' => [500], '200 without key' => [200]];
+        return ['HTTP 400' => [400], 'HTTP 500' => [500], 'HTTP 200 without key' => [200]];
     }
 
     #[DataProvider('v2Failures')]
