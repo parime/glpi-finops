@@ -31,7 +31,8 @@ use Session;
  * Ressource facturée (instance, VM, base, disque...) vue dans les coûts importés : une par entité,
  * fournisseur et identifiant de ressource, créée par l'import. Elle peut être rattachée à la main à
  * un actif de GLPI (droit UPDATE du plugin et lecture de l'actif) ; l'actif reçoit alors un onglet
- * « FinOps » avec ses coûts. Rien n'est rattaché automatiquement.
+ * « FinOps » avec ses coûts. Rien n'est rattaché automatiquement : AssetMatcher propose un actif,
+ * un utilisateur valide (issue #6).
  */
 class Resource extends RecordBase
 {
@@ -160,7 +161,8 @@ class Resource extends RecordBase
             $rows[] = self::present($row);
         }
 
-        return ['rows' => TagCompliance::annotate(self::withCosts($rows)), 'total' => $total];
+        // Actif proposé pour chaque ressource non rattachée (issue #6).
+        return ['rows' => AssetMatcher::annotate(TagCompliance::annotate(self::withCosts($rows))), 'total' => $total];
     }
 
     /**
@@ -171,7 +173,7 @@ class Resource extends RecordBase
      */
     public static function presentOne(array $row): array
     {
-        return TagCompliance::annotate(self::withCosts([self::present($row)]))[0];
+        return AssetMatcher::annotate(TagCompliance::annotate(self::withCosts([self::present($row)])))[0];
     }
 
     /**

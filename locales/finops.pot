@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-24 00:39+0000\n"
+"POT-Creation-Date: 2026-11-27 06:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: front/config.php:34
+#: front/config.php:35
 msgid "Settings saved."
 msgstr ""
 
@@ -73,16 +73,28 @@ msgstr ""
 msgid "OVHcloud read failed, the costs already read are kept: %s"
 msgstr ""
 
-#: front/resource.php:38
+#: front/resource.php:39
 msgid "Link removed."
 msgstr ""
 
-#: front/resource.php:38 front/sangfor.php:89
+#: front/resource.php:39 front/sangfor.php:89
 msgid "Resource linked to the asset."
 msgstr ""
 
-#: front/resource.php:41 front/sangfor.php:91
+#: front/resource.php:42 front/sangfor.php:91
 msgid "Choose an asset you can see."
+msgstr ""
+
+#: front/resource.php:55
+#, php-format
+msgid "Resources linked to the proposed assets: %s."
+msgstr ""
+
+#: front/resource.php:61
+#, php-format
+msgid ""
+"%s proposals not applied: the resource is already linked, or the proposal "
+"changed."
 msgstr ""
 
 #: front/sangfor.php:39
@@ -105,6 +117,26 @@ msgstr ""
 msgid ""
 "Sangfor SCP read failed, the inventory and the costs already read are kept: "
 "%s"
+msgstr ""
+
+#: src/AssetMatcher.php:68
+msgid "Instance ID = UUID of the asset"
+msgstr ""
+
+#: src/AssetMatcher.php:69
+msgid "UUID of a virtual machine = host of the virtual machine"
+msgstr ""
+
+#: src/AssetMatcher.php:70
+msgid "Serial number"
+msgstr ""
+
+#: src/AssetMatcher.php:71
+msgid "Name"
+msgstr ""
+
+#: src/AssetMatcher.php:72
+msgid "glpi_id tag"
 msgstr ""
 
 #: src/ConfigPage.php:51 templates/config.html.twig
@@ -272,7 +304,7 @@ msgstr ""
 msgid "Delete an import"
 msgstr ""
 
-#: src/Resource.php:47 templates/import.html.twig
+#: src/Resource.php:48 templates/import.html.twig
 #: templates/resource_tab.html.twig templates/resources.html.twig
 msgid "Resource"
 msgid_plural "Resources"
@@ -826,6 +858,10 @@ msgid "Mandatory tags"
 msgstr ""
 
 #: templates/config.html.twig
+msgid "Matching rules for assets"
+msgstr ""
+
+#: templates/config.html.twig
 msgid "Owner tag"
 msgstr ""
 
@@ -842,6 +878,14 @@ msgid ""
 "Reads the latest release published on GitHub at most every 12 hours, without "
 "sending any information about this GLPI. Turn it off on a server without "
 "Internet access."
+msgstr ""
+
+#: templates/config.html.twig
+msgid ""
+"Rules that propose a GLPI asset for each resource not linked yet, tried in "
+"this order, separated by commas. A person always confirms the proposals on "
+"the Resources page: nothing is linked on its own. Leave empty to turn the "
+"proposals off. Available rules:"
 msgstr ""
 
 #: templates/config.html.twig
@@ -1116,6 +1160,13 @@ msgid "%1$s to %2$s of %3$s"
 msgstr ""
 
 #: templates/resources.html.twig
+#, php-format
+msgid ""
+"%s proposals of a GLPI asset on this page. Check the ones that are right, "
+"then confirm: nothing is linked without your confirmation."
+msgstr ""
+
+#: templates/resources.html.twig
 msgid "Asset"
 msgstr ""
 
@@ -1142,6 +1193,10 @@ msgid ""
 msgstr ""
 
 #: templates/resources.html.twig
+msgid "Confirm the proposal"
+msgstr ""
+
+#: templates/resources.html.twig
 msgid ""
 "Each resource billed by a provider (instance, VM, database, disk...) and the "
 "GLPI asset it belongs to."
@@ -1152,11 +1207,25 @@ msgid "Expected tags:"
 msgstr ""
 
 #: templates/resources.html.twig
+#, php-format
+msgid "Found by: %s"
+msgstr ""
+
+#: templates/resources.html.twig
 msgid "Last seen"
 msgstr ""
 
 #: templates/resources.html.twig templates/sangfor_inventory.html.twig
 msgid "Link"
+msgstr ""
+
+#: templates/resources.html.twig
+#, php-format
+msgid "Link %1$s to %2$s"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Link the checked resources to the proposed assets"
 msgstr ""
 
 #: templates/resources.html.twig
@@ -1209,6 +1278,10 @@ msgid "Open"
 msgstr ""
 
 #: templates/resources.html.twig
+msgid "Open the proposed asset"
+msgstr ""
+
+#: templates/resources.html.twig
 msgid "Owner"
 msgstr ""
 
@@ -1222,6 +1295,11 @@ msgid "Owner unknown in GLPI: %s"
 msgstr ""
 
 #: templates/resources.html.twig
+#, php-format
+msgid "Proposed: %s"
+msgstr ""
+
+#: templates/resources.html.twig
 msgid "Remove the link"
 msgstr ""
 
@@ -1231,6 +1309,14 @@ msgstr ""
 
 #: templates/resources.html.twig
 msgid "Search"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Select all the proposals"
+msgstr ""
+
+#: templates/resources.html.twig
+msgid "Several assets match"
 msgstr ""
 
 #: templates/resources.html.twig

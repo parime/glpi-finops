@@ -56,6 +56,11 @@
                   'maxlength': 100,
                   'add_field_html': '<div class="form-hint">' ~ __('Tag whose value names the owner of the resource: a GLPI login or email address. Without a matching user, the owner is shown in orange. Leave empty to skip the owner check.', 'finops')|e ~ '</div>',
                }) }}
+               {% set rule_hint %}{{ __('Rules that propose a GLPI asset for each resource not linked yet, tried in this order, separated by commas. A person always confirms the proposals on the Resources page: nothing is linked on its own. Leave empty to turn the proposals off. Available rules:', 'finops') }}{% for key, label in match_rules %} {{ key }} ({{ label }}){{ loop.last ? '.' : ',' }}{% endfor %}{% endset %}
+               {{ fields.textField('match_rules', values.match_rules, __('Matching rules for assets', 'finops'), {
+                  'maxlength': 255,
+                  'add_field_html': '<div class="form-hint">' ~ rule_hint|e ~ '</div>',
+               }) }}
                {{ fields.sliderField('version_check', values.version_check, __('Check for new versions on GitHub', 'finops'), {
                   'add_field_html': '<div class="form-hint">' ~ __('Reads the latest release published on GitHub at most every 12 hours, without sending any information about this GLPI. Turn it off on a server without Internet access.', 'finops')|e ~ '</div>',
                }) }}
