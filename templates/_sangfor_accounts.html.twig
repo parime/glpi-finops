@@ -31,11 +31,22 @@
       {{ fields.dropdownField('Entity', 'entities_id', creation ? entity : account.entities_id, __('Entity'), {
          'add_field_html': '<div class="form-hint">' ~ __('The cost lines and virtual machines read belong to this entity.', 'finops')|e ~ '</div>',
       }) }}
-      {{ fields.textField('url', creation ? '' : account.url, __('Address of Sangfor SCP', 'finops'), {
-         'required': true,
-         'placeholder': 'https://scp.example.org',
-         'add_field_html': '<div class="form-hint">' ~ __('The only address called by the plugin: https:// followed by the name or IP address of SCP, and a port if needed. No redirect is followed.', 'finops')|e ~ '</div>',
-      }) }}
+      {# Nom (ou IP) et port envoyés séparément, schéma https fixé par le serveur : aucune URL complète
+         dans la requête, qu'un pare-feu applicatif peut prendre pour une inclusion distante (issue #48). #}
+      <div class="form-field row col-12 mb-2">
+         <label class="col-form-label col-xxl-5 text-xxl-end" for="finops-scp-host-{{ suffix }}">{{ __('Address of Sangfor SCP', 'finops') }}</label>
+         <div class="col-xxl-7 field-container">
+            <div class="input-group">
+               <span class="input-group-text">https://</span>
+               <input type="text" class="form-control" name="scp_host" id="finops-scp-host-{{ suffix }}" required
+                      maxlength="200" placeholder="scp.example.org" value="{{ creation ? '' : account.scp_host }}" />
+               <span class="input-group-text">:</span>
+               <input type="number" class="form-control" style="max-width: 7rem;" name="scp_port" min="1" max="65535"
+                      placeholder="443" aria-label="{{ __('Port') }}" value="{{ creation ? '' : account.scp_port }}" />
+            </div>
+            <div class="form-hint">{{ __('The only address called by the plugin: https:// followed by the name or IP address of SCP, and a port if needed. No redirect is followed.', 'finops') }}</div>
+         </div>
+      </div>
       {% for field, label in {'username': __('User name', 'finops'), 'password': __('Password')} %}
          <div class="form-field row col-12 mb-2">
             <label class="col-form-label col-xxl-5 text-xxl-end" for="finops-scp-{{ field }}-{{ suffix }}">{{ label }}</label>

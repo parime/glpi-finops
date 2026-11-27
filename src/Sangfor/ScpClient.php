@@ -88,6 +88,52 @@ final class ScpClient
     }
 
     /**
+     * Adresse construite à partir du nom (ou de l'adresse IP) et du port saisis séparément (issue #48) :
+     * le formulaire n'envoie pas d'URL complète, qu'un pare-feu applicatif peut prendre pour une
+     * inclusion de fichier distant. Le schéma reste https, imposé par le serveur ; un « https:// »
+     * collé par l'utilisateur est toléré. Null si le nom ou le port ne conviennent pas.
+     */
+    public static function urlFromParts(string $host, string $port): ?string
+    {
+        $host = rtrim(trim($host), '/');
+        if (stripos($host, 'https://') === 0) {
+            $host = substr($host, 8);
+        }
+        $port = trim($port);
+        if (
+            $host === '' || str_contains($host, '://')
+            || ($port !== '' && (preg_match('/^[1-9][0-9]{0,4}$/', $port) !== 1 || (int) $port > 65535))
+        ) {
+            return null;
+        }
+        // Une adresse IPv6 sans crochets (deux « : » ou plus) est mise entre crochets.
+        if (substr_count($host, ':') > 1 && !str_starts_with($host, '[')) {
+            $host = '[' . $host . ']';
+        }
+        // Un port écrit dans le nom (« hôte:4430 ») n'est accepté que sans port séparé.
+        if ($port !== '' && preg_match('/:[0-9]+$/', $host) === 1) {
+            return null;
+        }
+
+        return self::normalizeUrl('https://' . $host . ($port !== '' ? ':' . $port : ''));
+    }
+
+    /**
+     * Nom (ou IP) et port d'une adresse enregistrée, pour préremplir le formulaire.
+     *
+     * @return array{host: string, port: string}
+     */
+    public static function urlParts(string $url): array
+    {
+        $parts = parse_url($url);
+        if (!is_array($parts) || !isset($parts['host'])) {
+            return ['host' => '', 'port' => ''];
+        }
+
+        return ['host' => (string) $parts['host'], 'port' => isset($parts['port']) ? (string) $parts['port'] : ''];
+    }
+
+    /**
      * Chiffre le mot de passe avec le module RSA de SCP (exposant 65537), comme l'exemple de la
      * documentation : PKCS#1 v1.5, résultat en hexadécimal.
      */

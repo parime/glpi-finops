@@ -116,8 +116,13 @@ class SangforAccount extends RecordBase
                 return $this->refuse(__('Give the platform a name.', 'finops'));
             }
         }
-        if ($creation || isset($input['url'])) {
-            $url = ScpClient::normalizeUrl((string) ($input['url'] ?? ''));
+        // Le formulaire envoie le nom et le port séparément (issue #48, pare-feu applicatif) ; « url »
+        // reste accepté pour les appels directs (API, scripts).
+        $split = isset($input['scp_host']) || isset($input['scp_port']);
+        if ($split || $creation || isset($input['url'])) {
+            $url = $split
+                ? ScpClient::urlFromParts((string) ($input['scp_host'] ?? ''), (string) ($input['scp_port'] ?? ''))
+                : ScpClient::normalizeUrl((string) ($input['url'] ?? ''));
             if ($url === null) {
                 return $this->refuse(__(
                     'The address of Sangfor SCP is https:// followed by its name or IP address, and an '
@@ -329,6 +334,8 @@ class SangforAccount extends RecordBase
                 'entities_id'       => (int) $row['entities_id'],
                 'entity'            => \Dropdown::getDropdownName('glpi_entities', (int) $row['entities_id']),
                 'url'               => (string) $row['url'],
+                'scp_host'          => ScpClient::urlParts((string) $row['url'])['host'],
+                'scp_port'          => ScpClient::urlParts((string) $row['url'])['port'],
                 'allow_self_signed' => (bool) $row['allow_self_signed'],
                 'price_vcpu'        => (float) $row['price_vcpu'],
                 'price_ram_gb'      => (float) $row['price_ram_gb'],
