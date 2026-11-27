@@ -177,18 +177,44 @@ final class ScpClient
         return chr($tag) . chr(0x80 | strlen($bytes)) . $bytes . $content;
     }
 
+    /**
+     * Module de la clé publique. La documentation (§ 4.2.3 /janus/v2/public-key, SCP 6.8.0 ou plus ;
+     * § 4.2.4 /janus/public-key, SCP 6.3.0 ou plus) montre les deux réponses sans enveloppe,
+     * { "public_key": "..." }, tout en renvoyant à l'enveloppe commune { code, message, data } (§ 2.5) :
+     * les deux formes sont acceptées. L'ancienne adresse est essayée dès que la v2 ne donne pas de clé
+     * utilisable (adresse absente avant 6.8.0, code 400, 404 ou 5xx, réponse sans public_key), mais pas
+     * sur 401, 403 ou 429 : les deux adresses partagent la même limite d'appels (§ 4.2.3.1).
+     */
+    private function publicKey(): string
+    {
+        $retry = [ScpException::R_NOT_FOUND, ScpException::R_SERVER, ScpException::R_RESPONSE];
+        try {
+            return $this->modulusAt('/janus/v2/public-key');
+        } catch (ScpException $e) {
+            if (!in_array($e->reason, $retry, true)) {
+                throw $e;
+            }
+        }
+
+        return $this->modulusAt('/janus/public-key');
+    }
+
+    private function modulusAt(string $path): string
+    {
+        [$status, $body] = $this->send('GET', $path, ['Accept' => 'application/json']);
+        $key = self::envelope($status, $body, $path);
+        $modulus = is_array($key) ? ($key['public_key'] ?? null) : null;
+        if (!is_string($modulus) || $modulus === '') {
+            throw new ScpException(ScpException::R_RESPONSE, $path);
+        }
+
+        return $modulus;
+    }
+
     /** Obtient un jeton (valable 24 heures chez SCP, une lecture n'en demande qu'un). */
     public function login(): void
     {
-        [$status, $body] = $this->send('GET', '/janus/v2/public-key', ['Accept' => 'application/json']);
-        if ($status === 404) {
-            [$status, $body] = $this->send('GET', '/janus/public-key', ['Accept' => 'application/json']);
-        }
-        $key = self::envelope($status, $body, '/janus/public-key');
-        $modulus = is_array($key) ? ($key['public_key'] ?? null) : null;
-        if (!is_string($modulus)) {
-            throw new ScpException(ScpException::R_RESPONSE, '/janus/public-key');
-        }
+        $modulus = $this->publicKey();
         $payload = json_encode(['auth' => ['passwordCredentials' => [
             'username' => $this->username,
             'password' => self::encryptPassword($this->password, $modulus),
