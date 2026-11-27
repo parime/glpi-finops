@@ -24,7 +24,10 @@ use GlpiPlugin\Finops\Ovh\OvhTransport;
 
 /**
  * Faux OVHcloud : vérifie la signature de chaque requête comme le ferait l'API (403 sinon),
- * répond avec des données fictives et note les adresses appelées. Seul GET existe.
+ * répond avec des données fictives et note les adresses appelées. Seul GET existe. La consommation
+ * suit le modèle cloud.usage.UsageHistoryDetail de la référence officielle
+ * (https://eu.api.ovh.com/1.0/cloud.json) : hourlyUsage.quantum est un objet de listes et
+ * resourcesUsage porte ses prix dans resources[].components[].
  */
 final class FakeOvh implements OvhTransport
 {
@@ -80,8 +83,39 @@ final class FakeOvh implements OvhTransport
                         ],
                     ]],
                     'storage'  => [['region' => 'SBG5', 'type' => 'pcs', 'totalPrice' => 3.5]],
+                    // cloud.billingView.HourlyQuantum : un objet de listes, prix en order.Price.
+                    'quantum'  => [
+                        'notebook'       => [[
+                            'region' => 'GRA', 'reference' => 'qpu-notebook',
+                            'quantity' => ['unit' => 'Hour', 'value' => 4],
+                            'totalPrice' => ['currencyCode' => 'EUR', 'value' => 6.0, 'text' => '6.00 EUR'],
+                            'details' => [[
+                                'id' => 'nb-detail-1', 'resourceId' => 'notebook-fictive-1',
+                                'quantity' => ['unit' => 'Hour', 'value' => 4],
+                                'totalPrice' => ['currencyCode' => 'EUR', 'value' => 6.0, 'text' => '6.00 EUR'],
+                            ]],
+                        ]],
+                        'processingUnit' => [],
+                    ],
                 ],
                 'monthlyUsage' => ['instance' => []],
+                // cloud.billingView.TypedResources : le prix est dans resources[].components[].
+                'resourcesUsage' => [[
+                    'type' => 'ai-training', 'totalPrice' => 12.4,
+                    'resources' => [[
+                        'region' => 'GRA', 'deploymentMode' => 'REGION-1-AZ',
+                        'components' => [
+                            [
+                                'id' => 'component-gpu', 'name' => 'ai1-1-gpu', 'resourceId' => 'job-fictive-1',
+                                'quantity' => ['unit' => 'Minute', 'value' => 120], 'totalPrice' => 10.4,
+                            ],
+                            [
+                                'id' => 'component-cpu', 'name' => 'ai1-1-cpu', 'resourceId' => 'job-fictive-1',
+                                'quantity' => ['unit' => 'Minute', 'value' => 120], 'totalPrice' => 2.0,
+                            ],
+                        ],
+                    ]],
+                ]],
             ],
         ];
     }
