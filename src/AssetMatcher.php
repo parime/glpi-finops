@@ -356,10 +356,7 @@ final class AssetMatcher
         if ($id <= 0 || !in_array($itemtype, Resource::ASSET_TYPES, true) || !$itemtype::canView()) {
             return [];
         }
-        $item = getItemForItemtype($itemtype);
-        if (!$item instanceof CommonDBTM) {
-            return [];
-        }
+        $item = new $itemtype();
         $table = $item::getTable();
         $row = $DB->request([
             'SELECT' => ['id'],
