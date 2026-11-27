@@ -8,6 +8,31 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), et ce p
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-27
+
+### Added
+
+- **Rattachement assisté des ressources aux actifs de GLPI** (issue #6) : pour chaque ressource pas
+  encore rattachée, la page Gestion > FinOps > Ressources propose un ordinateur, une application ou
+  un matériel réseau, avec la règle qui l'a trouvé. Règles, dans l'ordre réglé dans Configuration >
+  Plugins > FinOps, onglet Général (« Règles de correspondance des actifs ») : identifiant d'instance
+  égal à l'UUID de l'actif, UUID d'une machine virtuelle de l'inventaire (l'hôte est proposé), numéro
+  de série, nom (identifiant ou étiquette `name`), étiquette `glpi_id` (`12` ou `Computer:12`).
+- Une règle qui trouve plusieurs actifs ne propose rien (« Plusieurs actifs correspondent ») et laisse
+  la main à la suivante. Rien ne se rattache tout seul : on coche les propositions justes puis on
+  confirme, en masse ou depuis la fiche de la ressource ; chaque proposition est recalculée et
+  vérifiée (entité de la ressource, droit de lire l'actif) au moment de la confirmation.
+
+### Fixed
+
+- **Ajout d'une plateforme Sangfor SCP derrière un pare-feu applicatif** (issue #48) : le formulaire
+  envoyait l'adresse complète (`https://10.0.0.1:4430`) dans un champ `url`, motif qu'un pare-feu
+  applicatif (par exemple FortiWeb, signature « RFI Injection ») peut prendre pour une inclusion de
+  fichier distant et bloquer. Le nom (ou l'adresse IP) et le port se saisissent désormais dans deux
+  champs séparés, `https://` est affiché devant et imposé par le serveur : aucune URL ne part dans la
+  requête. Les plateformes déjà enregistrées ne changent pas ; les contrôles de l'adresse restent les
+  mêmes (https seulement, sans chemin, paramètre ni identifiant).
+
 ## [0.2.0] - 2026-11-27
 
 ### Added
