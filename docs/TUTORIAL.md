@@ -101,6 +101,29 @@ suivi des coûts. Toutes les données citées sont fictives.
 4. Activer **Étiquetage à corriger seulement** pour lister les ressources à reprendre. Les étiquettes
    se corrigent chez le fournisseur : elles sont relues au prochain import.
 
+### Étape 6 : Valider les rattachements proposés aux actifs de GLPI
+
+1. **Configuration > Plugins > FinOps**, onglet **Général** : le champ **Règles de correspondance
+   des actifs** donne l'ordre des règles (par défaut
+   `instance_id, vm_uuid, serial, name, glpi_id_tag`). Retirer une règle la désactive ; un champ vide
+   coupe les propositions.
+2. Créer dans GLPI un ordinateur de test dont le **numéro de série** est `SN-DEMO-01`, puis importer
+   un fichier de coûts (données fictives) :
+
+   ```csv
+   date,provider,account,service,resource,cost,currency,tags
+   2026-10-01,ovhcloud,projet-demo,Public Cloud,SN-DEMO-01,3.10,EUR,
+   2026-10-01,aws,123456789012,Amazon EC2,i-0demo02,12.40,USD,glpi_id=Computer:12
+   ```
+
+3. **Gestion > FinOps > Ressources** : les ressources non rattachées affichent **Proposé :** et
+   l'actif trouvé, avec la règle (**Trouvé par : Numéro de série**). « Plusieurs actifs
+   correspondent » signale une règle ambiguë : rattacher cette ressource à la main.
+4. Cocher les propositions justes (la case de l'en-tête les coche toutes), puis
+   **Rattacher les ressources cochées aux actifs proposés**. Une seule ressource : ouvrir sa fiche,
+   vérifier l'actif avec **Ouvrir l'actif proposé**, puis **Confirmer la proposition**.
+5. La carte **Ressources non rattachées** de la page Coûts donne ce qui reste à traiter.
+
 ## 🇬🇧 English
 
 This tutorial follows, step by step, an administrator discovering FinOps: installation, settings,
@@ -196,3 +219,25 @@ then cost tracking. All the data quoted is fictitious.
    or email of a GLPI user, in orange otherwise, in red when the tag is missing.
 4. Turn on **Tagging to fix only** to list the resources to rework. Tags are fixed on the provider
    side: they are read again at the next import.
+
+### Step 6: Confirm the proposed links to GLPI assets
+
+1. **Setup > Plugins > FinOps**, **General** tab: the **Matching rules for assets** field gives the
+   order of the rules (by default `instance_id, vm_uuid, serial, name, glpi_id_tag`). Removing a rule
+   turns it off; an empty field turns the proposals off.
+2. Create in GLPI a test computer whose **serial number** is `SN-DEMO-01`, then import a cost file
+   (fictitious data):
+
+   ```csv
+   date,provider,account,service,resource,cost,currency,tags
+   2026-10-01,ovhcloud,projet-demo,Public Cloud,SN-DEMO-01,3.10,EUR,
+   2026-10-01,aws,123456789012,Amazon EC2,i-0demo02,12.40,USD,glpi_id=Computer:12
+   ```
+
+3. **Management > FinOps > Resources**: the resources not linked yet show **Proposed:** and the asset
+   found, with the rule (**Found by: Serial number**). "Several assets match" flags an ambiguous
+   rule: link that resource by hand.
+4. Check the right proposals (the box in the header checks them all), then
+   **Link the checked resources to the proposed assets**. For a single resource: open it, check the
+   asset with **Open the proposed asset**, then **Confirm the proposal**.
+5. The **Resources not linked to an asset** card of the Costs page shows what is left to do.
