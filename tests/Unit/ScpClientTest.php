@@ -23,6 +23,7 @@ use GlpiPlugin\Finops\Sangfor\ScpClient;
 use GlpiPlugin\Finops\Sangfor\ScpException;
 use GlpiPlugin\Finops\Sangfor\ScpInventoryReader;
 use GlpiPlugin\Finops\Tests\Fake\FakeScp;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ScpClientTest extends TestCase
@@ -106,6 +107,56 @@ final class ScpClientTest extends TestCase
         $fake->legacyKey = true;
         $this->client($fake)->login();
         $this->assertSame(FakeScp::BASE . '/janus/public-key', $fake->calls[1][1]);
+    }
+
+    /**
+     * Les deux formes de réponse de clé publique (sans enveloppe comme les exemples des § 4.2.3.4 et
+     * 4.2.4.4, ou dans l'enveloppe commune du § 2.5), sur les deux adresses.
+     *
+     * @return array<string, array{0: bool, 1: string}>
+     */
+    public static function keyForms(): array
+    {
+        return [
+            'v2 bare'     => [false, 'bare'],
+            'v2 data'     => [false, 'data'],
+            'legacy bare' => [true, 'bare'],
+            'legacy data' => [true, 'data'],
+        ];
+    }
+
+    #[DataProvider('keyForms')]
+    public function testBothPublicKeyFormsAreAccepted(bool $legacy, string $form): void
+    {
+        $fake = new FakeScp();
+        $fake->legacyKey = $legacy;
+        $fake->keyForm = $form;
+        $this->assertCount(2, $this->client($fake)->all('/janus/20180725/hosts'));
+    }
+
+    /** @return array<string, array{0: int}> */
+    public static function v2Failures(): array
+    {
+        return ['400' => [400], '500' => [500], '200 without key' => [200]];
+    }
+
+    #[DataProvider('v2Failures')]
+    public function testLegacyPublicKeyAddressIsTriedWhenV2GivesNoKey(int $status): void
+    {
+        $fake = new FakeScp();
+        $fake->legacyKey = true;
+        $fake->v2KeyStatus = $status;
+        $this->client($fake)->login();
+        $this->assertSame(FakeScp::BASE . '/janus/public-key', $fake->calls[1][1]);
+    }
+
+    public function testRateLimitOnV2IsNotRetriedOnTheLegacyAddress(): void
+    {
+        $fake = new FakeScp();
+        $fake->legacyKey = true;
+        $fake->v2KeyStatus = 403;
+        $this->assertSame(ScpException::R_AUTH, $this->reason(fn () => $this->client($fake)->login()));
+        $this->assertCount(1, $fake->calls);
     }
 
     public function testWrongPasswordIsAnAuthenticationFailure(): void
