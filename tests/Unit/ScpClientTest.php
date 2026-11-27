@@ -64,7 +64,8 @@ final class ScpClientTest extends TestCase
         // Issue #48 : le formulaire envoie le nom et le port, jamais une URL complète.
         $this->assertSame('https://192.0.2.10:4430', ScpClient::urlFromParts(' 192.0.2.10 ', '4430'));
         $this->assertSame('https://scp.example.test', ScpClient::urlFromParts('SCP.example.test', ''));
-        $this->assertSame('https://scp.example.test:4430', ScpClient::urlFromParts('https://scp.example.test/', '4430'));
+        $pasted = ScpClient::urlFromParts('https://scp.example.test/', '4430');
+        $this->assertSame('https://scp.example.test:4430', $pasted);
         $this->assertSame('https://scp.example.test:4430', ScpClient::urlFromParts('scp.example.test:4430', ''));
         $this->assertSame('https://[2001:db8::1]:4430', ScpClient::urlFromParts('2001:db8::1', '4430'));
         foreach (
@@ -77,8 +78,10 @@ final class ScpClientTest extends TestCase
         ) {
             $this->assertNull(ScpClient::urlFromParts($host, $port), $host . ' / ' . $port);
         }
-        $this->assertSame(['host' => '192.0.2.10', 'port' => '4430'], ScpClient::urlParts('https://192.0.2.10:4430'));
-        $this->assertSame(['host' => 'scp.example.test', 'port' => ''], ScpClient::urlParts('https://scp.example.test'));
+        $parts = ScpClient::urlParts('https://192.0.2.10:4430');
+        $this->assertSame(['host' => '192.0.2.10', 'port' => '4430'], $parts);
+        $parts = ScpClient::urlParts('https://scp.example.test');
+        $this->assertSame(['host' => 'scp.example.test', 'port' => ''], $parts);
     }
 
     public function testPasswordIsEncryptedWithTheModulusAndTheTokenIsUsed(): void

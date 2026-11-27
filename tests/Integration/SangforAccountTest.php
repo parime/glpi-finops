@@ -114,7 +114,9 @@ final class SangforAccountTest extends TestCase
             fn (array $row) => $row['id'] === $account->getID()
         ))[0];
         $this->assertSame(['192.0.2.10', '4430'], [$row['scp_host'], $row['scp_port']]);
-        $this->assertTrue($account->update(['id' => $account->getID(), 'scp_host' => 'scp.example.test', 'scp_port' => '']));
+        $this->assertTrue($account->update([
+            'id' => $account->getID(), 'scp_host' => 'scp.example.test', 'scp_port' => '',
+        ]));
         $this->assertTrue($account->getFromDB($account->getID()));
         $this->assertSame('https://scp.example.test', $account->fields['url']);
         $this->assertFalse((new SangforAccount())->add([
