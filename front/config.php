@@ -20,6 +20,7 @@ use GlpiPlugin\Finops\Config;
 use GlpiPlugin\Finops\ConfigPage;
 use GlpiPlugin\Finops\Menu;
 use GlpiPlugin\Finops\OvhAccount;
+use GlpiPlugin\Finops\PluginVersion;
 use GlpiPlugin\Finops\SangforAccount;
 use GlpiPlugin\Finops\Source\SourceRegistry;
 
@@ -35,25 +36,33 @@ if (isset($_POST['update'])) {
 }
 
 $tab = ConfigPage::tab((string) ($_GET['tab'] ?? ''));
+$values = Config::load();
+// Encadré « Version du plugin » (charte section 9 bis), onglet Général seulement : pas d'appel à
+// GitHub depuis les autres onglets.
+$pluginVersion = $tab === ConfigPage::TAB_GENERAL
+    ? (new PluginVersion('finops', 'parime/glpi-finops', PLUGIN_FINOPS_VERSION))
+        ->status($values['version_check'] === '1')
+    : null;
 Html::header(Menu::getTypeName(), '', 'config', 'plugin');
 TemplateRenderer::getInstance()->display('@finops/config.html.twig', [
     'tab'       => $tab,
     'tabs'      => ConfigPage::tabs($tab),
-    'values'    => Config::load(),
+    'values'    => $values,
     'min_mb'    => Config::MIN_UPLOAD_MB,
     'max_mb'    => Config::MAX_UPLOAD_MB,
     'sources'   => SourceRegistry::describe(),
     'version'   => PLUGIN_FINOPS_VERSION,
-    'usage_url' => Menu::url(Menu::TAB_OVERVIEW),
+    // Encadré « Version du plugin » (issue #38), null hors de l'onglet Général.
+    'plugin_version' => $pluginVersion,
     // Comptes OVHcloud (issue #26), sans leurs clés.
     'ovh_accounts' => $tab === ConfigPage::TAB_SOURCES ? OvhAccount::listing() : [],
-    'ovh_url'      => Menu::url('ovh'),
+    'ovh_action'   => Menu::url('ovh'),
     'regions'      => OvhAccount::regions(),
     'max_projects' => OvhAccount::MAX_PROJECTS,
     'entity'       => (int) Session::getActiveEntity(),
     // Plateformes Sangfor SCP (issue #11), sans identifiant ni mot de passe.
     'sangfor_accounts' => $tab === ConfigPage::TAB_SOURCES ? SangforAccount::listing() : [],
-    'sangfor_url'      => Menu::url('sangfor'),
+    'sangfor_action'   => Menu::url('sangfor'),
     'currency'         => Config::defaultCurrency(),
 ]);
 Html::footer();

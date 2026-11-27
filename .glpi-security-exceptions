@@ -1,3 +1,11 @@
 # Exceptions justifiées aux contrôles de sécurité communs (voir parime/glpi-plugin-security).
 # Une ligne par exception : « <contrôle> <identifiant> : <raison> ». Exemple :
 # tab-content Computer/PluginFinopsPassport$1 : contenu public par conception (droits du cœur)
+
+# Jeton fictif du faux serveur Sangfor SCP des tests (scp.example.test) : aucun service réel.
+gitleaks tests/Fake/FakeScp.php:generic-api-key:34 : jeton fictif du faux SCP des tests (example.test), aucun service réel
+
+# front/ovh.php ne reçoit que des formulaires POST (enregistrer, supprimer ou lire un compte OVHcloud,
+# depuis Configuration > Plugins > FinOps > Sources de coût ou Gestion > FinOps > Import) ; ouvert sans
+# formulaire, il renvoie vers Gestion > FinOps > Import. Ce n'est pas un écran (issue #37).
+crawl orphan front/ovh.php : point d'action POST sans écran propre, renvoie vers Gestion > FinOps > Import

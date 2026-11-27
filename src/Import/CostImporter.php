@@ -166,6 +166,7 @@ final class CostImporter
             $DB->insert(CostTables::RESOURCES, $criteria + [
                 'account'       => $row['account'],
                 'service'       => $row['service'],
+                'tags'          => $row['tags'],
                 'first_seen'    => $first,
                 'last_seen'     => $last,
                 'date_creation' => $now,
@@ -178,7 +179,10 @@ final class CostImporter
             $update['first_seen'] = $first;
         }
         if ($existing['last_seen'] === null || $last >= (string) $existing['last_seen']) {
-            $update += ['last_seen' => $last, 'account' => $row['account'], 'service' => $row['service']];
+            // Étiquettes de la ligne la plus récente (issue #19) : une étiquette corrigée chez le
+            // fournisseur apparaît au prochain import.
+            $update += ['last_seen' => $last, 'account' => $row['account'], 'service' => $row['service'],
+                'tags' => $row['tags']];
         }
         $DB->update(CostTables::RESOURCES, $update, ['id' => (int) $existing['id']]);
     }

@@ -1,6 +1,7 @@
 # Contrôles de sécurité communs à tous les plugins GLPI (parime/glpi-plugin-security) : règles
 # Semgrep, onglets sans droit, droits attribuables, traductions, archive, charte, restes après
-# désinstallation. À rendre obligatoire dans la protection des branches main et dev.
+# désinstallation, secrets (Gitleaks), dépendances (Trivy, Dependency Review), CodeQL, mise à jour
+# depuis la version publiée, tests d'intégration en français et parcours de toutes les pages. À rendre obligatoire dans la protection des branches main et dev.
 name: Sécurité commune
 
 on:
@@ -13,10 +14,20 @@ on:
 permissions:
   contents: read
 
+# Un nouveau commit sur une pull request annule l'exécution précédente de cette PR ; push sur main
+# ou dev et lancement manuel : un groupe par exécution (run_id), jamais annulés.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   security:
-    uses: parime/glpi-plugin-security/.github/workflows/plugin-security.yml@v1.9.1
+    uses: parime/glpi-plugin-security/.github/workflows/plugin-security.yml@v1.12.2
     with:
       plugin-key: finops
+      # Contrôles lourds (vrai GLPI : onglets et notifications, intégration en français, mise à
+      # jour, parcours des pages) seulement si la PR touche autre chose que la documentation ; tout
+      # tourne sur les push (main, dev).
+      heavy-paths: '* !docs/* !changes/* !*.md !*.png !*.jpg !*.jpeg !*.gif !*.svg !*.webp'
       seed-command: php plugins/finops/tests/security/setup.php
       charter-mode: error

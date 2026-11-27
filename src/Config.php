@@ -34,6 +34,12 @@ final class Config
     public const DEFAULTS = [
         'default_currency' => 'EUR',
         'max_upload_mb'    => '5',
+        // Composant « Version du plugin » (charte section 9 bis) : désactivable pour une instance
+        // sans accès à Internet.
+        'version_check'    => '1',
+        // Étiquettes obligatoires des ressources et étiquette du propriétaire (issue #19).
+        'mandatory_tags'   => 'owner, cost-center, env',
+        'owner_tag'        => 'owner',
     ];
 
     /**
@@ -47,7 +53,9 @@ final class Config
     }
 
     /**
-     * Valeurs validées : devise ISO 4217 (trois lettres), taille maximale bornée.
+     * Valeurs validées : devise ISO 4217 (trois lettres), taille maximale bornée, vérification des
+     * nouvelles versions activée ou non, étiquettes obligatoires et étiquette du propriétaire
+     * nettoyées (TagPolicy::parseList ; vide : aucune).
      *
      * @param array<string, mixed> $input
      * @return array<string, string> Valeurs enregistrées.
@@ -59,7 +67,19 @@ final class Config
             $currency = self::DEFAULTS['default_currency'];
         }
         $size = max(self::MIN_UPLOAD_MB, min(self::MAX_UPLOAD_MB, (int) ($input['max_upload_mb'] ?? 0)));
-        $values = ['default_currency' => $currency, 'max_upload_mb' => (string) $size];
+        $values = [
+            'default_currency' => $currency,
+            'max_upload_mb'    => (string) $size,
+            'version_check'    => empty($input['version_check']) ? '0' : '1',
+        ];
+        // Étiquettes (issue #19) : un champ absent du formulaire garde sa valeur.
+        $current = self::load();
+        $values['mandatory_tags'] = array_key_exists('mandatory_tags', $input)
+            ? implode(', ', TagPolicy::parseList((string) $input['mandatory_tags']))
+            : $current['mandatory_tags'];
+        $values['owner_tag'] = array_key_exists('owner_tag', $input)
+            ? (TagPolicy::parseList((string) $input['owner_tag'])[0] ?? '')
+            : $current['owner_tag'];
         \Config::setConfigurationValues(self::CONTEXT, $values);
 
         return $values;

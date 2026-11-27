@@ -43,6 +43,20 @@ class CostLine extends RecordBase
         return 'ti ti-receipt';
     }
 
+    /**
+     * Les liens de GLPI vers cet objet (getLinkURL, historique, recherche) ouvrent la page Coûts (une
+     * ligne de coût n'a pas d'écran propre), et non le formulaire générique de GLPI, sans contenu
+     * utile pour le plugin (issue #37).
+     *
+     * @param bool $full
+     *
+     * @return string
+     */
+    public static function getFormURL($full = true)
+    {
+        return Menu::url(Menu::TAB_OVERVIEW, [], (bool) $full);
+    }
+
     public static function canCreate(): bool
     {
         return false;

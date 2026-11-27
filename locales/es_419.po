@@ -169,8 +169,8 @@ msgstr "Archivo de costes más grande (MB)"
 msgid "License"
 msgstr "Licencia"
 
-msgid "Open the costs (Management > FinOps)"
-msgstr "Abrir los costes (Gestión > FinOps)"
+msgid "Daily use (costs, resources, import): menu Management > FinOps."
+msgstr "Uso diario (costes, recursos, importación): menú Gestión > FinOps."
 
 msgid "Planned"
 msgstr "Prevista"
@@ -800,3 +800,147 @@ msgstr "mismo nombre"
 
 msgid "vCPU"
 msgstr "vCPU"
+
+msgid "Check for new versions on GitHub"
+msgstr "Buscar nuevas versiones en GitHub"
+
+msgid "Reads the latest release published on GitHub at most every 12 hours, without sending any information about this GLPI. Turn it off on a server without Internet access."
+msgstr "Lee la última versión publicada en GitHub como máximo cada 12 horas, sin enviar ninguna información sobre este GLPI. Desactívelo en un servidor sin acceso a Internet."
+
+msgid "the check is turned off in the settings below"
+msgstr "la verificación está desactivada en los ajustes de abajo"
+
+msgid "GitHub cannot be reached from the GLPI server (no Internet access, proxy or firewall)"
+msgstr "No se puede acceder a GitHub desde el servidor GLPI (sin acceso a Internet, proxy o cortafuegos)"
+
+msgid "the GitHub request limit is reached, a new attempt will be made within an hour"
+msgstr "se ha alcanzado el límite de solicitudes de GitHub, se hará un nuevo intento dentro de una hora"
+
+msgid "GitHub did not answer within 3 seconds"
+msgstr "GitHub no respondió en 3 segundos"
+
+msgid "no release is published on GitHub yet"
+msgstr "todavía no hay ninguna versión publicada en GitHub"
+
+msgid "the answer from GitHub could not be read"
+msgstr "no se pudo leer la respuesta de GitHub"
+
+msgid "Plugin version"
+msgstr "Versión del plugin"
+
+msgid "Installed version"
+msgstr "Versión instalada"
+
+msgid "Latest release on GitHub"
+msgstr "Última versión en GitHub"
+
+msgid "Update available: %s"
+msgstr "Actualización disponible: %s"
+
+msgid "Latest version unknown"
+msgstr "Última versión desconocida"
+
+msgid "Release notes"
+msgstr "Notas de la versión"
+
+msgid "Download the archive"
+msgstr "Descargar el archivo"
+
+msgid "Last check failed: %s."
+msgstr "La última verificación falló: %s."
+
+msgid "Result of the last successful check (%s) shown."
+msgstr "Se muestra el resultado de la última verificación correcta (%s)."
+
+msgid "Reason: %s."
+msgstr "Motivo: %s."
+
+msgid "Last successful check: %s."
+msgstr "Última verificación correcta: %s."
+
+msgid "No successful check yet."
+msgstr "Todavía no hay ninguna verificación correcta."
+
+msgid "See the releases on GitHub"
+msgstr "Ver las versiones en GitHub"
+
+msgid "Last checked: %s (checked again every 12 hours)."
+msgstr "Última verificación: %s (se verifica de nuevo cada 12 horas)."
+
+msgid "Up to date"
+msgstr "Al día"
+
+msgid "Mandatory tags"
+msgstr "Etiquetas obligatorias"
+
+msgid "Owner tag"
+msgstr "Etiqueta del propietario"
+
+msgid "Tag keys every resource should carry, separated by commas (for example owner, cost-center, env). Letter case is ignored. Leave empty to turn the check off."
+msgstr "Claves de etiqueta que cada recurso debe llevar, separadas por comas (por ejemplo owner, cost-center, env). No se distinguen mayúsculas y minúsculas. Dejar vacío para desactivar la comprobación."
+
+msgid "Tag whose value names the owner of the resource: a GLPI login or email address. Without a matching user, the owner is shown in orange. Leave empty to skip the owner check."
+msgstr "Etiqueta cuyo valor indica el propietario del recurso: un inicio de sesión de GLPI o una dirección de correo. Sin usuario correspondiente, el propietario se muestra en naranja. Dejar vacío para omitir la comprobación del propietario."
+
+msgid "%1$s of %2$s resources have all the mandatory tags."
+msgstr "%1$s de %2$s recursos tienen todas las etiquetas obligatorias."
+
+msgid "Complete"
+msgstr "Completo"
+
+msgid "Compliance rate"
+msgstr "Tasa de conformidad"
+
+msgid "Compliance rate: %s"
+msgstr "Tasa de conformidad: %s"
+
+msgid "Compliant"
+msgstr "Conformes"
+
+msgid "Expected tags:"
+msgstr "Etiquetas esperadas:"
+
+msgid "Missing: %s"
+msgstr "Falta: %s"
+
+msgid "No mandatory tag is set. An administrator chooses them in Setup > Plugins > FinOps, General tab."
+msgstr "No hay ninguna etiqueta obligatoria definida. Un administrador las elige en Configuración > Plugins > FinOps, pestaña General."
+
+msgid "No owner"
+msgstr "Sin propietario"
+
+msgid "No resource yet: the rate appears after the first import."
+msgstr "Aún no hay recursos: la tasa aparece tras la primera importación."
+
+msgid "None"
+msgstr "Ninguna"
+
+msgid "Owner"
+msgstr "Propietario"
+
+msgid "Owner to fix"
+msgstr "Propietario por corregir"
+
+msgid "Owner unknown in GLPI: %s"
+msgstr "Propietario desconocido en GLPI: %s"
+
+msgid "Show the resources to fix"
+msgstr "Mostrar los recursos por corregir"
+
+msgid "Tagging to fix only"
+msgstr "Solo etiquetado por corregir"
+
+msgid "Tags"
+msgstr "Etiquetas"
+
+msgid "Tags are read from the provider: add them on the provider side, they appear here at the next import."
+msgstr "Las etiquetas se leen del proveedor: añádalas en el proveedor, aparecerán aquí en la próxima importación."
+
+msgid "The owner is read from the tag %s and matched with a GLPI user by login or email."
+msgstr "El propietario se lee de la etiqueta %s y se asocia a un usuario de GLPI por inicio de sesión o correo."
+
+msgid "Unknown owner: %s"
+msgstr "Propietario desconocido: %s"
+
+msgid "Without owner: %s"
+msgstr "Sin propietario: %s"

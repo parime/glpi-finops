@@ -22,7 +22,7 @@ use GlpiPlugin\Finops\Menu;
 use GlpiPlugin\Finops\Profile;
 use GlpiPlugin\Finops\Resource;
 
-define('PLUGIN_FINOPS_VERSION', '0.1.0');
+define('PLUGIN_FINOPS_VERSION', '0.2.0');
 define('PLUGIN_FINOPS_MIN_GLPI', '11.0.0');
 // GLPI 11 et 12 depuis un seul code source (voir src/Compat/).
 define('PLUGIN_FINOPS_MAX_GLPI', '12.99.99');
