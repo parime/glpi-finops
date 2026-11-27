@@ -8,6 +8,64 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), et ce p
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-27
+
+### Added
+
+- **Étiquetage obligatoire et ressources sans propriétaire** (issue #19) : réglage des étiquettes
+  attendues (par défaut `owner`, `cost-center`, `env`) et de l'étiquette du propriétaire dans
+  Configuration > Plugins > FinOps, onglet Général. La page Gestion > FinOps > Ressources affiche le
+  taux de conformité global, par fournisseur et par compte, les étiquettes manquantes de chaque
+  ressource et un filtre « Étiquetage à corriger seulement ».
+- Le propriétaire est rapproché d'un utilisateur de GLPI par son identifiant de connexion ou son
+  adresse de courriel (casse ignorée) : vert s'il est retrouvé, orange s'il est inconnu, rouge si
+  l'étiquette manque. Rien n'est modifié chez le fournisseur ni dans GLPI.
+- Chaque ressource garde les étiquettes de sa ligne de coût la plus récente ; la mise à jour les
+  reprend une fois des coûts déjà importés.
+
+- **Version du plugin** (issue #38, composant commun parime/glpi-plugin-template#12). En tête de
+  l'onglet Général de la configuration : version installée, dernière version publiée sur GitHub et
+  badge « À jour », « Mise à jour disponible » (avec les notes de version et l'archive) ou
+  « Dernière version inconnue » avec la raison. Délai de 3 s, résultat gardé 12 h, dernier résultat
+  réussi réutilisé si GitHub ne répond pas, proxy de GLPI ; réglage « Vérifier les nouvelles
+  versions sur GitHub » pour un serveur sans accès à Internet.
+
+### Changed
+
+- Contrôles de sécurité communs v1.11.3 (écart `config-version-premier` : l'encadré « Version du
+  plugin » en premier bloc de la configuration, parime/glpi-plugin-template#18).
+
+- **Configuration** : l'encadré « Version du plugin » est le premier bloc de l'onglet Général,
+  au-dessus de la carte des réglages (charte du modèle, section 9 bis, issue 18 du modèle :
+  parime/glpi-plugin-template#18).
+
+- CI : contrôles de sécurité communs glpi-plugin-security v1.10.2, qui rétablit le contrôle
+  d'ergonomie (réglages, menus, en-têtes), en avertissement le temps de l'issue de navigation #37.
+
+- **Navigation** (issue #37) : la page de configuration (Configuration > Plugins > FinOps) ne
+  contient plus de lien vers les écrans du quotidien ; l'onglet À propos indique le menu
+  Gestion > FinOps (coûts, ressources, import) par une phrase.
+- Les liens de GLPI vers une ressource, une ligne de coût ou un import (historique, recherche)
+  ouvrent les pages Ressources, Coûts ou Import du plugin, et non plus le formulaire générique de
+  GLPI, vide pour ces objets.
+- Badges aux couleurs de thème (`bg-*-subtle text-*-emphasis`), lisibles au contraste WCAG AA ;
+  le bouton « Ouvrir » de l'actif rattaché à une ressource se distingue sans la couleur.
+- CI : contrôle d'ergonomie et parcours de toutes les pages de nouveau bloquants.
+
+- CI : contrôles de sécurité communs glpi-plugin-security v1.10.1 (secrets, dépendances, CodeQL,
+  test de mise à jour depuis la version publiée, tests d'intégration en français, parcours de toutes
+  les pages en avertissement le temps de l'issue de navigation #37).
+
+- CI : contrôles de sécurité communs glpi-plugin-security v1.11.1 (encadré « Version du plugin »
+  exigé sur la page de configuration). Une PR qui ne touche que la documentation saute les
+  contrôles qui démarrent un vrai GLPI (`heavy-paths`) ; un nouveau commit sur une PR annule
+  l'exécution précédente de la CI et des contrôles communs, jamais sur un push de main ou dev.
+
+- **Contrôles de sécurité communs v1.12.2** : éléments du cœur de GLPI reconnus par le parcours des pages.
+
+- **Contrôles de sécurité communs v1.12.1** : parcours des pages en tranches parallèles (CI plus
+  rapide).
+
 ## [0.1.0] - 2026-11-21
 
 ### Added
