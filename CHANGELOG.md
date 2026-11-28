@@ -10,6 +10,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), et ce p
 
 ## [0.3.0] - 2026-11-28
 
+- Publiée dans le catalogue de la marketplace GLPI (`finops.xml`).
+
 ### Added
 
 - **Rattachement assisté des ressources aux actifs de GLPI** (issue #6) : pour chaque ressource pas
