@@ -8,7 +8,7 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), et ce p
 
 ## [Unreleased]
 
-## [0.3.0] - 2026-11-27
+## [0.3.0] - 2026-11-28
 
 ### Added
 
@@ -32,6 +32,19 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), et ce p
   champs séparés, `https://` est affiché devant et imposé par le serveur : aucune URL ne part dans la
   requête. Les plateformes déjà enregistrées ne changent pas ; les contrôles de l'adresse restent les
   mêmes (https seulement, sans chemin, paramètre ni identifiant).
+- **OVHcloud : coûts de consommation Public Cloud perdus** (issue #41) : dans
+  `/cloud/project/{id}/usage/history/{usageId}`, les prix de `resourcesUsage` sont portés par
+  `resources[].components[]`, qui n'était pas parcouru (lignes rejetées, coûts manquants), et
+  `hourlyUsage.quantum` est un objet (`notebook`, `processingUnit`) qui était écarté. Les deux sont
+  désormais lus, d'après le modèle officiel `cloud.usage.UsageHistoryDetail` ; un composant donne une
+  ligne par composant (libellé « type nom », ressource `resourceId`).
+- **Connexion à Sangfor SCP : lecture de la clé publique** (issue #42) : la réponse de
+  `/janus/v2/public-key` et de `/janus/public-key` est acceptée sous ses deux formes documentées,
+  sans enveloppe (`{"public_key": "..."}`, exemples de la documentation OPEN-API 6.10.0) ou dans
+  l'enveloppe commune `{code, message, data}`. L'ancienne adresse (SCP 6.3.0 à 6.7) est désormais
+  essayée dès que la v2 ne donne pas de clé utilisable (code 400, 404 ou 5xx, réponse sans clé), et
+  plus seulement sur 404 ; elle ne l'est pas sur 401, 403 ou 429, les deux adresses partageant la
+  même limite d'appels.
 
 ## [0.2.0] - 2026-11-27
 
