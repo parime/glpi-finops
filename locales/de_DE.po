@@ -944,3 +944,63 @@ msgstr "Unbekannter Verantwortlicher: %s"
 
 msgid "Without owner: %s"
 msgstr "Ohne Verantwortlichen: %s"
+
+#, php-format
+msgid "Resources linked to the proposed assets: %s."
+msgstr "Mit den vorgeschlagenen Assets verknüpfte Ressourcen: %s."
+
+#, php-format
+msgid "%s proposals not applied: the resource is already linked, or the proposal changed."
+msgstr "%s Vorschläge nicht übernommen: Die Ressource ist bereits verknüpft oder der Vorschlag hat sich geändert."
+
+msgid "Instance ID = UUID of the asset"
+msgstr "Instanz-ID = UUID des Assets"
+
+msgid "UUID of a virtual machine = host of the virtual machine"
+msgstr "UUID einer virtuellen Maschine = Host der virtuellen Maschine"
+
+msgid "Serial number"
+msgstr "Seriennummer"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "glpi_id tag"
+msgstr "Tag glpi_id"
+
+msgid "Matching rules for assets"
+msgstr "Zuordnungsregeln für Assets"
+
+msgid "Rules that propose a GLPI asset for each resource not linked yet, tried in this order, separated by commas. A person always confirms the proposals on the Resources page: nothing is linked on its own. Leave empty to turn the proposals off. Available rules:"
+msgstr "Regeln, die für jede noch nicht verknüpfte Ressource ein GLPI-Asset vorschlagen, in dieser Reihenfolge versucht, durch Kommas getrennt. Eine Person bestätigt die Vorschläge immer auf der Seite Ressourcen: Nichts wird von selbst verknüpft. Leer lassen, um die Vorschläge auszuschalten. Verfügbare Regeln:"
+
+#, php-format
+msgid "%s proposals of a GLPI asset on this page. Check the ones that are right, then confirm: nothing is linked without your confirmation."
+msgstr "%s Vorschläge für ein GLPI-Asset auf dieser Seite. Markieren Sie die richtigen und bestätigen Sie: Nichts wird ohne Ihre Bestätigung verknüpft."
+
+msgid "Confirm the proposal"
+msgstr "Vorschlag bestätigen"
+
+#, php-format
+msgid "Found by: %s"
+msgstr "Gefunden durch: %s"
+
+#, php-format
+msgid "Link %1$s to %2$s"
+msgstr "%1$s mit %2$s verknüpfen"
+
+msgid "Link the checked resources to the proposed assets"
+msgstr "Markierte Ressourcen mit den vorgeschlagenen Assets verknüpfen"
+
+msgid "Open the proposed asset"
+msgstr "Vorgeschlagenes Asset öffnen"
+
+#, php-format
+msgid "Proposed: %s"
+msgstr "Vorgeschlagen: %s"
+
+msgid "Select all the proposals"
+msgstr "Alle Vorschläge auswählen"
+
+msgid "Several assets match"
+msgstr "Mehrere Assets passen"

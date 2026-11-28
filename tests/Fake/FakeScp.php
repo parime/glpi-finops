@@ -42,8 +42,18 @@ final class FakeScp implements ScpTransport
     /** @var array<string, int> Chemin => code HTTP imposé. */
     public array $failures = [];
 
-    /** Vrai : seule l'ancienne adresse de la clé publique existe (SCP avant 6.10). */
+    /** Vrai : seule l'ancienne adresse de la clé publique existe (SCP avant 6.8.0). */
     public bool $legacyKey = false;
+
+    /** Code HTTP de /janus/v2/public-key quand $legacyKey est vrai (200 : page HTML sans clé). */
+    public int $v2KeyStatus = 404;
+
+    /**
+     * Forme de la réponse de clé publique : « bare » ({ "public_key": ... }, exemples des § 4.2.3.4 et
+     * 4.2.4.4 de la documentation) ou « data » (enveloppe commune du § 2.5). Null : v2 sans enveloppe,
+     * ancienne adresse avec enveloppe.
+     */
+    public ?string $keyForm = null;
 
     /** @var list<array<mixed>>|null Liste des VM imposée (une seule page). */
     public ?array $servers = null;
@@ -82,12 +92,16 @@ final class FakeScp implements ScpTransport
             return [$this->failures[$path], '{"code":1,"message":"<b>fake failure</b>","data":{}}'];
         }
         if ($method === 'GET' && $path === '/janus/v2/public-key') {
-            return $this->legacyKey
-                ? [404, '{"code":404,"message":"not found","data":{}}']
-                : [200, (string) json_encode(['public_key' => self::modulus() . '\n'])];
+            if (!$this->legacyKey) {
+                return [200, $this->publicKey($this->keyForm ?? 'bare')];
+            }
+
+            return $this->v2KeyStatus === 200
+                ? [200, '<html><body>SCP</body></html>']
+                : [$this->v2KeyStatus, '{"code":' . $this->v2KeyStatus . ',"message":"error","data":{}}'];
         }
         if ($method === 'GET' && $path === '/janus/public-key' && $this->legacyKey) {
-            return [200, $this->envelope(['public_key' => self::modulus()])];
+            return [200, $this->publicKey($this->keyForm ?? 'data')];
         }
         if ($method === 'POST' && $path === '/janus/authenticate') {
             return $this->authenticate($body);
@@ -111,6 +125,14 @@ final class FakeScp implements ScpTransport
             ])],
             default => [404, '{"code":404,"message":"not found","data":{}}'],
         };
+    }
+
+    /** Réponse de clé publique ; le module finit par « \n » écrit en toutes lettres (§ 4.2.4.4). */
+    private function publicKey(string $form): string
+    {
+        $key = ['public_key' => self::modulus() . '\n'];
+
+        return $form === 'data' ? $this->envelope($key) : (string) json_encode($key);
     }
 
     /**

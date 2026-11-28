@@ -23,6 +23,7 @@ use GlpiPlugin\Finops\Sangfor\ScpClient;
 use GlpiPlugin\Finops\Sangfor\ScpException;
 use GlpiPlugin\Finops\Sangfor\ScpInventoryReader;
 use GlpiPlugin\Finops\Tests\Fake\FakeScp;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ScpClientTest extends TestCase
@@ -59,6 +60,31 @@ final class ScpClientTest extends TestCase
         ));
     }
 
+    public function testAddressIsBuiltFromTheNameAndThePortTypedSeparately(): void
+    {
+        // Issue #48 : le formulaire envoie le nom et le port, jamais une URL complète.
+        $this->assertSame('https://192.0.2.10:4430', ScpClient::urlFromParts(' 192.0.2.10 ', '4430'));
+        $this->assertSame('https://scp.example.test', ScpClient::urlFromParts('SCP.example.test', ''));
+        $pasted = ScpClient::urlFromParts('https://scp.example.test/', '4430');
+        $this->assertSame('https://scp.example.test:4430', $pasted);
+        $this->assertSame('https://scp.example.test:4430', ScpClient::urlFromParts('scp.example.test:4430', ''));
+        $this->assertSame('https://[2001:db8::1]:4430', ScpClient::urlFromParts('2001:db8::1', '4430'));
+        foreach (
+            [
+                ['', '443'], ['http://scp.example.test', ''], ['scp.example.test/janus', ''],
+                ['user@scp.example.test', ''], ['scp.example.test', '0'], ['scp.example.test', '65536'],
+                ['scp.example.test', '44a'], ['scp.example.test:4430', '4430'], ['bad_host', ''],
+                ['scp.example.test?x=1', ''],
+            ] as [$host, $port]
+        ) {
+            $this->assertNull(ScpClient::urlFromParts($host, $port), $host . ' / ' . $port);
+        }
+        $parts = ScpClient::urlParts('https://192.0.2.10:4430');
+        $this->assertSame(['host' => '192.0.2.10', 'port' => '4430'], $parts);
+        $parts = ScpClient::urlParts('https://scp.example.test');
+        $this->assertSame(['host' => 'scp.example.test', 'port' => ''], $parts);
+    }
+
     public function testPasswordIsEncryptedWithTheModulusAndTheTokenIsUsed(): void
     {
         $fake = new FakeScp();
@@ -81,6 +107,56 @@ final class ScpClientTest extends TestCase
         $fake->legacyKey = true;
         $this->client($fake)->login();
         $this->assertSame(FakeScp::BASE . '/janus/public-key', $fake->calls[1][1]);
+    }
+
+    /**
+     * Les deux formes de réponse de clé publique (sans enveloppe comme les exemples des § 4.2.3.4 et
+     * 4.2.4.4, ou dans l'enveloppe commune du § 2.5), sur les deux adresses.
+     *
+     * @return array<string, array{0: bool, 1: string}>
+     */
+    public static function keyForms(): array
+    {
+        return [
+            'v2 bare'     => [false, 'bare'],
+            'v2 data'     => [false, 'data'],
+            'legacy bare' => [true, 'bare'],
+            'legacy data' => [true, 'data'],
+        ];
+    }
+
+    #[DataProvider('keyForms')]
+    public function testBothPublicKeyFormsAreAccepted(bool $legacy, string $form): void
+    {
+        $fake = new FakeScp();
+        $fake->legacyKey = $legacy;
+        $fake->keyForm = $form;
+        $this->assertCount(2, $this->client($fake)->all('/janus/20180725/hosts'));
+    }
+
+    /** @return array<string, array{0: int}> */
+    public static function v2Failures(): array
+    {
+        return ['HTTP 400' => [400], 'HTTP 500' => [500], 'HTTP 200 without key' => [200]];
+    }
+
+    #[DataProvider('v2Failures')]
+    public function testLegacyPublicKeyAddressIsTriedWhenV2GivesNoKey(int $status): void
+    {
+        $fake = new FakeScp();
+        $fake->legacyKey = true;
+        $fake->v2KeyStatus = $status;
+        $this->client($fake)->login();
+        $this->assertSame(FakeScp::BASE . '/janus/public-key', $fake->calls[1][1]);
+    }
+
+    public function testRateLimitOnV2IsNotRetriedOnTheLegacyAddress(): void
+    {
+        $fake = new FakeScp();
+        $fake->legacyKey = true;
+        $fake->v2KeyStatus = 403;
+        $this->assertSame(ScpException::R_AUTH, $this->reason(fn () => $this->client($fake)->login()));
+        $this->assertCount(1, $fake->calls);
     }
 
     public function testWrongPasswordIsAnAuthenticationFailure(): void

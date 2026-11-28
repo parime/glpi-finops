@@ -46,6 +46,16 @@
    {% endif %}
 {% endmacro %}
 
+{# Actif proposé par les règles de rattachement assisté (issue #6), avec la règle qui l'a trouvé. #}
+{% macro proposal(row) %}
+   {% if row.proposal %}
+      <span class="badge bg-info-subtle text-info-emphasis text-wrap"><i class="ti ti-bulb me-1"></i>{{ __('Proposed: %s', 'finops')|format(row.proposal.type ~ ' ' ~ row.proposal.name) }}</span>
+      <div class="small text-muted">{{ __('Found by: %s', 'finops')|format(row.proposal.rule_label) }}</div>
+   {% elseif row.ambiguous %}
+      {% include '@finops/_badge.html.twig' with {kind: 'neutral', label: __('Several assets match', 'finops')} %}
+   {% endif %}
+{% endmacro %}
+
 <div class="container-fluid mt-2">
    {% include '@finops/_page_help.html.twig' with {
       page: 'resources',
@@ -178,6 +188,26 @@
                   {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Not linked', 'finops')} %}
                {% endif %}
             </p>
+            {% if not selected.asset and (selected.proposal or selected.ambiguous) %}
+               <div class="alert alert-info mb-3">
+                  {{ tag_ui.proposal(selected) }}
+                  {% if selected.proposal %}
+                     <div class="mt-2 d-flex gap-2 flex-wrap">
+                        {% if can_link %}
+                           <form method="post" action="{{ page_url }}">
+                              <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                              <input type="hidden" name="proposals[{{ selected.id }}]" value="{{ selected.proposal.value }}" />
+                              <input type="hidden" name="back" value="id={{ selected.id }}" />
+                              <button type="submit" name="validate" value="1" class="btn btn-sm btn-primary">
+                                 <i class="ti ti-check me-1"></i>{{ __('Confirm the proposal', 'finops') }}
+                              </button>
+                           </form>
+                        {% endif %}
+                        <a href="{{ selected.proposal.url }}" class="btn btn-sm btn-outline-primary"><i class="ti ti-external-link me-1"></i>{{ __('Open the proposed asset', 'finops') }}</a>
+                     </div>
+                  {% endif %}
+               </div>
+            {% endif %}
             {% if can_link %}
                <form method="post" action="{{ page_url }}">
                   <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
@@ -237,10 +267,24 @@
             </div>
          </div>
       {% else %}
+         {% set proposals = rows|filter(r => r.proposal) %}
+         {% set bulk = can_link and proposals is not empty %}
+         {% if match_rules is not empty %}
+            <div class="card-body border-bottom py-2 small">
+               <i class="ti ti-bulb me-1 text-muted"></i>
+               {{ __('%s proposals of a GLPI asset on this page. Check the ones that are right, then confirm: nothing is linked without your confirmation.', 'finops')|format(proposals|length) }}
+            </div>
+         {% endif %}
          <div class="table-responsive">
             <table class="table table-vcenter card-table">
                <thead>
                   <tr>
+                     {% if bulk %}
+                        <th class="w-1">
+                           <input class="form-check-input" type="checkbox" aria-label="{{ __('Select all the proposals', 'finops') }}"
+                                  onchange="document.querySelectorAll('input[form=finops-proposals][name^=proposals]').forEach((box) => { box.checked = this.checked; })" />
+                        </th>
+                     {% endif %}
                      <th>{{ __('Resource', 'finops') }}</th>
                      <th>{{ __('Provider', 'finops') }}</th>
                      <th>{{ __('Account', 'finops') }}</th>
@@ -255,6 +299,14 @@
                <tbody>
                   {% for row in rows %}
                      <tr>
+                        {% if bulk %}
+                           <td>
+                              {% if row.proposal %}
+                                 <input class="form-check-input" type="checkbox" name="proposals[{{ row.id }}]" value="{{ row.proposal.value }}" form="finops-proposals"
+                                        aria-label="{{ __('Link %1$s to %2$s', 'finops')|format(row.resource, row.proposal.name) }}" />
+                              {% endif %}
+                           </td>
+                        {% endif %}
                         <td class="text-break"><a href="{{ page_url }}?id={{ row.id }}">{{ row.resource }}</a></td>
                         <td><i class="ti ti-cloud me-1 text-muted"></i>{{ row.provider }}</td>
                         <td>{{ row.account }}</td>
@@ -274,6 +326,7 @@
                               <a href="{{ page_url }}?id={{ row.id }}">
                                  {% include '@finops/_badge.html.twig' with {kind: 'warning', label: __('Not linked', 'finops')} %}
                               </a>
+                              {{ tag_ui.proposal(row) }}
                            {% endif %}
                         </td>
                      </tr>
@@ -281,6 +334,15 @@
                </tbody>
             </table>
          </div>
+         {% if bulk %}
+            <form method="post" action="{{ page_url }}" id="finops-proposals" class="card-footer">
+               <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+               <input type="hidden" name="back" value="{{ back }}" />
+               <button type="submit" name="validate" value="1" class="btn btn-primary">
+                  <i class="ti ti-checks me-1"></i>{{ __('Link the checked resources to the proposed assets', 'finops') }}
+               </button>
+            </form>
+         {% endif %}
          {% if total > page_size %}
             <div class="card-footer d-flex justify-content-between align-items-center">
                <span class="text-muted small">{{ __('%1$s to %2$s of %3$s', 'finops')|format(start + 1, min(start + page_size, total), total) }}</span>

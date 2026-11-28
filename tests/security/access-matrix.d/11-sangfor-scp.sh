@@ -59,7 +59,7 @@ esac
 # Gestion des plateformes : droit de configuration de GLPI (aucun des profils de test sauf super-admin).
 if [ "$ROLE" != admin ]; then
   expect "front/sangfor.php : ajout d'une plateforme" 403 \
-    "$(code -d "add=1&name=x&entities_id=$(id a)&url=https://x.example.test&_glpi_csrf_token=$(csrf)" "$P/sangfor.php")"
+    "$(code -d "add=1&name=x&entities_id=$(id a)&scp_host=x.example.test&scp_port=4430&_glpi_csrf_token=$(csrf)" "$P/sangfor.php")"
   expect "front/sangfor.php : modification de la plateforme de A" 403 \
     "$(code -d "update=1&id=$(id sangfor_A)&name=x&_glpi_csrf_token=$(csrf)" "$P/sangfor.php")"
   expect "front/sangfor.php : suppression de la plateforme de A" 403 \

@@ -33,8 +33,15 @@ final class OvhCostReader
 {
     public const PROVIDER = 'ovhcloud';
 
-    /** Champs qui identifient une ressource dans la consommation, par ordre de préférence. */
-    private const RESOURCE_FIELDS = ['instanceId', 'volumeId', 'snapshotId', 'id', 'name'];
+    /**
+     * Champs qui identifient une ressource dans la consommation, par ordre de préférence : resourceId
+     * passe avant id, qui n'est pour un composant (cloud.billingView.Component) que l'identifiant du
+     * composant.
+     */
+    private const RESOURCE_FIELDS = ['instanceId', 'volumeId', 'snapshotId', 'rancherId', 'resourceId', 'id', 'name'];
+
+    /** Détails parcourus : details (hourlyUsage, monthlyUsage), resources puis components (resourcesUsage). */
+    private const CHILDREN = ['details', 'resources', 'components'];
 
     /** @var list<array<string, string>> */
     private array $rows = [];
@@ -116,8 +123,8 @@ final class OvhCostReader
             $usage = self::object($this->client->get($usagePath), $usagePath);
             $base = ['project' => $project, 'date' => $from, 'key' => 'usage|' . $project . '|' . $id];
             foreach (['hourlyUsage', 'monthlyUsage'] as $kind) {
-                foreach (is_array($usage[$kind] ?? null) ? $usage[$kind] : [] as $category => $entries) {
-                    foreach (is_array($entries) && array_is_list($entries) ? $entries : [] as $i => $entry) {
+                foreach (self::categories($usage[$kind] ?? null) as $category => $entries) {
+                    foreach ($entries as $i => $entry) {
                         if (is_array($entry)) {
                             $label = trim($category . ' ' . (string) ($entry['reference'] ?? $entry['type'] ?? ''));
                             $this->walk($entry, $label, $base, $kind . '|' . $category . '|' . $i);
@@ -134,7 +141,36 @@ final class OvhCostReader
     }
 
     /**
-     * Une entrée qui a un détail (details, resources) est parcourue ; sinon c'est une ligne de coût.
+     * Catégories d'une consommation horaire ou mensuelle : chacune est une liste d'entrées, sauf
+     * quantum (cloud.billingView.HourlyQuantum), objet qui regroupe ses propres listes (notebook,
+     * processingUnit), rendues ici sous les catégories « quantum notebook » et « quantum processingUnit ».
+     *
+     * @return array<string, list<mixed>>
+     */
+    private static function categories(mixed $usage): array
+    {
+        $categories = [];
+        foreach (is_array($usage) ? $usage : [] as $category => $entries) {
+            if (!is_array($entries)) {
+                continue;
+            }
+            if (array_is_list($entries)) {
+                $categories[(string) $category] = $entries;
+                continue;
+            }
+            foreach ($entries as $sub => $list) {
+                if (is_array($list) && array_is_list($list)) {
+                    $categories[$category . ' ' . $sub] = $list;
+                }
+            }
+        }
+
+        return $categories;
+    }
+
+    /**
+     * Une entrée qui a un détail (details, resources, components) est parcourue ; sinon c'est une
+     * ligne de coût. Un composant ajoute son nom (name) au libellé du type de ressource.
      *
      * @param array<mixed>                                     $node
      * @param array{project: string, date: string, key: string} $base
@@ -142,11 +178,18 @@ final class OvhCostReader
     private function walk(array $node, string $label, array $base, string $key, string $region = ''): void
     {
         $region = (string) ($node['region'] ?? $region);
-        foreach (['details', 'resources'] as $children) {
+        foreach (self::CHILDREN as $children) {
             if (is_array($node[$children] ?? null) && $node[$children] !== []) {
                 foreach ($node[$children] as $i => $child) {
                     if (is_array($child)) {
-                        $this->walk($child, $label, $base, $key . '|' . $children . '|' . $i, $region);
+                        $name = $children === 'components' && is_string($child['name'] ?? null) ? $child['name'] : '';
+                        $this->walk(
+                            $child,
+                            trim($label . ' ' . $name),
+                            $base,
+                            $key . '|' . $children . '|' . $i,
+                            $region
+                        );
                     }
                 }
                 return;

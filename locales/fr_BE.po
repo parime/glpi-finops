@@ -944,3 +944,63 @@ msgstr "Propriétaire inconnu : %s"
 
 msgid "Without owner: %s"
 msgstr "Sans propriétaire : %s"
+
+#, php-format
+msgid "Resources linked to the proposed assets: %s."
+msgstr "Ressources rattachées aux actifs proposés : %s."
+
+#, php-format
+msgid "%s proposals not applied: the resource is already linked, or the proposal changed."
+msgstr "%s propositions non appliquées : la ressource est déjà rattachée, ou la proposition a changé."
+
+msgid "Instance ID = UUID of the asset"
+msgstr "Identifiant d'instance = UUID de l'actif"
+
+msgid "UUID of a virtual machine = host of the virtual machine"
+msgstr "UUID d'une machine virtuelle = hôte de la machine virtuelle"
+
+msgid "Serial number"
+msgstr "Numéro de série"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "glpi_id tag"
+msgstr "Étiquette glpi_id"
+
+msgid "Matching rules for assets"
+msgstr "Règles de correspondance des actifs"
+
+msgid "Rules that propose a GLPI asset for each resource not linked yet, tried in this order, separated by commas. A person always confirms the proposals on the Resources page: nothing is linked on its own. Leave empty to turn the proposals off. Available rules:"
+msgstr "Règles qui proposent un actif de GLPI pour chaque ressource pas encore rattachée, essayées dans cet ordre, séparées par des virgules. Une personne confirme toujours les propositions sur la page Ressources : rien ne se rattache tout seul. Laisser vide pour désactiver les propositions. Règles disponibles :"
+
+#, php-format
+msgid "%s proposals of a GLPI asset on this page. Check the ones that are right, then confirm: nothing is linked without your confirmation."
+msgstr "%s propositions d'actif de GLPI sur cette page. Cochez celles qui sont justes, puis confirmez : rien n'est rattaché sans votre confirmation."
+
+msgid "Confirm the proposal"
+msgstr "Confirmer la proposition"
+
+#, php-format
+msgid "Found by: %s"
+msgstr "Trouvé par : %s"
+
+#, php-format
+msgid "Link %1$s to %2$s"
+msgstr "Rattacher %1$s à %2$s"
+
+msgid "Link the checked resources to the proposed assets"
+msgstr "Rattacher les ressources cochées aux actifs proposés"
+
+msgid "Open the proposed asset"
+msgstr "Ouvrir l'actif proposé"
+
+#, php-format
+msgid "Proposed: %s"
+msgstr "Proposé : %s"
+
+msgid "Select all the proposals"
+msgstr "Sélectionner toutes les propositions"
+
+msgid "Several assets match"
+msgstr "Plusieurs actifs correspondent"

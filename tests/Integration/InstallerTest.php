@@ -67,6 +67,7 @@ final class InstallerTest extends TestCase
                 // Champs absents : valeurs gardées.
                 'mandatory_tags'   => $before['mandatory_tags'],
                 'owner_tag'        => $before['owner_tag'],
+                'match_rules'      => $before['match_rules'],
             ], $saved);
             $this->assertSame(Config::MAX_UPLOAD_MB * 1024 * 1024, Config::maxUploadBytes());
 

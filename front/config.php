@@ -16,6 +16,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use GlpiPlugin\Finops\AssetMatcher;
 use GlpiPlugin\Finops\Config;
 use GlpiPlugin\Finops\ConfigPage;
 use GlpiPlugin\Finops\Menu;
@@ -48,6 +49,7 @@ TemplateRenderer::getInstance()->display('@finops/config.html.twig', [
     'tab'       => $tab,
     'tabs'      => ConfigPage::tabs($tab),
     'values'    => $values,
+    'match_rules' => AssetMatcher::labels(),
     'min_mb'    => Config::MIN_UPLOAD_MB,
     'max_mb'    => Config::MAX_UPLOAD_MB,
     'sources'   => SourceRegistry::describe(),

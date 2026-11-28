@@ -97,13 +97,32 @@ final class OvhCostReaderTest extends TestCase
             $byResource[$row['resource']] = $row;
         }
         ksort($byResource);
-        $this->assertSame(['', 'ns0000.ip-192-0-2.example', 'vm-fictive-1', 'vm-fictive-2'], array_keys($byResource));
+        $this->assertSame(
+            ['', 'job-fictive-1', 'notebook-fictive-1', 'ns0000.ip-192-0-2.example', 'vm-fictive-1', 'vm-fictive-2'],
+            array_keys($byResource)
+        );
         $this->assertSame('59.990000', $byResource['ns0000.ip-192-0-2.example']['cost']);
         $this->assertSame('2026-09-01', $byResource['ns0000.ip-192-0-2.example']['usage_date']);
         $this->assertSame('50.250000', $byResource['vm-fictive-1']['cost']);
         $this->assertSame('Public Cloud instance b3-8', $byResource['vm-fictive-1']['service']);
         $this->assertStringContainsString('GRA11', $byResource['vm-fictive-1']['tags']);
         $this->assertSame('3.500000', $byResource['']['cost']);
+    }
+
+    public function testResourcesUsageComponentsAndQuantumAreRead(): void
+    {
+        $parsed = (new OvhCostReader($this->client(new FakeOvh())))->read('2026-08-01', [FakeOvh::PROJECT]);
+        $rows = [];
+        foreach ($parsed['rows'] as $row) {
+            $rows[$row['service']] = $row;
+        }
+        $this->assertSame('10.400000', $rows['Public Cloud ai-training ai1-1-gpu']['cost']);
+        $this->assertSame('2.000000', $rows['Public Cloud ai-training ai1-1-cpu']['cost']);
+        $this->assertSame('job-fictive-1', $rows['Public Cloud ai-training ai1-1-gpu']['resource']);
+        $this->assertStringContainsString('GRA', $rows['Public Cloud ai-training ai1-1-cpu']['tags']);
+        $this->assertSame('6.000000', $rows['Public Cloud quantum notebook qpu-notebook']['cost']);
+        $this->assertSame('notebook-fictive-1', $rows['Public Cloud quantum notebook qpu-notebook']['resource']);
+        $this->assertSame(1, $parsed['rejected'], 'only the unreadable bill line is rejected');
     }
 
     public function testWithoutProjectTheBillLineIsKept(): void

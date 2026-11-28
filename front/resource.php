@@ -16,6 +16,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use GlpiPlugin\Finops\AssetMatcher;
 use GlpiPlugin\Finops\Menu;
 use GlpiPlugin\Finops\Resource;
 use GlpiPlugin\Finops\TagCompliance;
@@ -41,6 +42,28 @@ if (isset($_POST['link']) || isset($_POST['unlink'])) {
         Session::addMessageAfterRedirect(htmlescape(__('Choose an asset you can see.', 'finops')), false, ERROR);
     }
     Html::redirect($pageUrl . '?' . http_build_query(['id' => $id]));
+}
+
+// Rattachement assisté (issue #6) : propositions cochées, validées par l'utilisateur. Droit UPDATE ;
+// chaque proposition est recalculée et rattachée par Resource::link() (entité, lecture de l'actif).
+if (isset($_POST['validate'])) {
+    Session::checkRight(Menu::RIGHTNAME, UPDATE);
+    $proposals = is_array($_POST['proposals'] ?? null) ? $_POST['proposals'] : [];
+    $result = AssetMatcher::validate(array_slice($proposals, 0, Resource::PAGE_SIZE, true));
+    if ($result['linked'] > 0) {
+        Session::addMessageAfterRedirect(htmlescape(sprintf(
+            __('Resources linked to the proposed assets: %s.', 'finops'),
+            $result['linked']
+        )), false, INFO);
+    }
+    if ($result['skipped'] > 0 || $result['linked'] === 0) {
+        Session::addMessageAfterRedirect(htmlescape(sprintf(
+            __('%s proposals not applied: the resource is already linked, or the proposal changed.', 'finops'),
+            $result['skipped']
+        )), false, WARNING);
+    }
+    $back = (string) ($_POST['back'] ?? '');
+    Html::redirect($pageUrl . (preg_match('/^[a-z0-9=&%_.+-]*$/i', $back) === 1 && $back !== '' ? '?' . $back : ''));
 }
 
 $selected = null;
@@ -73,6 +96,9 @@ TemplateRenderer::getInstance()->display('@finops/resources.html.twig', [
     'selected'    => $selected,
     'asset_types' => Resource::ASSET_TYPES,
     'can_link'    => Resource::canUpdate(),
+    'back'        => http_build_query(array_filter(['search' => $search, 'unlinked' => $unlinked ? 1 : 0,
+        'tofix' => $toFix ? 1 : 0, 'start' => $start])),
+    'match_rules' => AssetMatcher::rules(),
     'import_url'  => Session::haveRight(Menu::RIGHTNAME, CREATE) ? Menu::url(Menu::TAB_IMPORT) : '',
 ]);
 Html::footer();

@@ -40,6 +40,8 @@ final class Config
         // Étiquettes obligatoires des ressources et étiquette du propriétaire (issue #19).
         'mandatory_tags'   => 'owner, cost-center, env',
         'owner_tag'        => 'owner',
+        // Règles de rattachement assisté, dans l'ordre (issue #6) ; vide : aucune proposition.
+        'match_rules'      => 'instance_id, vm_uuid, serial, name, glpi_id_tag',
     ];
 
     /**
@@ -80,6 +82,10 @@ final class Config
         $values['owner_tag'] = array_key_exists('owner_tag', $input)
             ? (TagPolicy::parseList((string) $input['owner_tag'])[0] ?? '')
             : $current['owner_tag'];
+        // Rattachement assisté (issue #6) : règles connues seulement, dans l'ordre saisi.
+        $values['match_rules'] = array_key_exists('match_rules', $input)
+            ? implode(', ', AssetMatcher::parseRules((string) $input['match_rules']))
+            : $current['match_rules'];
         \Config::setConfigurationValues(self::CONTEXT, $values);
 
         return $values;
