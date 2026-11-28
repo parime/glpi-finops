@@ -47,6 +47,18 @@ Les factures du cloud et de la virtualisation vivent souvent hors du parc : pers
             <compatibility>~12.0</compatibility>
             <download_url>https://github.com/parime/glpi-finops/releases/download/v0.3.0/glpi-finops-0.3.0.zip</download_url>
         </version>
+        <version>
+            <num>0.2.0</num>
+            <compatibility>~11.0</compatibility>
+            <compatibility>~12.0</compatibility>
+            <download_url>https://github.com/parime/glpi-finops/releases/download/v0.2.0/glpi-finops-0.2.0.zip</download_url>
+        </version>
+        <version>
+            <num>0.1.0</num>
+            <compatibility>~11.0</compatibility>
+            <compatibility>~12.0</compatibility>
+            <download_url>https://github.com/parime/glpi-finops/releases/download/v0.1.0/glpi-finops-0.1.0.zip</download_url>
+        </version>
     </versions>
     <langs>
         <lang>fr_FR</lang>

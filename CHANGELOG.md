@@ -50,6 +50,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), et ce p
 
 ## [0.2.0] - 2026-11-27
 
+- Publiée dans le catalogue de la marketplace GLPI (`finops.xml`).
+
 ### Added
 
 - **Étiquetage obligatoire et ressources sans propriétaire** (issue #19) : réglage des étiquettes
@@ -107,6 +109,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), et ce p
   rapide).
 
 ## [0.1.0] - 2026-11-21
+
+- Publiée dans le catalogue de la marketplace GLPI (`finops.xml`).
 
 ### Added
 
